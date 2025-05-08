@@ -94,7 +94,7 @@ const Header = () => {
                 onClick={handleDownloadCV}
                 className="bg-cyan-500 text-blue-950 font-medium px-4 py-2 sm:px-5 sm:py-3 rounded-md border border-cyan-500 hover:bg-transparent hover:text-cyan-500 transition-colors duration-300 text-sm sm:text-base"
               >
-                Download CV
+                DownloaD CV
               </button>
             </div>
 

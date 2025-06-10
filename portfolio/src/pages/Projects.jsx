@@ -6,28 +6,68 @@ import Tilt from "react-parallax-tilt";
 const MyProjects = () => {
   const projects = [
     {
-      title: "Car Rent",
+      title: "Event Planner",
       description:
-        "Web-based platform that allows users to search, book, and manage car rentals from various providers, providing a convenient and efficient solution for transportation needs.",
-      tags: ["React", "MongoDB", "Tailwind"],
-      image: "/images/myprojects/website1.jpeg",
-      link: "#"
+        "A platform to create, manage, and share events with real-time RSVP tracking and notifications.",
+      tags: ["React", "Firebase", "Tailwind"],
+      image: "/images/myprojects/event-planner.jpeg",
+      link: "#",
     },
     {
-      title: "Job IT",
+      title: "Fitness Tracker",
       description:
-        "Web application that enables users to search for job openings, view estimated salary ranges for positions, and locate available jobs based on their current location.",
-      tags: ["React", "REST API", "SCSS"],
-      image: "/images/myprojects/website2.jpeg",
-      link: "#"
+        "A mobile-friendly app to log workouts, track progress, and set fitness goals with analytics.",
+      tags: ["React Native", "MongoDB", "CSS"],
+      image: "/images/myprojects/fitness-tracker.jpeg",
+      link: "#",
     },
     {
-      title: "Trip Guide",
+      title: "E-Commerce Hub",
       description:
-        "A comprehensive travel booking platform that allows users to book flights, hotels, and rental cars, and offers curated recommendations for popular destinations.",
+        "An online store with product filtering, secure checkout, and user account management.",
+      tags: ["Next.js", "Stripe", "Tailwind"],
+      image: "/images/myprojects/ecommerce-hub.jpeg",
+      link: "#",
+    },
+    {
+      title: "Task Manager",
+      description:
+        "A collaborative tool for teams to organize tasks, set deadlines, and track project progress.",
+      tags: ["Vue.js", "Node.js", "SCSS"],
+      image: "/images/myprojects/task-manager.jpeg",
+      link: "#",
+    },
+    {
+      title: "Recipe Finder",
+      description:
+        "A web app to discover recipes based on ingredients, with meal planning and shopping lists.",
+      tags: ["React", "REST API", "Bootstrap"],
+      image: "/images/myprojects/recipe-finder.jpeg",
+      link: "#",
+    },
+    {
+      title: "Portfolio Builder",
+      description:
+        "A drag-and-drop interface for creatives to build and showcase their portfolios online.",
       tags: ["Next.js", "Supabase", "CSS"],
-      image: "/images/myprojects/website4.jpeg",
-      link: "#"
+      image: "/images/myprojects/portfolio-builder.jpeg",
+      link: "#",
+    },
+    {
+      title: "Weather Dashboard",
+      description:
+        "A real-time weather app with location-based forecasts and interactive visualizations.",
+      tags: ["Angular", "OpenWeather API", "Tailwind"],
+      image: "/images/myprojects/weather-dashboard.jpeg",
+      link: "#",
+    },
+    {
+      title: "Chat App",
+      description:
+        "A secure messaging platform with real-time chat, group channels, and file sharing.",
+      tags: ["React", "Socket.io", "MUI"],
+      image: "/images/myprojects/chat-app.jpeg",
+      link: "#",
     },
   ];
 
@@ -37,82 +77,86 @@ const MyProjects = () => {
     show: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1
-      }
-    }
+        staggerChildren: 0.2,
+      },
+    },
   };
 
   const item = {
-    hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0 }
+    hidden: { opacity: 0, y: 30 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
   };
 
   return (
     <Element name="projects">
-      <section className="bg-black text-white py-20 px-4">
+      <section className="text-white py-16 sm:py-20 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto">
-          {/* Static header that won't disappear */}
-          <div className="text-center mb-16 w-full px-4">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-white">
+          {/* Header */}
+          <div className="text-center mb-12 sm:mb-16 px-4">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-white">
               My <span className="text-cyan-400">Projects</span>
             </h2>
-            <p className="text-gray-300 max-w-2xl mx-auto text-base sm:text-lg">
-              Here are some of my recent projects. Each one was built to solve real-world problems
-              and showcase different aspects of my development skills.
+            <p className="text-gray-300 max-w-2xl mx-auto text-base sm:text-lg md:text-xl">
+              Explore my recent projects, each crafted to solve real-world challenges and showcase my development expertise.
             </p>
           </div>
 
-          {/* Animated projects grid */}
+          {/* Projects Grid */}
           <motion.div
             variants={container}
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, margin: "-100px" }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
           >
             {projects.map((project, index) => (
-              <motion.div key={index} variants={item}>
+              <motion.div
+                key={`${project.title}-${index}`} // Unique key to avoid React key issues
+                variants={item}
+                className="h-full"
+              >
                 <Tilt
-                  tiltMaxAngleX={8}
-                  tiltMaxAngleY={8}
+                  tiltMaxAngleX={10}
+                  tiltMaxAngleY={10}
                   glareEnable={true}
-                  glareMaxOpacity={0.2}
+                  glareMaxOpacity={0.3}
                   glareColor="#00FFFF"
                   glarePosition="all"
                   className="h-full"
                 >
                   <motion.div
-                    whileHover={{ y: -10 }}
-                    className="bg-[#111111] border border-cyan-500/20 rounded-xl overflow-hidden h-full flex flex-col"
+                    whileHover={{ y: -8, boxShadow: "0 8px 32px rgba(0, 255, 255, 0.2)" }}
+                    transition={{ duration: 0.3 }}
+                    className="bg-[#1a1a1a] border border-cyan-500/30 rounded-xl overflow-hidden h-full flex flex-col"
                   >
-                    <div className="overflow-hidden h-48">
+                    <div className="overflow-hidden h-48 sm:h-56">
                       <img
                         src={project.image}
                         alt={project.title}
-                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                        className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
                       />
                     </div>
-                    <div className="p-6 flex-grow">
-                      <h3 className="text-xl font-semibold text-white mb-2">{project.title}</h3>
-                      <p className="text-gray-400 mb-4">{project.description}</p>
-                      <div className="mt-auto">
-                        <div className="flex flex-wrap gap-2">
-                          {project.tags.map((tag, idx) => (
-                            <span 
-                              key={idx} 
-                              className="text-xs bg-cyan-900/30 text-cyan-400 px-3 py-1 rounded-full"
-                            >
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-                        <a 
-                          href={project.link} 
-                          className="mt-4 inline-block text-cyan-400 hover:text-cyan-300 text-sm font-medium"
-                        >
-                          View Project →
-                        </a>
+                    <div className="p-5 sm:p-6 flex flex-col flex-grow">
+                      <h3 className="text-lg sm:text-xl font-semibold text-white mb-3">{project.title}</h3>
+                      <p className="text-gray-400 text-sm sm:text-base mb-4 flex-grow">
+                        {project.description}
+                      </p>
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {project.tags.map((tag, idx) => (
+                          <span
+                            key={idx}
+                            className="text-xs bg-cyan-900/40 text-cyan-400 px-3 py-1 rounded-full"
+                          >
+                            {tag}
+                          </span>
+                        ))}
                       </div>
+                      <a
+                        href={project.link}
+                        className="mt-auto text-cyan-400 hover:text-cyan-300 text-sm sm:text-base font-medium transition-colors duration-300"
+                      >
+                        View Project →
+                      </a>
                     </div>
                   </motion.div>
                 </Tilt>

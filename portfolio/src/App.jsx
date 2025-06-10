@@ -8,6 +8,8 @@ import Navbar from './pages/Navbar'
 import Footer from './pages/Footer'
 import MyProjects from './pages/Projects'
 import Intro from './pages/Intro'
+import ProfessionalCertificates from './pages/Procertificates'
+import EmailIcon from './pages/Email'
 
 function App() {
 
@@ -20,7 +22,9 @@ function App() {
       <Skills />
       <WorkExperience />
       <MyProjects />
+      <ProfessionalCertificates />
       <ContactForm />
+      <EmailIcon />
       <Footer />
     </>
   )

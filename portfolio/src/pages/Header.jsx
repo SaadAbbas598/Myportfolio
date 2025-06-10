@@ -2,13 +2,14 @@ import React, { useMemo, useState, useEffect } from "react";
 import { BsLinkedin } from "react-icons/bs";
 import { FaGithub } from "react-icons/fa";
 import dynamic from "next/dynamic";
+import { Link } from "react-scroll";
 
 // CORRECT dynamic import syntax (removed the _c = assignment)
 const ParticlesBackground = dynamic(
   () => import("../components/ParticlesBackground"),
-  { 
+  {
     ssr: false,
-    loading: () => <div className="absolute inset-0 bg-black" />
+    loading: () => <div className="absolute inset-0 bg-black" />,
   }
 );
 
@@ -21,8 +22,8 @@ const Header = () => {
     };
 
     handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const handleDownloadCV = () => {
@@ -35,28 +36,31 @@ const Header = () => {
     document.body.removeChild(link);
   };
 
-  const socialLinks = useMemo(() => (
-    <div className="flex gap-6 text-2xl justify-center md:justify-start">
-      <a
-        href="https://www.linkedin.com/"
-        target="_blank"
-        rel="noreferrer noopener"
-        className="hover:text-cyan-500 transition-colors duration-300"
-        aria-label="LinkedIn Profile"
-      >
-        <BsLinkedin />
-      </a>
-      <a
-        href="https://github.com/"
-        target="_blank"
-        rel="noreferrer noopener"
-        className="hover:text-cyan-500 transition-colors duration-300"
-        aria-label="GitHub Profile"
-      >
-        <FaGithub />
-      </a>
-    </div>
-  ), []);
+  const socialLinks = useMemo(
+    () => (
+      <div className="flex gap-6 text-2xl justify-center md:justify-start">
+        <a
+          href="https://www.linkedin.com/"
+          target="_blank"
+          rel="noreferrer noopener"
+          className="hover:text-cyan-500 transition-colors duration-300"
+          aria-label="LinkedIn Profile"
+        >
+          <BsLinkedin />
+        </a>
+        <a
+          href="https://github.com/"
+          target="_blank"
+          rel="noreferrer noopener"
+          className="hover:text-cyan-500 transition-colors duration-300"
+          aria-label="GitHub Profile"
+        >
+          <FaGithub />
+        </a>
+      </div>
+    ),
+    []
+  );
 
   return (
     <header
@@ -86,13 +90,13 @@ const Header = () => {
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-6 justify-center md:justify-start">
               <a
                 href="contact"
-                className="bg-transparent text-cyan-500 font-medium px-4 py-2 sm:px-5 sm:py-3 rounded-md border border-cyan-500 hover:bg-cyan-500 hover:text-blue-950 transition-colors duration-300 text-sm sm:text-base"
+                className="bg-transparent text-cyan-500 font-medium px-4 py-2 sm:px-5 sm:py-3 rounded-md border border-cyan-500 hover:bg-cyan-500 hover:text-white transition-colors duration-300 text-sm sm:text-base"
               >
                 Contact Me
               </a>
               <button
                 onClick={handleDownloadCV}
-                className="bg-cyan-500 text-blue-950 font-medium px-4 py-2 sm:px-5 sm:py-3 rounded-md border border-cyan-500 hover:bg-transparent hover:text-cyan-500 transition-colors duration-300 text-sm sm:text-base"
+                className="bg-transparent text-cyan-500 font-medium px-4 py-2 sm:px-5 sm:py-3 rounded-md border border-cyan-500 hover:bg-cyan-500 hover:text-white transition-colors duration-300 text-sm sm:text-base"
               >
                 Download CV
               </button>

@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const letters = [
-  { char: "S", color: "text-cyan-400", startPos: { x: -100, y: 0 } },
-  { char: "A", color: "text-fuchsia-400", startPos: { x: 0, y: -100 } },
-  { char: "A", color: "text-fuchsia-400", startPos: { x: 100, y: 0 } },
-  { char: "D", color: "text-cyan-400", startPos: { x: 0, y: 100 } },
+  { char: "S", color: "text-cyan-400", startPos: { x: -100, y: -50 } },
+  { char: "A", color: "text-fuchsia-400", startPos: { x: 50, y: -100 } },
+  { char: "A", color: "text-cyan-400", startPos: { x: 100, y: 50 } },
+  { char: "D", color: "text-fuchsia-400", startPos: { x: -50, y: 100 } },
 ];
 
 const containerVariants = {
@@ -28,35 +28,37 @@ const letterVariants = {
     x: startPos.x,
     y: startPos.y,
     opacity: 0,
-    scale: 0.5,
+    rotate: -90,
+    scale: 0.2,
   }),
   visible: {
     x: 0,
     y: 0,
     opacity: 1,
+    rotate: 0,
     scale: 1,
     transition: {
       type: "spring",
-      stiffness: 400,
-      damping: 15,
+      stiffness: 500,
+      damping: 20,
     },
   },
-  circle: (i) => ({
-    x: Math.cos((i * Math.PI) / 2) * 80,
-    y: Math.sin((i * Math.PI) / 2) * 80,
+  dance: (i) => ({
+    y: [0, -30, 0],
+    rotate: [0, 10, -10, 0],
     transition: {
-      type: "spring",
-      stiffness: 200,
-      damping: 10,
-    }
+      duration: 0.8,
+      repeat: Infinity,
+      repeatType: "reverse",
+      delay: i * 0.1,
+    },
   }),
   assemble: {
-    x: 0,
-    y: 0,
+    scale: [1, 1.2, 1],
     transition: {
-      type: "spring",
-      stiffness: 500,
-      damping: 15,
+      duration: 0.6,
+      repeat: Infinity,
+      repeatType: "reverse",
     }
   }
 };
@@ -64,19 +66,27 @@ const letterVariants = {
 const Preloader = ({ onFinish }) => {
   const [animationStage, setAnimationStage] = useState("enter");
   const [show, setShow] = useState(true);
+  const [displayedLetters, setDisplayedLetters] = useState([]);
 
   useEffect(() => {
+    // For animation, show only unique letters
+    const uniqueLetters = letters.filter((letter, index, self) =>
+      index === self.findIndex((l) => l.char === letter.char)
+    );
+    setDisplayedLetters(uniqueLetters);
+
     const sequence = async () => {
-      // Initial entry
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Initial entry animation
+      setAnimationStage("enter");
+      await new Promise(resolve => setTimeout(resolve, 1500));
       
-      // Form circle
-      setAnimationStage("circle");
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Dancing animation
+      setAnimationStage("dance");
+      await new Promise(resolve => setTimeout(resolve, 2000));
       
-      // Assemble to center
+      // Final assemble with all letters
       setAnimationStage("assemble");
-      await new Promise(resolve => setTimeout(resolve, 800));
+      await new Promise(resolve => setTimeout(resolve, 1200));
       
       // Finish
       setShow(false);
@@ -97,11 +107,12 @@ const Preloader = ({ onFinish }) => {
           variants={containerVariants}
         >
           <div className="relative flex items-center justify-center">
-            {letters.map((item, index) => (
+            {/* Animated letters (only unique during movement) */}
+            {animationStage !== "assemble" && displayedLetters.map((item, index) => (
               <motion.span
-                key={index}
+                key={`${item.char}-${index}`}
                 className={`absolute text-7xl md:text-8xl font-extrabold font-mono ${item.color}`}
-                custom={animationStage === "circle" ? index : item.startPos}
+                custom={index}
                 variants={letterVariants}
                 animate={animationStage}
                 style={{
@@ -113,51 +124,51 @@ const Preloader = ({ onFinish }) => {
               </motion.span>
             ))}
             
-            {/* Glowing circle effect */}
-            {animationStage === "circle" && (
-              <motion.div 
-                className="absolute border-2 border-fuchsia-400 rounded-full"
-                initial={{ width: 0, height: 0, opacity: 0 }}
-                animate={{ 
-                  width: 180, 
-                  height: 180, 
-                  opacity: 0.3,
-                  transition: { duration: 0.5 }
-                }}
-                exit={{ opacity: 0 }}
-              />
-            )}
-            
-            {/* Final assembled word */}
+            {/* Final assembled "SAAD" */}
             {animationStage === "assemble" && (
               <motion.div 
                 className="flex"
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ 
                   opacity: 1, 
-                  scale: 1.1,
+                  scale: 1,
                   transition: { 
-                    type: "spring", 
-                    stiffness: 500,
-                    damping: 15,
-                    delay: 0.3
+                    duration: 0.5
                   }
                 }}
               >
                 {letters.map((item, index) => (
                   <motion.span
-                    key={index}
+                    key={`full-${index}`}
                     className={`text-7xl md:text-8xl font-extrabold font-mono ${item.color}`}
                     style={{
                       textShadow: "0 0 15px currentColor",
                     }}
-                    whileHover={{ scale: 1.2 }}
+                    variants={letterVariants}
+                    animate="assemble"
+                    custom={index}
                   >
                     {item.char}
                   </motion.span>
                 ))}
               </motion.div>
             )}
+            
+            {/* Background pulse effect */}
+            <motion.div 
+              className="absolute bg-fuchsia-400 rounded-full mix-blend-screen opacity-10"
+              initial={{ width: 0, height: 0 }}
+              animate={{ 
+                width: 300, 
+                height: 300,
+                opacity: [0.05, 0.15, 0.05],
+                transition: {
+                  duration: 3,
+                  repeat: Infinity,
+                  repeatType: "reverse"
+                }
+              }}
+            />
           </div>
         </motion.div>
       )}

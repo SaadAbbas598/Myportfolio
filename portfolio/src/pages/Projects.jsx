@@ -89,10 +89,10 @@ const MyProjects = () => {
 
   return (
     <Element name="projects">
-      <section className="text-white py-16 sm:py-20 px-4 sm:px-6">
+      <section className="text-white pt-20 pb-6 sm:pt-24 sm:pb-10 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-12 sm:mb-16 px-4">
+          <div className="text-center mb-10 sm:mb-14 px-4">
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-white">
               My <span className="text-cyan-400">Projects</span>
             </h2>
@@ -111,7 +111,7 @@ const MyProjects = () => {
           >
             {projects.map((project, index) => (
               <motion.div
-                key={`${project.title}-${index}`} // Unique key to avoid React key issues
+                key={`${project.title}-${index}`}
                 variants={item}
                 className="h-full"
               >
@@ -125,7 +125,10 @@ const MyProjects = () => {
                   className="h-full"
                 >
                   <motion.div
-                    whileHover={{ y: -8, boxShadow: "0 8px 32px rgba(0, 255, 255, 0.2)" }}
+                    whileHover={{
+                      y: -8,
+                      boxShadow: "0 8px 32px rgba(0, 255, 255, 0.2)",
+                    }}
                     transition={{ duration: 0.3 }}
                     className="bg-[#1a1a1a] border border-cyan-500/30 rounded-xl overflow-hidden h-full flex flex-col"
                   >
@@ -137,7 +140,9 @@ const MyProjects = () => {
                       />
                     </div>
                     <div className="p-5 sm:p-6 flex flex-col flex-grow">
-                      <h3 className="text-lg sm:text-xl font-semibold text-white mb-3">{project.title}</h3>
+                      <h3 className="text-lg sm:text-xl font-semibold text-white mb-3">
+                        {project.title}
+                      </h3>
                       <p className="text-gray-400 text-sm sm:text-base mb-4 flex-grow">
                         {project.description}
                       </p>

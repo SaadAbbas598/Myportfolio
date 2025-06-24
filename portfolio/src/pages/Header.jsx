@@ -1,10 +1,10 @@
+"use client";
 import React, { useMemo, useState, useEffect } from "react";
 import { BsLinkedin } from "react-icons/bs";
 import { FaGithub } from "react-icons/fa";
 import dynamic from "next/dynamic";
 import { Link } from "react-scroll";
 
-// CORRECT dynamic import syntax (removed the _c = assignment)
 const ParticlesBackground = dynamic(
   () => import("../components/ParticlesBackground"),
   {
@@ -14,18 +14,6 @@ const ParticlesBackground = dynamic(
 );
 
 const Header = () => {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
   const handleDownloadCV = () => {
     const cvUrl = "/path/to/your/cv.pdf";
     const link = document.createElement("a");
@@ -38,7 +26,7 @@ const Header = () => {
 
   const socialLinks = useMemo(
     () => (
-      <div className="flex gap-6 text-2xl justify-center md:justify-start">
+      <div className="flex gap-6 text-xl sm:text-2xl justify-center md:justify-start">
         <a
           href="https://www.linkedin.com/"
           target="_blank"
@@ -67,46 +55,48 @@ const Header = () => {
       id="home"
       className="relative h-screen flex items-center px-4 sm:px-6 bg-black text-white overflow-hidden"
     >
-      {!isMobile && <ParticlesBackground />}
+      {/* ✅ Always render ParticlesBackground */}
+      <ParticlesBackground />
 
       <div className="w-full max-w-6xl mx-auto z-10">
         <div className="flex flex-col-reverse md:flex-row items-center gap-6 md:gap-12 lg:gap-16">
           <div className="flex-1 text-center md:text-left">
-            <h5 className="text-sm sm:text-base md:text-lg mb-2 text-white/70">
+            <h5 className="text-xs xs:text-sm sm:text-base md:text-lg mb-1 sm:mb-2 text-white/70">
               Hello, I'm
             </h5>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-2 sm:mb-3">
+            <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-2 sm:mb-3">
               SAAD ABBAS
             </h1>
-            <h5 className="text-lg sm:text-xl md:text-2xl mb-4 sm:mb-6 text-white/70">
+            <h5 className="text-base xs:text-lg sm:text-xl md:text-2xl mb-4 sm:mb-6 text-white/70">
               Full Stack Developer
             </h5>
 
-            <p className="text-sm sm:text-base text-white/70 mb-6 sm:mb-8 leading-relaxed max-w-xl mx-auto md:mx-0">
+            <p className="text-xs xs:text-sm sm:text-base text-white/70 mb-6 sm:mb-8 leading-relaxed max-w-md sm:max-w-xl mx-auto md:mx-0 px-1">
               Passionate developer with expertise in modern web technologies.
               Creating efficient, scalable, and user-friendly applications.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-6 justify-center md:justify-start">
-              <a
-                href="contact"
-                className="bg-transparent text-cyan-500 font-medium px-4 py-2 sm:px-5 sm:py-3 rounded-md border border-cyan-500 hover:bg-cyan-500 hover:text-white transition-colors duration-300 text-sm sm:text-base"
-              >
-                Contact Me
-              </a>
-              <button
-                onClick={handleDownloadCV}
-                className="bg-transparent text-cyan-500 font-medium px-4 py-2 sm:px-5 sm:py-3 rounded-md border border-cyan-500 hover:bg-cyan-500 hover:text-white transition-colors duration-300 text-sm sm:text-base"
-              >
-                Download CV
-              </button>
-            </div>
+            <div className="flex flex-row flex-wrap justify-center md:justify-start gap-3 sm:gap-4 mb-6">
+  <a
+    href="contact"
+    className="flex-1 max-w-[140px] text-center bg-transparent text-cyan-500 font-medium px-3 py-2 rounded-md border border-cyan-500 hover:bg-cyan-500 hover:text-white transition duration-300 text-sm"
+  >
+    Contact Me
+  </a>
+  <button
+    onClick={handleDownloadCV}
+    className="flex-1 max-w-[140px] text-center bg-transparent text-cyan-500 font-medium px-3 py-2 rounded-md border border-cyan-500 hover:bg-cyan-500 hover:text-white transition duration-300 text-sm"
+  >
+    Download CV
+  </button>
+</div>
+
 
             {socialLinks}
           </div>
 
-          <div className="flex-1 flex justify-center items-center mb-8 sm:mb-10 md:mb-0">
-            <div className="relative w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-72 lg:h-72 xl:w-80 xl:h-80">
+          <div className="flex-1 flex justify-center items-center mb-6 xs:mb-8 sm:mb-10 md:mb-0">
+            <div className="relative w-40 h-40 xs:w-48 xs:h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-72 lg:h-72 xl:w-80 xl:h-80">
               <div className="absolute w-full h-full rounded-full overflow-hidden z-10 border-4 border-cyan-500/30">
                 <img
                   src="/images/profile.webp"

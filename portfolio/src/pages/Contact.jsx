@@ -61,7 +61,7 @@ const ContactForm = () => {
               </div>
               
               <div className="space-y-2">
-                <label htmlFor="email" className extraclassName="text-sm sm:text-base font-medium text-gray-200">Email Address</label>
+                <label htmlFor="email" className ="text-sm sm:text-base font-medium text-gray-200">Email Address</label>
                 <input
                   id="email"
                   type="email"

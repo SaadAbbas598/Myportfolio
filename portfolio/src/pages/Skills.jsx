@@ -19,10 +19,10 @@ import {
   SiTypescript,
 } from "react-icons/si";
 
-// Dynamically import ParticlesBackground
+// Particle background
 const ParticlesBackground = dynamic(() => import("../components/ParticlesBackground"), {
   ssr: false,
-  loading: () => <div className="absolute inset-0 bg-black" />
+  loading: () => <div className="absolute inset-0 bg-black" />,
 });
 
 const skills = [
@@ -42,16 +42,13 @@ const skills = [
 ];
 
 const Skills = () => {
-  const [isMobile, setIsMobile] = useState(false);
   const containerRef = useRef(null);
   const skillContainerRef = useRef(null);
   const animationRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
 
-  // Adjust speed based on screen size
-  const duration = isMobile ? 30 : 20;
-
-  // Only duplicate once for mobile
-  const duplicatedSkills = isMobile ? [...skills] : [...skills, ...skills, ...skills];
+  const duration = isMobile ? 35 : 20;
+  const duplicatedSkills = [...skills, ...skills, ...skills];
 
   useEffect(() => {
     const handleResize = () => {
@@ -59,68 +56,64 @@ const Skills = () => {
     };
 
     handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   useEffect(() => {
     const container = containerRef.current;
     const skillContainer = skillContainerRef.current;
-    
-    if (!container || !skillContainer || isMobile) return;
 
-    const skillContainerWidth = skillContainer.scrollWidth / 3;
+    if (!container || !skillContainer) return;
+
+    const scrollWidth = skillContainer.scrollWidth / 3;
     let startTime = null;
-    let progress = 0;
 
     const animate = (timestamp) => {
       if (!startTime) startTime = timestamp;
       const elapsed = timestamp - startTime;
-      progress = (elapsed / (duration * 1000)) % 1;
-
-      const translateX = -skillContainerWidth * progress;
+      const progress = (elapsed / (duration * 1000)) % 1;
+      const translateX = -scrollWidth * progress;
       skillContainer.style.transform = `translateX(${translateX}px)`;
-
       animationRef.current = requestAnimationFrame(animate);
     };
 
     animationRef.current = requestAnimationFrame(animate);
 
     return () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
+      if (animationRef.current) cancelAnimationFrame(animationRef.current);
     };
-  }, [duration, isMobile]);
+  }, [duration]);
 
   return (
-    <section id="skills" className="relative min-h-screen bg-black text-white overflow-hidden">
-      {/* Only render particles on desktop */}
-      {!isMobile && <ParticlesBackground />}
-      
-      {/* Content with higher z-index */}
-      <div className="relative z-10 flex flex-col justify-center items-center h-full px-4 sm:px-6 py-12 sm:py-16">
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-8 sm:mb-12 text-center text-cyan-500">
+    <section
+      id="skills"
+      className="relative min-h-screen bg-black text-white overflow-hidden"
+    >
+      <ParticlesBackground />
+
+      <div className="relative z-10 flex flex-col justify-center items-center h-full px-3 sm:px-6 pt-10 sm:pt-12 pb-2 sm:pb-3">
+        <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 text-center text-cyan-500">
           My Skills
         </h2>
 
-        <div 
-          ref={containerRef}
-          className="w-full overflow-hidden py-4 sm:py-8"
-        >
+        <div ref={containerRef} className="w-full overflow-hidden py-1 sm:py-2">
           <div
             ref={skillContainerRef}
-            className={`flex ${isMobile ? 'justify-center flex-wrap' : 'w-max'}`}
+            className="flex w-max"
+            style={{ willChange: "transform" }}
           >
             {duplicatedSkills.map((skill, index) => (
-              <div 
-                key={`${skill.id}-${index}`} 
-                className={`flex flex-col items-center mx-2 sm:mx-4 ${isMobile ? 'w-20 mb-4' : 'w-24'}`}
+              <div
+                key={`${skill.id}-${index}`}
+                className="flex flex-col items-center mx-2 sm:mx-4 w-20 sm:w-24"
               >
-                <div className={`${isMobile ? 'w-16 h-16' : 'w-20 h-20'} flex items-center justify-center rounded-full bg-[#0f0f0f] border border-cyan-500/20 hover:border-cyan-500 transition-colors duration-300`}>
-                  <div className={`${isMobile ? 'text-3xl' : 'text-4xl'}`}>{skill.icon}</div>
+                <div className="w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center rounded-full bg-[#0f0f0f] border border-cyan-500/20 hover:border-cyan-500 transition-colors duration-300">
+                  <div className="text-3xl sm:text-4xl">{skill.icon}</div>
                 </div>
-                <p className="text-xs sm:text-sm font-medium text-white/80 mt-2 text-center">{skill.name}</p>
+                <p className="text-xs sm:text-sm font-medium text-white/80 mt-2 text-center">
+                  {skill.name}
+                </p>
               </div>
             ))}
           </div>

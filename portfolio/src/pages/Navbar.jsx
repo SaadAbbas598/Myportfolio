@@ -6,18 +6,26 @@ import { Link } from "react-scroll";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("about-section");
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [isVisible, setIsVisible] = useState(true);
+  const [isAtTop, setIsAtTop] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {
+      const scrollY = window.scrollY;
+
+      setIsAtTop(scrollY < 50);
+      setIsVisible(scrollY < lastScrollY || scrollY < 50);
+      setLastScrollY(scrollY);
+
       const sections = ["about-section", "project", "experience-section", "contact-form"];
-      const scrollPosition = window.scrollY + 100;
+      const scrollPosition = scrollY + 100;
 
       for (const section of sections) {
         const element = document.getElementById(section);
         if (element) {
           const offsetTop = element.offsetTop;
           const offsetHeight = element.offsetHeight;
-
           if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
             setActiveSection(section);
             break;
@@ -28,7 +36,7 @@ const Navbar = () => {
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [lastScrollY]);
 
   const navLinks = [
     { id: "home", label: "Home" },
@@ -37,12 +45,15 @@ const Navbar = () => {
     { id: "skills", label: "Skills" },
     { id: "experience", label: "WorkExperience" },
     { id: "projects", label: "Projects" },
+    { id: "certificates", label: "Certificates" },
     { id: "contact", label: "Contact" },
   ];
 
   return (
     <motion.nav
-      className="p-4 transition-all duration-300 fixed top-0 left-0 w-full z-50 bg-black/90 backdrop-blur-sm shadow-md text-white"
+      className={`p-4 transition-all duration-300 fixed top-0 left-0 w-full z-50 shadow-md text-white 
+        ${isVisible ? "translate-y-0" : "-translate-y-full"} 
+        ${isAtTop ? "bg-transparent" : "bg-black/90 backdrop-blur-sm"}`}
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
@@ -77,8 +88,8 @@ const Navbar = () => {
         </div>
 
         <div className="flex items-center space-x-4">
-          <button 
-            className="md:hidden text-cyan-500 text-xl" 
+          <button
+            className="md:hidden text-cyan-500 text-xl"
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"
           >

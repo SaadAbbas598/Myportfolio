@@ -89,14 +89,14 @@ const MyProjects = () => {
 
   return (
     <Element name="projects">
-      <section className="text-white pt-20 pb-6 sm:pt-24 sm:pb-10 px-4 sm:px-6">
-        <div className="max-w-6xl mx-auto">
+      <section className="relative z-10 py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-transparent text-white">
+        <div className="max-w-7xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-10 sm:mb-14 px-4">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-white">
-              My <span className="text-cyan-400">Projects</span>
+          <div className="text-center mb-12 px-4">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-cyan-400 mb-4">
+              My Projects
             </h2>
-            <p className="text-gray-300 max-w-2xl mx-auto text-base sm:text-lg md:text-xl">
+            <p className="text-gray-300 text-base sm:text-lg max-w-2xl mx-auto">
               Explore my recent projects, each crafted to solve real-world challenges and showcase my development expertise.
             </p>
           </div>

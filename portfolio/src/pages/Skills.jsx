@@ -88,11 +88,11 @@ const Skills = () => {
   return (
     <section
       id="skills"
-      className="relative min-h-screen bg-black text-white overflow-hidden"
+      className="relative py-12 bg-black text-white overflow-hidden"
     >
       <ParticlesBackground />
 
-      <div className="relative z-10 flex flex-col justify-center items-center h-full px-3 sm:px-6 pt-10 sm:pt-12 pb-2 sm:pb-3">
+      <div className="relative z-10 flex flex-col justify-center items-center px-3 sm:px-6">
         <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 text-center text-cyan-500">
           My Skills
         </h2>

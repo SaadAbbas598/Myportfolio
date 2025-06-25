@@ -29,7 +29,7 @@ const WorkExperience = () => {
   return (
     <section
       id="experience"
-      className={`relative ${isMobile ? "bg-black" : ""}`}
+      className="relative py-12" // Removed bg-black
     >
       <div className="container mx-auto px-4">
         <h2 className="mb-6 text-center text-3xl sm:text-4xl font-bold text-cyan-400">

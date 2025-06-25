@@ -57,7 +57,7 @@ const Preloader = ({ onFinish }) => {
   return (
     <AnimatePresence>
       {show && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-900 z-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-black z-50">
           <motion.div 
             className="flex relative"
             initial="hidden"

@@ -32,27 +32,27 @@ const Testimonials = () => {
   }, []);
 
   const testimonials = [
-    {
-      quote:
-        "I thought it was impossible to make a website as beautiful as our product, but Rick proved me wrong.",
-      name: "Sara Lee",
-      position: "CFO of Acme Co",
-      image: "/images/testimonials/person1.webp",
-    },
-    {
-      quote:
-        "I've never met a web developer who truly cares about their clients' success like Rick does.",
-      name: "Chris Brown",
-      position: "COO of DEF Corp",
-      image: "/images/testimonials/person2.webp",
-    },
-    {
-      quote:
-        "After Rick optimized our website, our traffic increased by 50%. We can't thank them enough!",
-      name: "Lisa Wang",
-      position: "CTO of 456 Enterprises",
-      image: "/images/testimonials/person3.webp",
-    },
+  {
+    quote:
+      "Working with Saad was a game-changer for our business. His attention to detail and creative solutions took our platform to the next level.",
+    name: "Elena Matthews",
+    position: "CEO of NovaTech",
+    image: "https://randomuser.me/api/portraits/women/65.jpg",
+  },
+  {
+    quote:
+      "Saad’s ability to understand our needs and deliver exactly what we imagined is rare. Highly recommended for any tech project.",
+    name: "James Carter",
+    position: "Product Manager at SkyLabs",
+    image: "https://randomuser.me/api/portraits/men/32.jpg",
+  },
+  {
+    quote:
+      "From start to finish, the project was handled professionally. Saad brought both clarity and efficiency to our complex requirements.",
+    name: "Maya Rios",
+    position: "CTO of Brightline Solutions",
+    image: "https://randomuser.me/api/portraits/women/22.jpg",
+  },
   ];
 
   const headingVariants = {

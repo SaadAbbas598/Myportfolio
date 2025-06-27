@@ -2,48 +2,51 @@
 import { motion } from "framer-motion";
 import { Element } from "react-scroll";
 import Tilt from "react-parallax-tilt";
+import { useState } from "react";
 
 const MyProjects = () => {
+  const [showAll, setShowAll] = useState(false);
+
   const projects = [
     {
-      title: "Event Planner",
+      title: "My Portfolio",
       description:
-        "A platform to create, manage, and share events with real-time RSVP tracking and notifications.",
-      tags: ["React", "Firebase", "Tailwind"],
-      image: "/images/myprojects/event-planner.jpeg",
-      link: "#",
+        "A personal portfolio website to showcase my projects, skills, and professional achievements with a modern, responsive design.",
+      tags: ["React", "Tailwind", "Framer Motion"],
+      image: "/images/image.png",
+      link: "https://saadabbas.me",
     },
     {
-      title: "Fitness Tracker",
+      title: "A Software House Website",
       description:
-        "A mobile-friendly app to log workouts, track progress, and set fitness goals with analytics.",
-      tags: ["React Native", "MongoDB", "CSS"],
-      image: "/images/myprojects/fitness-tracker.jpeg",
-      link: "#",
+        "A professional website for a software house, showcasing services, projects, team members, and a contact section with responsive design.",
+      tags: ["React", "Tailwind", "Node.js"],
+      image: "/images/image2.png.png",
+      link: "https://softsincs.com",
     },
     {
-      title: "E-Commerce Hub",
+      title: "A Chat Bot",
       description:
-        "An online store with product filtering, secure checkout, and user account management.",
-      tags: ["Next.js", "Stripe", "Tailwind"],
-      image: "/images/myprojects/ecommerce-hub.jpeg",
-      link: "#",
+        "An AI-powered chat bot built with OpenAI API, capable of natural language conversations and integrated with voice input support.",
+      tags: ["Next.js", "OpenAI", "Tailwind"],
+      image: "/images/image3.png",
+      link: "https://github.com/SaadAbbas598/Chatbot.git",
     },
     {
-      title: "Task Manager",
+      title: "Website Visitor Dashboard",
       description:
-        "A collaborative tool for teams to organize tasks, set deadlines, and track project progress.",
-      tags: ["Vue.js", "Node.js", "SCSS"],
-      image: "/images/myprojects/task-manager.jpeg",
-      link: "#",
+        "A real-time analytics dashboard to monitor website visitors, track page views, and analyze user behavior with charts and insights.",
+      tags: ["React", "Node.js", "Tailwind"],
+      image: "/images/image4.png",
+      link: "https://github.com/SaadAbbas598/web-analytics.git",
     },
     {
-      title: "Recipe Finder",
+      title: "Stakeholder Management System",
       description:
-        "A web app to discover recipes based on ingredients, with meal planning and shopping lists.",
-      tags: ["React", "REST API", "Bootstrap"],
-      image: "/images/myprojects/recipe-finder.jpeg",
-      link: "#",
+        "A role-based web application to manage projects, stakeholders, and their shares, with approval flows and secure user access control.",
+      tags: ["React", "Node.js", "MongoDB"],
+      image: "/images/image5.png",
+      link: "https://github.com/SaadAbbas598/SHMS..git",
     },
     {
       title: "Portfolio Builder",
@@ -71,20 +74,23 @@ const MyProjects = () => {
     },
   ];
 
-  // Animation variants
-  const container = {
-    hidden: { opacity: 0 },
+  // Scroll-based entrance variants
+  const leftSlide = {
+    hidden: { opacity: 0, x: -80 },
     show: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
+      x: 0,
+      transition: { duration: 0.6, ease: "easeOut" },
     },
   };
 
-  const item = {
-    hidden: { opacity: 0, y: 30 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+  const rightSlide = {
+    hidden: { opacity: 0, x: 80 },
+    show: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
   };
 
   return (
@@ -97,77 +103,91 @@ const MyProjects = () => {
               My Projects
             </h2>
             <p className="text-gray-300 text-base sm:text-lg max-w-2xl mx-auto">
-              Explore my recent projects, each crafted to solve real-world challenges and showcase my development expertise.
+              Explore my recent projects, each crafted to solve real-world
+              challenges and showcase my development expertise.
             </p>
           </div>
 
           {/* Projects Grid */}
-          <motion.div
-            variants={container}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: "-100px" }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
-          >
-            {projects.map((project, index) => (
-              <motion.div
-                key={`${project.title}-${index}`}
-                variants={item}
-                className="h-full"
-              >
-                <Tilt
-                  tiltMaxAngleX={10}
-                  tiltMaxAngleY={10}
-                  glareEnable={true}
-                  glareMaxOpacity={0.3}
-                  glareColor="#00FFFF"
-                  glarePosition="all"
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            {(showAll ? projects : projects.slice(0, 3)).map(
+              (project, index) => (
+                <motion.div
+                  key={`${project.title}-${index}`}
+                  variants={index % 2 === 0 ? leftSlide : rightSlide}
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true, amount: 0.2 }}
                   className="h-full"
                 >
-                  <motion.div
-                    whileHover={{
-                      y: -8,
-                      boxShadow: "0 8px 32px rgba(0, 255, 255, 0.2)",
-                    }}
-                    transition={{ duration: 0.3 }}
-                    className="bg-[#1a1a1a] border border-cyan-500/30 rounded-xl overflow-hidden h-full flex flex-col"
+                  <Tilt
+                    tiltMaxAngleX={10}
+                    tiltMaxAngleY={10}
+                    glareEnable={true}
+                    glareMaxOpacity={0.3}
+                    glareColor="#00FFFF"
+                    glarePosition="all"
+                    className="h-full"
                   >
-                    <div className="overflow-hidden h-48 sm:h-56">
-                      <img
-                        src={project.image}
-                        alt={project.title}
-                        className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
-                      />
-                    </div>
-                    <div className="p-5 sm:p-6 flex flex-col flex-grow">
-                      <h3 className="text-lg sm:text-xl font-semibold text-white mb-3">
-                        {project.title}
-                      </h3>
-                      <p className="text-gray-400 text-sm sm:text-base mb-4 flex-grow">
-                        {project.description}
-                      </p>
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        {project.tags.map((tag, idx) => (
-                          <span
-                            key={idx}
-                            className="text-xs bg-cyan-900/40 text-cyan-400 px-3 py-1 rounded-full"
-                          >
-                            {tag}
-                          </span>
-                        ))}
+                    <motion.div
+                      whileHover={{
+                        y: -8,
+                        boxShadow: "0 8px 32px rgba(0, 255, 255, 0.2)",
+                      }}
+                      transition={{ duration: 0.3 }}
+                      className="bg-[#1a1a1a] border border-cyan-500/30 rounded-xl overflow-hidden h-full flex flex-col"
+                    >
+                      <div className="overflow-hidden h-48 sm:h-56">
+                        <img
+                          src={project.image}
+                          alt={project.title}
+                          className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+                        />
                       </div>
-                      <a
-                        href={project.link}
-                        className="mt-auto text-cyan-400 hover:text-cyan-300 text-sm sm:text-base font-medium transition-colors duration-300"
-                      >
-                        View Project →
-                      </a>
-                    </div>
-                  </motion.div>
-                </Tilt>
-              </motion.div>
-            ))}
-          </motion.div>
+                      <div className="p-5 sm:p-6 flex flex-col flex-grow">
+                        <h3 className="text-lg sm:text-xl font-semibold text-white mb-3">
+                          {project.title}
+                        </h3>
+                        <p className="text-gray-400 text-sm sm:text-base mb-4 flex-grow">
+                          {project.description}
+                        </p>
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          {project.tags.map((tag, idx) => (
+                            <span
+                              key={idx}
+                              className="text-xs bg-cyan-900/40 text-cyan-400 px-3 py-1 rounded-full"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                        <a
+                          href={project.link}
+                          className="mt-auto text-cyan-400 hover:text-cyan-300 text-sm sm:text-base font-medium transition-colors duration-300"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          View Project →
+                        </a>
+                      </div>
+                    </motion.div>
+                  </Tilt>
+                </motion.div>
+              )
+            )}
+          </div>
+
+          {/* Show More Button */}
+          {!showAll && (
+            <div className="mt-10 text-center">
+              <button
+                onClick={() => setShowAll(true)}
+                className="text-cyan-400 hover:text-cyan-300 border border-cyan-500/30 px-6 py-2 rounded-md transition-all duration-300"
+              >
+                See More Projects
+              </button>
+            </div>
+          )}
         </div>
       </section>
     </Element>

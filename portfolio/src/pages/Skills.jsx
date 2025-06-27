@@ -20,19 +20,30 @@ import {
 } from "react-icons/si";
 
 // Particle background
-const ParticlesBackground = dynamic(() => import("../components/ParticlesBackground"), {
-  ssr: false,
-  loading: () => <div className="absolute inset-0 bg-black" />,
-});
+const ParticlesBackground = dynamic(
+  () => import("../components/ParticlesBackground"),
+  {
+    ssr: false,
+    loading: () => <div className="absolute inset-0 bg-black" />,
+  }
+);
 
 const skills = [
   { id: 1, icon: <FaHtml5 className="text-orange-500" />, name: "HTML" },
   { id: 2, icon: <FaCss3Alt className="text-blue-500" />, name: "CSS" },
   { id: 3, icon: <FaJs className="text-yellow-500" />, name: "JavaScript" },
-  { id: 4, icon: <SiTypescript className="text-blue-400" />, name: "TypeScript" },
+  {
+    id: 4,
+    icon: <SiTypescript className="text-blue-400" />,
+    name: "TypeScript",
+  },
   { id: 5, icon: <FaReact className="text-cyan-400" />, name: "React" },
   { id: 6, icon: <SiRedux className="text-purple-500" />, name: "Redux" },
-  { id: 7, icon: <SiTailwindcss className="text-teal-400" />, name: "Tailwind" },
+  {
+    id: 7,
+    icon: <SiTailwindcss className="text-teal-400" />,
+    name: "Tailwind",
+  },
   { id: 8, icon: <FaNodeJs className="text-green-500" />, name: "Node.js" },
   { id: 9, icon: <SiMongodb className="text-green-400" />, name: "MongoDB" },
   { id: 10, icon: <SiPrisma className="text-gray-400" />, name: "Prisma" },
@@ -94,7 +105,7 @@ const Skills = () => {
 
       <div className="relative z-10 flex flex-col justify-center items-center px-3 sm:px-6">
         <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 text-center text-cyan-500">
-          My Skills
+          Tech Stack
         </h2>
 
         <div ref={containerRef} className="w-full overflow-hidden py-1 sm:py-2">

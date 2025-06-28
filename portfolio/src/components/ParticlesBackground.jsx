@@ -1,11 +1,25 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 
 const ParticlesBackground = () => {
+  const [showParticles, setShowParticles] = useState(false);
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setShowParticles(window.innerWidth > 768); // Show only on large screens
+    };
+
+    checkScreenSize(); // Initial check
+    window.addEventListener("resize", checkScreenSize);
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
+
   const particleShadows = useMemo(() => {
     return Array.from({ length: 10 }).map(() =>
       generateBoxShadow(150)
     );
   }, []);
+
+  if (!showParticles) return null; // ⛔ Don't render anything on small screens
 
   return (
     <>

@@ -2,10 +2,20 @@
 import { motion } from "framer-motion";
 import { Element } from "react-scroll";
 import Tilt from "react-parallax-tilt";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const MyProjects = () => {
   const [showAll, setShowAll] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const projects = [
     {
@@ -74,7 +84,6 @@ const MyProjects = () => {
     },
   ];
 
-  // Scroll-based entrance variants
   const leftSlide = {
     hidden: { opacity: 0, x: -80 },
     show: {
@@ -95,7 +104,11 @@ const MyProjects = () => {
 
   return (
     <Element name="projects">
-      <section className="relative z-10 py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-transparent text-white">
+      <section
+        className={`relative z-10 py-16 sm:py-24 px-4 sm:px-6 lg:px-8 text-white ${
+          isMobile ? "bg-black" : ""
+        } transition-colors duration-300`}
+      >
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12 px-4">

@@ -29,7 +29,9 @@ const WorkExperience = () => {
   return (
     <section
       id="experience"
-      className="relative py-12" // Removed bg-black
+      className={`relative py-12 ${
+        isMobile ? "bg-black" : ""
+      } transition-colors duration-300`}
     >
       <div className="container mx-auto px-4">
         <h2 className="mb-6 text-center text-3xl sm:text-4xl font-bold text-cyan-400">

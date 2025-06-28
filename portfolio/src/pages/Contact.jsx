@@ -8,14 +8,9 @@ const ContactForm = () => {
   const formRef = useRef();
   const [isMobile, setIsMobile] = useState(false);
 
+  // Detect screen size once only (no resize listener for performance)
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    setIsMobile(window.innerWidth <= 768);
   }, []);
 
   const handleSubmit = (e) => {
@@ -33,8 +28,11 @@ const ContactForm = () => {
           transition={{ duration: 0.8, ease: "easeOut" }}
           viewport={{ once: true }}
           className="w-full max-w-xl p-6 sm:p-8 rounded-2xl border border-cyan-600/30 backdrop-blur-md bg-black bg-opacity-60 shadow-md"
+          style={{ willChange: "transform, opacity" }}
         >
-          <h2 className="text-3xl font-bold text-cyan-400 mb-2 text-center">Let's Connect</h2>
+          <h2 className="text-3xl font-bold text-cyan-400 mb-2 text-center">
+            Let's Connect
+          </h2>
           <p className="text-gray-300 text-center mb-6 text-sm sm:text-base">
             Have a project in mind? Drop a message and let's bring it to life!
           </p>
@@ -45,7 +43,9 @@ const ContactForm = () => {
             className="flex flex-col gap-4"
           >
             <div>
-              <label htmlFor="name" className="text-sm font-medium text-gray-200">Your Name</label>
+              <label htmlFor="name" className="text-sm font-medium text-gray-200">
+                Your Name
+              </label>
               <input
                 id="name"
                 type="text"
@@ -56,7 +56,9 @@ const ContactForm = () => {
             </div>
 
             <div>
-              <label htmlFor="email" className="text-sm font-medium text-gray-200">Email Address</label>
+              <label htmlFor="email" className="text-sm font-medium text-gray-200">
+                Email Address
+              </label>
               <input
                 id="email"
                 type="email"
@@ -67,7 +69,9 @@ const ContactForm = () => {
             </div>
 
             <div>
-              <label htmlFor="message" className="text-sm font-medium text-gray-200">Your Message</label>
+              <label htmlFor="message" className="text-sm font-medium text-gray-200">
+                Your Message
+              </label>
               <textarea
                 id="message"
                 required

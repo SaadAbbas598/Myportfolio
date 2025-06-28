@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const Preloader = ({ onFinish }) => {
   const [show, setShow] = useState(true);
-  
+
   const letters = [
     { char: "S", color: "text-cyan-400", from: "top" },
     { char: "A", color: "text-fuchsia-400", from: "right" },
@@ -15,13 +15,13 @@ const Preloader = ({ onFinish }) => {
     const timer = setTimeout(() => {
       setShow(false);
       onFinish?.();
-    }, 3200); // Increased duration to accommodate circular motion
+    }, 3200);
 
     return () => clearTimeout(timer);
   }, [onFinish]);
 
   const getInitial = (from) => {
-    switch(from) {
+    switch (from) {
       case "top": return { y: -320, opacity: 0 };
       case "right": return { x: 320, opacity: 0 };
       case "bottom": return { y: 320, opacity: 0 };
@@ -55,20 +55,28 @@ const Preloader = ({ onFinish }) => {
   });
 
   return (
-    <AnimatePresence>
+    <AnimatePresence mode="wait">
       {show && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black z-50">
-          <motion.div 
+        <motion.div
+          className="fixed inset-0 flex items-center justify-center bg-black z-[999]"
+          initial={{ opacity: 1 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0, transition: { duration: 0.5 } }}
+          style={{ willChange: "opacity" }}
+        >
+          <motion.div
             className="flex relative"
             initial="hidden"
             animate="visible"
-            exit={{ opacity: 0, transition: { duration: 0.5 } }}
           >
             {letters.map((letter, i) => (
               <motion.span
                 key={i}
                 className={`text-5xl md:text-7xl font-bold mx-1 ${letter.color}`}
-                style={{ textShadow: "0 0 10px currentColor" }}
+                style={{
+                  textShadow: "0 0 8px currentColor",
+                  willChange: "transform, opacity"
+                }}
                 initial={getInitial(letter.from)}
                 animate={getCircularPath(i)}
               >
@@ -76,7 +84,7 @@ const Preloader = ({ onFinish }) => {
               </motion.span>
             ))}
           </motion.div>
-        </div>
+        </motion.div>
       )}
     </AnimatePresence>
   );

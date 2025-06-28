@@ -1,0 +1,5 @@
+/* globals.css or tailwind base layer */
+html,
+body {
+  overflow-x: hidden;
+}

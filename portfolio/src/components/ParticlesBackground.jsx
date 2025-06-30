@@ -1,25 +1,25 @@
 import React, { useMemo, useState, useEffect } from "react";
 
 const ParticlesBackground = () => {
-  const [showParticles, setShowParticles] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const checkScreenSize = () => {
-      setShowParticles(window.innerWidth > 768); // Show only on large screens
+      setIsMobile(window.innerWidth <= 768);
     };
 
-    checkScreenSize(); // Initial check
+    checkScreenSize();
     window.addEventListener("resize", checkScreenSize);
     return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
 
+  // Fewer particles on mobile, more on desktop
   const particleShadows = useMemo(() => {
-    return Array.from({ length: 10 }).map(() =>
-      generateBoxShadow(150)
+    const count = isMobile ? 5 : 10;
+    return Array.from({ length: count }).map(() =>
+      generateBoxShadow(isMobile ? 80 : 150) // fewer total points per particle on mobile
     );
-  }, []);
-
-  if (!showParticles) return null; // ⛔ Don't render anything on small screens
+  }, [isMobile]);
 
   return (
     <>
@@ -63,11 +63,12 @@ const ParticlesBackground = () => {
           100% { transform: translateY(-3500px); }
         }
 
-        .animate-particle1 { animation: particleMove1 60s linear infinite; }
-        .animate-particle2 { animation: particleMove2 70s linear infinite; }
-        .animate-particle3 { animation: particleMove3 80s linear infinite; }
-        .animate-particle4 { animation: particleMove4 100s linear infinite; }
-        .animate-particle5 { animation: particleMove5 120s linear infinite; }
+        /* Slower animations for mobile performance */
+        .animate-particle1 { animation: particleMove1 ${isMobile ? '90s' : '60s'} linear infinite; }
+        .animate-particle2 { animation: particleMove2 ${isMobile ? '100s' : '70s'} linear infinite; }
+        .animate-particle3 { animation: particleMove3 ${isMobile ? '110s' : '80s'} linear infinite; }
+        .animate-particle4 { animation: particleMove4 ${isMobile ? '130s' : '100s'} linear infinite; }
+        .animate-particle5 { animation: particleMove5 ${isMobile ? '150s' : '120s'} linear infinite; }
       `}</style>
     </>
   );

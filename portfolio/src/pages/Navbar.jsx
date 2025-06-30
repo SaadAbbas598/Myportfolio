@@ -51,7 +51,7 @@ const Navbar = () => {
   const navLinks = [
     { id: "home", label: "Home" },
     { id: "about", label: "About" },
-    { id: "skills", label: "Skills" },
+    { id: "skills", label: "Tech" },
     { id: "experience", label: "Experience" },
     { id: "projects", label: "Projects" },
     { id: "certificates", label: "Certificates" },
@@ -68,9 +68,17 @@ const Navbar = () => {
       transition={{ duration: 0.5 }}
     >
       <div className="max-w-7xl mx-auto flex justify-between items-center px-4">
-        {/* Logo */}
-        <div className="text-xl font-bold text-cyan-500">SAAD</div>
+<Link to="/" className="relative w-16 h-12 group overflow-hidden cursor-pointer block">
+  {/* Default Logo Text (visible by default) */}
+  <div className="absolute inset-0 flex items-center justify-center text-5xl font-bold text-cyan-500 transition-opacity duration-300 group-hover:opacity-0">
+    <h1>S.</h1>
+  </div>
 
+  {/* Hover Logo Text (visible on hover) */}
+  <div className="absolute inset-0 flex items-center justify-center text-2xl font-bold text-cyan-300 transform -translate-x-full opacity-0 transition-all duration-500 ease-in-out group-hover:translate-x-0 group-hover:opacity-100">
+    SAAD
+  </div>
+</Link>
         {/* Desktop Links */}
         <div className="hidden md:flex items-center space-x-6">
           {navLinks.map((link) => (

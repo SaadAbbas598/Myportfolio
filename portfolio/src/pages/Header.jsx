@@ -103,20 +103,27 @@ const Header = () => {
 
           {/* Right Side Profile */}
           <div className="flex-1 flex justify-center items-center mb-6 xs:mb-8 sm:mb-10 md:mb-0">
-            <div className="relative w-40 h-40 xs:w-48 xs:h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-72 lg:h-72 xl:w-80 xl:h-80">
-              <div className="absolute w-full h-full rounded-full overflow-hidden z-10 border-4 border-cyan-500/30">
-                <img
-                  src="/images/profile.webp"
-                  alt="Saad Abbas Profile"
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                  width={320}
-                  height={320}
-                />
-              </div>
-              <div className="absolute top-[-5%] left-[-5%] w-[110%] h-[110%] border-2 border-dashed border-cyan-500 rounded-full animate-spin-slow z-0"></div>
-            </div>
-          </div>
+  <div className="relative w-40 h-40 xs:w-48 xs:h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-72 lg:h-72 xl:w-80 xl:h-80 group">
+    
+    {/* Profile Image with hover scale and glow */}
+    <div className="absolute w-full h-full rounded-full overflow-hidden z-10 border-4 border-cyan-500/30 transform transition duration-500 group-hover:scale-105 group-hover:shadow-xl group-hover:shadow-cyan-400/40">
+      <img
+        src="/images/profile.webp"
+        alt="Saad Abbas Profile"
+        className="w-full h-full object-cover"
+        loading="lazy"
+        width={320}
+        height={320}
+      />
+    </div>
+
+    {/* Spinning Dashed Border */}
+    <div className="absolute top-[-5%] left-[-5%] w-[110%] h-[110%] border-2 border-dashed border-cyan-500 rounded-full animate-spin z-0"></div>
+
+  
+  </div>
+</div>
+
         </div>
       </div>
     </header>

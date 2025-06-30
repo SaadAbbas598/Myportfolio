@@ -106,7 +106,7 @@ const MyProjects = () => {
     <Element name="projects">
       <section
         className={`relative z-10 py-16 sm:py-24 px-4 sm:px-6 lg:px-8 text-white ${
-          isMobile ? "bg-black" : ""
+          isMobile ? "" : ""
         } transition-colors duration-300`}
       >
         <div className="max-w-7xl mx-auto">

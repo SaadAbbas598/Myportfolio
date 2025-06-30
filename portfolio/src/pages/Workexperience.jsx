@@ -30,7 +30,7 @@ const WorkExperience = () => {
     <section
       id="experience"
       className={`relative py-12 ${
-        isMobile ? "bg-black" : ""
+        isMobile ? "" : ""
       } transition-colors duration-300`}
     >
       <div className="container mx-auto px-4">

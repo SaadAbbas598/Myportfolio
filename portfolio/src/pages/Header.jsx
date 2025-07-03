@@ -15,7 +15,7 @@ const ParticlesBackground = dynamic(
 
 const Header = () => {
   const handleDownloadCV = () => {
-    const cvUrl = "/path/to/your/cv.pdf";
+    const cvUrl = "/portfolio/src/assets/Saad-Abbas-CV.pdf";
     const link = document.createElement("a");
     link.href = cvUrl;
     link.download = "Saad_Abbas_CV.pdf";

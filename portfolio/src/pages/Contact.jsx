@@ -8,7 +8,6 @@ const ContactForm = () => {
   const formRef = useRef();
   const [isMobile, setIsMobile] = useState(false);
 
-  // Detect screen size once (no resize listener for performance)
   useEffect(() => {
     setIsMobile(window.innerWidth <= 768);
   }, []);
@@ -23,8 +22,8 @@ const ContactForm = () => {
     <Element name="contact">
       <div className="flex justify-center items-center py-16 px-4 sm:px-6 lg:px-8 w-full text-white bg-black">
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, x: 80 }}
+          whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           viewport={{ once: true }}
           className="w-full max-w-xl p-6 sm:p-8 rounded-2xl border border-cyan-600/30 backdrop-blur-md bg-black bg-opacity-60 shadow-md"

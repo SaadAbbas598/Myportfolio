@@ -1,52 +1,14 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-scroll";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("about");
-  const [lastScrollY, setLastScrollY] = useState(0);
+  const [activeSection, setActiveSection] = useState("home");
   const [isVisible, setIsVisible] = useState(true);
   const [isAtTop, setIsAtTop] = useState(true);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      setIsAtTop(scrollY < 50);
-      setIsVisible(scrollY < lastScrollY || scrollY < 50);
-      setLastScrollY(scrollY);
-
-      const sections = [
-        "home",
-        "about",
-        "skills",
-        "experience",
-        "projects",
-        "certificates",
-        "contact",
-      ];
-      const scrollPosition = scrollY + 100;
-
-      for (const section of sections) {
-        const el = document.getElementById(section);
-        if (el) {
-          const offsetTop = el.offsetTop;
-          const offsetHeight = el.offsetHeight;
-          if (
-            scrollPosition >= offsetTop &&
-            scrollPosition < offsetTop + offsetHeight
-          ) {
-            setActiveSection(section);
-            break;
-          }
-        }
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY]);
+  const lastScrollY = useRef(0);
 
   const navLinks = [
     { id: "home", label: "Home" },
@@ -58,6 +20,62 @@ const Navbar = () => {
     { id: "contact", label: "Contact" },
   ];
 
+  const handleScroll = () => {
+    const scrollY = window.scrollY;
+    const viewportBottom = scrollY + window.innerHeight;
+    setIsAtTop(scrollY < 50);
+    setIsVisible(scrollY < lastScrollY.current || scrollY < 50);
+    lastScrollY.current = scrollY;
+
+    let matched = false;
+
+    for (const section of navLinks.map((l) => l.id)) {
+      const el = document.getElementById(section);
+      if (el) {
+        const offsetTop = el.offsetTop;
+        const offsetHeight = el.offsetHeight;
+        if (
+          scrollY >= offsetTop - 100 &&
+          scrollY < offsetTop + offsetHeight - 50
+        ) {
+          setActiveSection(section);
+          matched = true;
+          break;
+        }
+      }
+    }
+
+    // If at bottom and nothing matched, assume "contact" is active
+    if (!matched && window.innerHeight + scrollY >= document.body.scrollHeight - 10) {
+      setActiveSection("contact");
+    }
+  };
+
+  useEffect(() => {
+    handleScroll(); // On first load
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const updateUnderline = () => {
+      const activeEl = document.querySelector(`[data-id='${activeSection}']`);
+      if (activeEl) {
+        const rect = activeEl.getBoundingClientRect();
+        const containerRect = activeEl.parentElement.getBoundingClientRect();
+        const left = rect.left - containerRect.left;
+        const width = rect.width;
+
+        document.documentElement.style.setProperty("--underline-left", `${left}px`);
+        document.documentElement.style.setProperty("--underline-width", `${width}px`);
+      }
+    };
+
+    updateUnderline();
+    window.addEventListener("resize", updateUnderline);
+    return () => window.removeEventListener("resize", updateUnderline);
+  }, [activeSection]);
+
   return (
     <motion.nav
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 p-4 shadow-md text-white 
@@ -68,19 +86,17 @@ const Navbar = () => {
       transition={{ duration: 0.5 }}
     >
       <div className="max-w-7xl mx-auto flex justify-between items-center px-4">
-<Link to="/" className="relative w-16 h-12 group overflow-hidden cursor-pointer block">
-  {/* Default Logo Text (visible by default) */}
-  <div className="absolute inset-0 flex items-center justify-center text-5xl font-bold text-cyan-500 transition-opacity duration-300 group-hover:opacity-0">
-    <h1>S.</h1>
-  </div>
+        <Link to="/" className="relative w-16 h-12 group overflow-hidden cursor-pointer block">
+          <div className="absolute inset-0 flex items-center justify-center text-5xl font-bold text-cyan-500 transition-opacity duration-300 group-hover:opacity-0">
+            <h1>S.</h1>
+          </div>
+          <div className="absolute inset-0 flex items-center justify-center text-2xl font-bold text-cyan-300 transform -translate-x-full opacity-0 transition-all duration-500 ease-in-out group-hover:translate-x-0 group-hover:opacity-100">
+            SAAD
+          </div>
+        </Link>
 
-  {/* Hover Logo Text (visible on hover) */}
-  <div className="absolute inset-0 flex items-center justify-center text-2xl font-bold text-cyan-300 transform -translate-x-full opacity-0 transition-all duration-500 ease-in-out group-hover:translate-x-0 group-hover:opacity-100">
-    SAAD
-  </div>
-</Link>
-        {/* Desktop Links */}
-        <div className="hidden md:flex items-center space-x-6">
+        {/* Desktop Navigation Links */}
+        <div className="relative hidden md:flex items-center space-x-6">
           {navLinks.map((link) => (
             <Link
               key={link.id}
@@ -88,16 +104,31 @@ const Navbar = () => {
               smooth={true}
               duration={700}
               offset={-80}
-              className={`cursor-pointer hover:text-cyan-400 transition-colors ${
-                activeSection === link.id ? "text-cyan-400 font-semibold" : ""
+              data-id={link.id}
+              className={`relative cursor-pointer pb-2 transition-colors ${
+                activeSection === link.id
+                  ? "text-cyan-400 font-semibold"
+                  : "text-white"
               }`}
             >
               {link.label}
             </Link>
           ))}
+
+          {/* Animated Underline */}
+          <motion.div
+            className="absolute bottom-0 h-0.5 bg-white"
+            layout
+            layoutId="underline"
+            transition={{ type: "spring", stiffness: 500, damping: 30 }}
+            style={{
+              width: "var(--underline-width)",
+              left: "var(--underline-left)",
+            }}
+          />
         </div>
 
-        {/* Mobile Toggle Button */}
+        {/* Mobile Toggle */}
         <div className="md:hidden z-50">
           <button
             onClick={() => setIsOpen(!isOpen)}

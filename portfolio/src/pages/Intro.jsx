@@ -83,27 +83,37 @@ const Intro = () => {
           className="grid md:grid-cols-[1fr_1.5fr] gap-6 sm:gap-10 items-start"
         >
           {/* Left: Image */}
-          <motion.div variants={imageAnim} className="w-full aspect-square rounded-xl sm:rounded-2xl bg-gradient-to-tr from-transparent via-cyan-500 to-transparent grid place-items-center p-0.5 sm:p-1">
+          <motion.div
+            variants={imageAnim}
+            className="w-full aspect-square rounded-xl sm:rounded-2xl bg-gradient-to-tr from-transparent via-cyan-500 to-transparent grid place-items-center p-0.5 sm:p-1"
+          >
             <div className="overflow-hidden rounded-xl sm:rounded-2xl transition-all duration-300 hover:scale-[1.02] w-full h-full">
               <motion.img
                 src="/images/profile.webp"
                 alt="Saad Abbas"
-                className="object-cover w-full h-full"
+                className="object-cover w-full h-full transition-all duration-500 grayscale hover:grayscale-0 group-hover:grayscale-0"
                 loading="lazy"
                 width={400}
                 height={400}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5, duration: 0.8 }}
+                onTouchStart={(e) =>
+                  e.currentTarget.classList.remove("grayscale")
+                } // Mobile tap support
+                onTouchEnd={(e) => e.currentTarget.classList.add("grayscale")}
               />
             </div>
           </motion.div>
 
           {/* Right: Text Content */}
           <motion.div variants={container} className="mt-4 sm:mt-0">
-            <motion.div variants={container} className="grid grid-cols-1 xs:grid-cols-2 gap-3 sm:gap-5 mb-6 sm:mb-8">
+            <motion.div
+              variants={container}
+              className="grid grid-cols-1 xs:grid-cols-2 gap-3 sm:gap-5 mb-6 sm:mb-8"
+            >
               {/* Experience Card */}
-              <motion.article 
+              <motion.article
                 variants={cardAnim}
                 whileHover={{ y: -5 }}
                 className="bg-[#0f0f0f] border border-cyan-500/20 rounded-xl sm:rounded-2xl p-3 sm:p-5 text-center hover:shadow-lg hover:scale-[1.02] hover:border-cyan-500 transition-all duration-300 cursor-default"
@@ -116,7 +126,7 @@ const Intro = () => {
               </motion.article>
 
               {/* Projects Card */}
-              <motion.article 
+              <motion.article
                 variants={cardAnim}
                 whileHover={{ y: -5 }}
                 className="bg-[#0f0f0f] border border-cyan-500/20 rounded-xl sm:rounded-2xl p-3 sm:p-5 text-center hover:shadow-lg hover:scale-[1.02] hover:border-cyan-500 transition-all duration-300 cursor-default"
@@ -129,7 +139,7 @@ const Intro = () => {
               </motion.article>
             </motion.div>
 
-            <motion.p 
+            <motion.p
               variants={item}
               className="text-white mb-6 sm:mb-8 leading-relaxed text-xs xs:text-sm sm:text-base"
             >
@@ -144,16 +154,13 @@ const Intro = () => {
               performance.
             </motion.p>
 
-            <motion.div 
-              variants={item}
-              className="text-center sm:text-left"
-            >
+            <motion.div variants={item} className="text-center sm:text-left">
               <motion.a
                 href="#contact"
                 className="inline-block bg-transparent text-cyan-500 border border-cyan-500 px-4 py-2 sm:px-5 sm:py-3 rounded-md font-medium sm:font-semibold hover:bg-cyan-500 hover:text-blue-950 transition-colors duration-300 text-sm sm:text-base"
-                whileHover={{ 
+                whileHover={{
                   scale: 1.05,
-                  boxShadow: "0 0 10px rgba(34, 211, 238, 0.5)"
+                  boxShadow: "0 0 10px rgba(34, 211, 238, 0.5)",
                 }}
                 whileTap={{ scale: 0.95 }}
               >

@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 
 const certificates = [
   {
@@ -28,6 +29,19 @@ const ProfessionalCertificates = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // Animation variant
+  const fadeInFromLeft = {
+    hidden: { opacity: 0, x: -50 },
+    show: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut",
+      },
+    },
+  };
+
   return (
     <section
       id="certificates"
@@ -40,8 +54,12 @@ const ProfessionalCertificates = () => {
 
         <div className="mx-auto max-w-3xl">
           {certificates.map((cert, index) => (
-            <div
+            <motion.div
               key={index}
+              variants={fadeInFromLeft}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.2 }}
               className="mb-6 rounded-lg border border-[#00ffff30] bg-[#0f0f0f] p-6"
             >
               {/* Certificate Image */}
@@ -70,7 +88,7 @@ const ProfessionalCertificates = () => {
                   </li>
                 ))}
               </ul>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

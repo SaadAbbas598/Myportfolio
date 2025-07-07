@@ -29,6 +29,7 @@ function App() {
           <Skills />
           <WorkExperience />
           <MyProjects />
+          
           <ProfessionalCertificates />
           <ContactForm />
           <EmailIcon />

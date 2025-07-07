@@ -58,14 +58,14 @@ const MyProjects = () => {
       image: "/images/image5.png",
       link: "https://github.com/SaadAbbas598/SHMS..git",
     },
-    {
-      title: "Portfolio Builder",
-      description:
-        "A drag-and-drop interface for creatives to build and showcase their portfolios online.",
-      tags: ["Next.js", "Supabase", "CSS"],
-      image: "/images/myprojects/portfolio-builder.jpeg",
-      link: "#",
-    },
+   {
+  title: "Smart Quest System",
+  description:
+    "A request and complaint management platform with role-based hierarchy built using Django and React.",
+  tags: ["Django", "React", "SQLite"],
+  image: "/images/image6.png",  // ✅ Corrected path for public folder
+  link: "https://smart-quest-system.vercel.app/",
+},
     {
       title: "Weather Dashboard",
       description:

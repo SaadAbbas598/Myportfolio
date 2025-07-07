@@ -28,7 +28,7 @@ const Header = () => {
     () => (
       <div className="flex gap-6 text-xl sm:text-2xl justify-center md:justify-start">
         <a
-          href="https://www.linkedin.com/"
+          href="www.linkedin.com/in/saad-abbas-722b08345"
           target="_blank"
           rel="noreferrer noopener"
           className="hover:text-cyan-500 transition-colors duration-300"
@@ -37,7 +37,7 @@ const Header = () => {
           <BsLinkedin />
         </a>
         <a
-          href="https://github.com/"
+          href="https://github.com/SaadAbbas598/"
           target="_blank"
           rel="noreferrer noopener"
           className="hover:text-cyan-500 transition-colors duration-300"

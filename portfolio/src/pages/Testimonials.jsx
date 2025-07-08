@@ -1,22 +1,8 @@
 "use client";
 import { motion } from "framer-motion";
-import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
-
-const Tilt = dynamic(() => import("react-parallax-tilt"), {
-  ssr: false,
-  loading: () => (
-    <div className="p-4 sm:p-6 rounded-xl shadow-lg bg-[#0f0f0f] border border-cyan-500/20" />
-  ),
-});
-
-const ParticlesBackground = dynamic(
-  () => import("../components/ParticlesBackground"),
-  {
-    ssr: false,
-    loading: () => <div className="absolute inset-0 bg-black" />,
-  }
-);
+import Tilt from "react-parallax-tilt";
+import ParticlesBackground from "../components/ParticlesBackground"; // direct import
 
 const Testimonials = () => {
   const [isMobile, setIsMobile] = useState(false);

@@ -2,16 +2,9 @@
 import React, { useMemo } from "react";
 import { BsLinkedin } from "react-icons/bs";
 import { FaGithub } from "react-icons/fa";
-import dynamic from "next/dynamic";
 import { Link } from "react-scroll";
 
-const ParticlesBackground = dynamic(
-  () => import("../components/ParticlesBackground"),
-  {
-    ssr: false,
-    loading: () => <div className="absolute inset-0 bg-black" />,
-  }
-);
+import ParticlesBackground from "../components/ParticlesBackground"; // Ensure this component exists  
 
 const Header = () => {
   const handleDownloadCV = () => {

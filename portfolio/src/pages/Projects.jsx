@@ -4,6 +4,7 @@ import { Element } from "react-scroll";
 import Tilt from "react-parallax-tilt";
 import { useState, useEffect } from "react";
 
+
 const MyProjects = () => {
   const [showAll, setShowAll] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -109,6 +110,7 @@ const MyProjects = () => {
           isMobile ? "" : ""
         } transition-colors duration-300`}
       >
+    
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12 px-4">

@@ -1,6 +1,8 @@
 "use client";
 import { useRef, useEffect, useState } from "react";
-import dynamic from "next/dynamic";
+import ParticlesBackground from "../components/ParticlesBackground";
+
+// import dynamic from "next/dynamic";
 import {
   FaHtml5,
   FaCss3Alt,
@@ -20,13 +22,13 @@ import {
 } from "react-icons/si";
 
 // Particle background
-const ParticlesBackground = dynamic(
-  () => import("../components/ParticlesBackground"),
-  {
-    ssr: false,
-    loading: () => <div className="absolute inset-0 bg-black" />,
-  }
-);
+// const ParticlesBackground = dynamic(
+//   () => import("../components/ParticlesBackground"),
+//   {
+//     ssr: false,
+//     loading: () => <div className="absolute inset-0 bg-black" />,
+//   }
+// );
 
 const skills = [
   { id: 1, icon: <FaHtml5 className="text-orange-500" />, name: "HTML" },

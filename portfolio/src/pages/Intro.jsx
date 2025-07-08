@@ -2,16 +2,9 @@
 import React, { useEffect, useState } from "react";
 import { FaAward } from "react-icons/fa";
 import { VscFolderLibrary } from "react-icons/vsc";
-import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 
-const ParticlesBackground = dynamic(
-  () => import("../components/ParticlesBackground"),
-  {
-    ssr: false,
-    loading: () => <div className="absolute inset-0 bg-black" />,
-  }
-);
+import ParticlesBackground from "../components/ParticlesBackground"; // Ensure this component exists
 
 // Animation variants
 const container = {

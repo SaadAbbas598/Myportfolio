@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Element } from "react-scroll";
 import Tilt from "react-parallax-tilt";
 import { useState, useEffect } from "react";
-
+import ParticlesBackground from "../components/ParticlesBackground"; // ✅ Add this import
 
 const MyProjects = () => {
   const [showAll, setShowAll] = useState(false);
@@ -59,14 +59,14 @@ const MyProjects = () => {
       image: "/images/image5.png",
       link: "https://github.com/SaadAbbas598/SHMS..git",
     },
-   {
-  title: "Smart Quest System",
-  description:
-    "A request and complaint management platform with role-based hierarchy built using Django and React.",
-  tags: ["Django", "React", "SQLite"],
-  image: "/images/image6.png",  // ✅ Corrected path for public folder
-  link: "https://smart-quest-system.vercel.app/",
-},
+    {
+      title: "Smart Quest System",
+      description:
+        "A request and complaint management platform with role-based hierarchy built using Django and React.",
+      tags: ["Django", "React", "SQLite"],
+      image: "/images/image6.png",
+      link: "https://smart-quest-system.vercel.app/",
+    },
     {
       title: "Weather Dashboard",
       description:
@@ -105,13 +105,11 @@ const MyProjects = () => {
 
   return (
     <Element name="projects">
-      <section
-        className={`relative z-10 py-16 sm:py-24 px-4 sm:px-6 lg:px-8 text-white ${
-          isMobile ? "" : ""
-        } transition-colors duration-300`}
-      >
-    
-        <div className="max-w-7xl mx-auto">
+      <section className="relative z-10 py-16 sm:py-24 px-4 sm:px-6 lg:px-8 text-white overflow-hidden bg-black">
+        {/* ✅ Background Particles */}
+        <ParticlesBackground />
+
+        <div className="relative z-10 max-w-7xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12 px-4">
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-cyan-400 mb-4">
@@ -125,71 +123,69 @@ const MyProjects = () => {
 
           {/* Projects Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {(showAll ? projects : projects.slice(0, 3)).map(
-              (project, index) => (
-                <motion.div
-                  key={`${project.title}-${index}`}
-                  variants={index % 2 === 0 ? leftSlide : rightSlide}
-                  initial="hidden"
-                  whileInView="show"
-                  viewport={{ once: true, amount: 0.2 }}
+            {(showAll ? projects : projects.slice(0, 3)).map((project, index) => (
+              <motion.div
+                key={`${project.title}-${index}`}
+                variants={index % 2 === 0 ? leftSlide : rightSlide}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, amount: 0.2 }}
+                className="h-full"
+              >
+                <Tilt
+                  tiltMaxAngleX={10}
+                  tiltMaxAngleY={10}
+                  glareEnable={true}
+                  glareMaxOpacity={0.3}
+                  glareColor="#00FFFF"
+                  glarePosition="all"
                   className="h-full"
                 >
-                  <Tilt
-                    tiltMaxAngleX={10}
-                    tiltMaxAngleY={10}
-                    glareEnable={true}
-                    glareMaxOpacity={0.3}
-                    glareColor="#00FFFF"
-                    glarePosition="all"
-                    className="h-full"
+                  <motion.div
+                    whileHover={{
+                      y: -8,
+                      boxShadow: "0 8px 32px rgba(0, 255, 255, 0.2)",
+                    }}
+                    transition={{ duration: 0.3 }}
+                    className="bg-[#1a1a1a] border border-cyan-500/30 rounded-xl overflow-hidden h-full flex flex-col"
                   >
-                    <motion.div
-                      whileHover={{
-                        y: -8,
-                        boxShadow: "0 8px 32px rgba(0, 255, 255, 0.2)",
-                      }}
-                      transition={{ duration: 0.3 }}
-                      className="bg-[#1a1a1a] border border-cyan-500/30 rounded-xl overflow-hidden h-full flex flex-col"
-                    >
-                      <div className="overflow-hidden h-48 sm:h-56">
-                        <img
-                          src={project.image}
-                          alt={project.title}
-                          className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
-                        />
+                    <div className="overflow-hidden h-48 sm:h-56">
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+                      />
+                    </div>
+                    <div className="p-5 sm:p-6 flex flex-col flex-grow">
+                      <h3 className="text-lg sm:text-xl font-semibold text-white mb-3">
+                        {project.title}
+                      </h3>
+                      <p className="text-gray-400 text-sm sm:text-base mb-4 flex-grow">
+                        {project.description}
+                      </p>
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {project.tags.map((tag, idx) => (
+                          <span
+                            key={idx}
+                            className="text-xs bg-cyan-900/40 text-cyan-400 px-3 py-1 rounded-full"
+                          >
+                            {tag}
+                          </span>
+                        ))}
                       </div>
-                      <div className="p-5 sm:p-6 flex flex-col flex-grow">
-                        <h3 className="text-lg sm:text-xl font-semibold text-white mb-3">
-                          {project.title}
-                        </h3>
-                        <p className="text-gray-400 text-sm sm:text-base mb-4 flex-grow">
-                          {project.description}
-                        </p>
-                        <div className="flex flex-wrap gap-2 mb-4">
-                          {project.tags.map((tag, idx) => (
-                            <span
-                              key={idx}
-                              className="text-xs bg-cyan-900/40 text-cyan-400 px-3 py-1 rounded-full"
-                            >
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-                        <a
-                          href={project.link}
-                          className="mt-auto text-cyan-400 hover:text-cyan-300 text-sm sm:text-base font-medium transition-colors duration-300"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          View Project →
-                        </a>
-                      </div>
-                    </motion.div>
-                  </Tilt>
-                </motion.div>
-              )
-            )}
+                      <a
+                        href={project.link}
+                        className="mt-auto text-cyan-400 hover:text-cyan-300 text-sm sm:text-base font-medium transition-colors duration-300"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        View Project →
+                      </a>
+                    </div>
+                  </motion.div>
+                </Tilt>
+              </motion.div>
+            ))}
           </div>
 
           {/* Show More Button */}

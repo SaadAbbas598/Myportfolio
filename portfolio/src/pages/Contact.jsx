@@ -1,15 +1,18 @@
-"use client";
 import React, { useRef, useState, useEffect } from "react";
 import { Element } from "react-scroll";
 import { motion } from "framer-motion";
 import { FiSend } from "react-icons/fi";
+import ParticlesBackground from "../components/ParticlesBackground"; // adjust path if needed
 
 const ContactForm = () => {
   const formRef = useRef();
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    setIsMobile(window.innerWidth <= 768);
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const handleSubmit = (e) => {
@@ -20,14 +23,21 @@ const ContactForm = () => {
 
   return (
     <Element name="contact">
-      <div className="flex justify-center items-center py-16 px-4 sm:px-6 lg:px-8 w-full text-white bg-black">
+      {/* ✅ Add relative here to contain the absolute particles */}
+      <div className="relative flex justify-center items-center py-16 px-4 sm:px-6 lg:px-8 w-full text-white bg-black overflow-hidden">
+        
+        {/* ✅ Background Particle */}
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <ParticlesBackground />
+        </div>
+
+        {/* ✅ Main Content */}
         <motion.div
-          initial={{ opacity: 0, x: 80 }}
+          initial={{ opacity: 0.1, x: 40 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           viewport={{ once: true }}
-          className="w-full max-w-xl p-6 sm:p-8 rounded-2xl border border-cyan-600/30 backdrop-blur-md bg-black bg-opacity-60 shadow-md"
-          style={{ willChange: "transform, opacity" }}
+          className="relative z-10 w-full max-w-xl p-6 sm:p-8 rounded-2xl border border-cyan-600/30 backdrop-blur-md bg-black bg-opacity-60 shadow-md"
         >
           <h2 className="text-3xl font-bold text-cyan-400 mb-2 text-center">
             Let's Connect

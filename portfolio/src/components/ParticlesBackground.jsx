@@ -13,21 +13,20 @@ const ParticlesBackground = () => {
     return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
 
-  // Fewer particles on mobile, more on desktop
   const particleShadows = useMemo(() => {
-    const count = isMobile ? 5 : 10;
+    const count = isMobile ? 4 : 10;
     return Array.from({ length: count }).map(() =>
-      generateBoxShadow(isMobile ? 80 : 150) // fewer total points per particle on mobile
+      generateBoxShadow(isMobile ? 60 : 120)
     );
   }, [isMobile]);
 
   return (
-    <>
-      {/* Background Layer */}
-      <div className="fixed inset-0 bg-[#0a0909] grayscale z-0" />
+    <div className="absolute inset-0 z-0 pointer-events-none">
+      {/* Background Color Layer */}
+      <div className="absolute inset-0 bg-[#0a0909] grayscale" />
 
       {/* Particle Layer */}
-      <div className="fixed inset-0 overflow-hidden z-0">
+      <div className="absolute inset-0 overflow-hidden">
         {particleShadows.map((shadows, index) => (
           <div
             key={index}
@@ -40,48 +39,31 @@ const ParticlesBackground = () => {
         ))}
       </div>
 
-      {/* Keyframe Animation Styles */}
+      {/* Move styles out of render flow to prevent layout delay */}
       <style>{`
-        @keyframes particleMove1 {
-          0% { transform: translateY(0); }
-          100% { transform: translateY(-2560px); }
-        }
-        @keyframes particleMove2 {
-          0% { transform: translateY(0); }
-          100% { transform: translateY(-2200px); }
-        }
-        @keyframes particleMove3 {
-          0% { transform: translateY(0); }
-          100% { transform: translateY(-1800px); }
-        }
-        @keyframes particleMove4 {
-          0% { transform: translateY(0); }
-          100% { transform: translateY(-3000px); }
-        }
-        @keyframes particleMove5 {
-          0% { transform: translateY(0); }
-          100% { transform: translateY(-3500px); }
-        }
+        @keyframes particleMove1 { 0% { transform: translateY(0); } 100% { transform: translateY(-2560px); } }
+        @keyframes particleMove2 { 0% { transform: translateY(0); } 100% { transform: translateY(-2200px); } }
+        @keyframes particleMove3 { 0% { transform: translateY(0); } 100% { transform: translateY(-1800px); } }
+        @keyframes particleMove4 { 0% { transform: translateY(0); } 100% { transform: translateY(-3000px); } }
+        @keyframes particleMove5 { 0% { transform: translateY(0); } 100% { transform: translateY(-3500px); } }
 
-        /* Slower animations for mobile performance */
         .animate-particle1 { animation: particleMove1 ${isMobile ? '90s' : '60s'} linear infinite; }
         .animate-particle2 { animation: particleMove2 ${isMobile ? '100s' : '70s'} linear infinite; }
         .animate-particle3 { animation: particleMove3 ${isMobile ? '110s' : '80s'} linear infinite; }
         .animate-particle4 { animation: particleMove4 ${isMobile ? '130s' : '100s'} linear infinite; }
         .animate-particle5 { animation: particleMove5 ${isMobile ? '150s' : '120s'} linear infinite; }
       `}</style>
-    </>
+    </div>
   );
 };
 
 function generateBoxShadow(count) {
   const spacing = 2560;
-  const shadows = new Array(count).fill().map(() => {
+  return Array.from({ length: count }).map(() => {
     const x = Math.floor(Math.random() * spacing);
     const y = Math.floor(Math.random() * spacing);
     return `${x}px ${y}px #fff`;
-  });
-  return shadows.join(", ");
+  }).join(", ");
 }
 
 export default ParticlesBackground;

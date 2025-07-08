@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import ParticlesBackground from "../components/ParticlesBackground";
 
 const certificates = [
   {
@@ -12,7 +13,7 @@ const certificates = [
       "Learned core Python concepts like variables, functions, loops, and data structures.",
       "Gained hands-on experience in writing, debugging, and automating Python scripts.",
     ],
-    image: "/images/My Certificate.jpeg", // Make sure the image exists in public/images/
+    image: "/images/My Certificate.jpeg", // Ensure this exists in public/images
   },
 ];
 
@@ -45,9 +46,13 @@ const ProfessionalCertificates = () => {
   return (
     <section
       id="certificates"
-      className={`relative py-16 ${isMobile ? "bg-black" : ""}`}
+      className="relative py-16 bg-black text-white overflow-hidden"
     >
-      <div className="container mx-auto px-4">
+      {/* Background Particles */}
+      <ParticlesBackground />
+
+      {/* Main Content */}
+      <div className="relative z-10 container mx-auto px-4">
         <h2 className="mb-12 text-center text-4xl font-bold text-cyan-400">
           Professional Certificates
         </h2>
@@ -60,28 +65,25 @@ const ProfessionalCertificates = () => {
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, amount: 0.2 }}
-              className="mb-6 rounded-lg border border-[#00ffff30] bg-[#0f0f0f] p-6"
+              className="mb-8 rounded-lg border border-[#00ffff30] bg-[#0f0f0f] p-6 shadow-lg backdrop-blur-md"
             >
               {/* Certificate Image */}
               <img
                 src={cert.image}
                 alt={`${cert.title} Certificate`}
                 className="mb-4 w-full rounded-lg border border-cyan-700 shadow-md"
+                loading="lazy"
               />
 
-              <div className="mb-4 flex items-start">
-                <div className="flex-1">
-                  <h3 className="mb-1 text-xl font-semibold text-cyan-400">
-                    {cert.title}
-                  </h3>
-                  <h4 className="mb-2 text-base text-gray-300">
-                    {cert.issuer}
-                  </h4>
-                  <p className="mb-4 text-sm text-gray-400">{cert.date}</p>
-                </div>
+              <div className="mb-4">
+                <h3 className="mb-1 text-xl font-semibold text-cyan-400">
+                  {cert.title}
+                </h3>
+                <h4 className="mb-1 text-base text-gray-300">{cert.issuer}</h4>
+                <p className="text-sm text-gray-400">{cert.date}</p>
               </div>
 
-              <ul className="list-inside list-disc space-y-2 pl-4 text-gray-300">
+              <ul className="list-disc list-inside space-y-2 text-sm text-gray-300">
                 {cert.description.map((desc, i) => (
                   <li key={i} className="leading-relaxed">
                     {desc}

@@ -15,17 +15,20 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-10">
           <motion.p
             className="text-lg font-medium text-center md:text-left"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
           >
             Making the world a better place through constructing elegant hierarchies.
           </motion.p>
+
           <motion.div
             className="flex space-x-5"
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            whileInView={{ opacity: 1 }}
             transition={{ delay: 0.3, duration: 0.5 }}
+            viewport={{ once: true }}
           >
             <a href="#" className="text-xl hover:text-purple-400 transition-colors"><FaFacebookF /></a>
             <a href="#" className="text-xl hover:text-purple-400 transition-colors"><FaInstagram /></a>
@@ -58,12 +61,13 @@ const Footer = () => {
           ))}
         </div>
 
-        {/* Bottom Copyright */}
+        {/* Copyright */}
         <motion.div
           className="border-t border-gray-800 pt-6 text-center text-sm text-gray-400"
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          whileInView={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.5 }}
+          viewport={{ once: true }}
         >
           &copy; {new Date().getFullYear()} Your Company, Inc. All rights reserved.
         </motion.div>

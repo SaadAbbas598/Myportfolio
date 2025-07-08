@@ -73,30 +73,30 @@ const Skills = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  useEffect(() => {
-    const container = containerRef.current;
-    const skillContainer = skillContainerRef.current;
+useEffect(() => {
+  const container = containerRef.current;
+  const skillContainer = skillContainerRef.current;
 
-    if (!container || !skillContainer) return;
+  if (!container || !skillContainer) return;
 
-    const scrollWidth = skillContainer.scrollWidth / 3;
-    let startTime = null;
+  const scrollWidth = skillContainer.scrollWidth / 4;
+  let startTime = null;
 
-    const animate = (timestamp) => {
-      if (!startTime) startTime = timestamp;
-      const elapsed = timestamp - startTime;
-      const progress = (elapsed / (duration * 1000)) % 1;
-      const translateX = -scrollWidth * progress;
-      skillContainer.style.transform = `translateX(${translateX}px)`;
-      animationRef.current = requestAnimationFrame(animate);
-    };
-
+  const animate = (timestamp) => {
+    if (!startTime) startTime = timestamp;
+    const elapsed = timestamp - startTime;
+    const distancePerMs = scrollWidth / (duration * 1000);
+    const translateX = -(elapsed * distancePerMs) % scrollWidth;
+    skillContainer.style.transform = `translateX(${translateX}px)`;
     animationRef.current = requestAnimationFrame(animate);
+  };
 
-    return () => {
-      if (animationRef.current) cancelAnimationFrame(animationRef.current);
-    };
-  }, [duration]);
+  animationRef.current = requestAnimationFrame(animate);
+
+  return () => {
+    if (animationRef.current) cancelAnimationFrame(animationRef.current);
+  };
+}, [duration]);
 
   return (
     <section

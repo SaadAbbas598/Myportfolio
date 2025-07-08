@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import ParticlesBackground from "../components/ParticlesBackground"; // ✅ Import added
 
 const experience = {
   title: "Software Intern",
@@ -29,11 +30,12 @@ const WorkExperience = () => {
   return (
     <section
       id="experience"
-      className={`relative py-12 ${
-        isMobile ? "" : ""
-      } transition-colors duration-300`}
+      className={`relative py-12 bg-black text-white overflow-hidden`}
     >
-      <div className="container mx-auto px-4">
+      {/* ✅ Background Particles */}
+      <ParticlesBackground />
+
+      <div className="relative z-10 container mx-auto px-4">
         <h2 className="mb-6 text-center text-3xl sm:text-4xl font-bold text-cyan-400">
           Work Experience
         </h2>

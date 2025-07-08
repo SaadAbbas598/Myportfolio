@@ -1,11 +1,12 @@
 import { Mail } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const EmailIcon = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [textIndex, setTextIndex] = useState(0);
-  
+  const intervalRef = useRef(null);
+
   const messages = [
     "Need help with a project?",
     "Let's collaborate!",
@@ -14,28 +15,30 @@ const EmailIcon = () => {
   ];
 
   useEffect(() => {
-    let interval;
-    
     if (isHovered) {
-      interval = setInterval(() => {
+      intervalRef.current = setInterval(() => {
         setTextIndex((prev) => (prev + 1) % messages.length);
       }, 3000);
+    } else {
+      clearInterval(intervalRef.current);
     }
-    
-    return () => clearInterval(interval);
-  }, [isHovered, messages.length]);
+
+    return () => clearInterval(intervalRef.current);
+  }, [isHovered]);
 
   return (
     <div className="fixed bottom-6 right-6 z-50 flex items-end gap-2">
-      <AnimatePresence>
-        {isHovered && (
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 20 }}
-            transition={{ type: "spring", damping: 25 }}
-            className="mb-2 rounded-lg bg-white px-4 py-2 shadow-xl"
-          >
+      {/** Tooltip Box */}
+      {isHovered && (
+        <motion.div
+          key="tooltip"
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: 20 }}
+          transition={{ type: "spring", damping: 25 }}
+          className="mb-2 rounded-lg bg-white px-4 py-2 shadow-xl"
+        >
+          <AnimatePresence mode="wait">
             <motion.p
               key={textIndex}
               initial={{ y: 10, opacity: 0 }}
@@ -46,10 +49,11 @@ const EmailIcon = () => {
             >
               {messages[textIndex]}
             </motion.p>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </AnimatePresence>
+        </motion.div>
+      )}
 
+      {/** Mail Icon */}
       <motion.a
         href="https://mail.google.com/mail/?view=cm&fs=1&to=iamsaadabbas@gmail.com"
         target="_blank"

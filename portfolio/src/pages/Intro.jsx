@@ -1,10 +1,8 @@
-"use client";
 import React, { useEffect, useState } from "react";
 import { FaAward } from "react-icons/fa";
 import { VscFolderLibrary } from "react-icons/vsc";
 import { motion } from "framer-motion";
-
-import ParticlesBackground from "../components/ParticlesBackground"; // Ensure this component exists
+import ParticlesBackground from "../components/ParticlesBackground";
 
 // Animation variants
 const container = {
@@ -23,16 +21,6 @@ const item = {
   show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
 };
 
-const imageAnim = {
-  hidden: { opacity: 0, x: -50 },
-  show: { opacity: 1, x: 0, transition: { duration: 0.8 } },
-};
-
-const cardAnim = {
-  hidden: { opacity: 0, scale: 0.8 },
-  show: { opacity: 1, scale: 1, transition: { duration: 0.5 } },
-};
-
 const Intro = () => {
   const [isMobile, setIsMobile] = useState(false);
 
@@ -49,15 +37,19 @@ const Intro = () => {
   return (
     <section
       id="about"
-      className={`py-10 sm:py-14 px-3 sm:px-6 text-black bg-black relative overflow-hidden`}
+      className="py-10 sm:py-14 px-3 sm:px-6 text-black bg-black relative overflow-hidden"
     >
-      <ParticlesBackground />
+      {/* ✅ Fix Particles flicker: position absolute & fade in */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <ParticlesBackground />
+      </div>
 
       <div className="relative z-10 max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
+          whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
           className="text-center mb-8 sm:mb-12"
         >
           <h5 className="text-xs xs:text-sm sm:text-base text-cyan-400 uppercase tracking-wider">
@@ -76,13 +68,13 @@ const Intro = () => {
           className="grid md:grid-cols-[1fr_1.5fr] gap-6 sm:gap-10 items-start"
         >
           {/* Left: Image */}
-          <motion.div
-            variants={imageAnim}
+    <motion.div
+            variants={item}
             className="w-full aspect-square rounded-xl sm:rounded-2xl bg-gradient-to-tr from-transparent via-cyan-500 to-transparent grid place-items-center p-0.5 sm:p-1"
           >
             <div className="overflow-hidden rounded-xl sm:rounded-2xl transition-all duration-300 hover:scale-[1.02] w-full h-full">
               <motion.img
-                src="/images/profile.webp"
+                src="/images/profile.png" 
                 alt="Saad Abbas"
                 className="object-cover w-full h-full transition-all duration-500 grayscale hover:grayscale-0 group-hover:grayscale-0"
                 loading="lazy"
@@ -99,38 +91,33 @@ const Intro = () => {
             </div>
           </motion.div>
 
+
+
           {/* Right: Text Content */}
           <motion.div variants={container} className="mt-4 sm:mt-0">
-            <motion.div
-              variants={container}
-              className="grid grid-cols-1 xs:grid-cols-2 gap-3 sm:gap-5 mb-6 sm:mb-8"
-            >
+            <div className="grid grid-cols-1 xs:grid-cols-2 gap-3 sm:gap-5 mb-6 sm:mb-8">
               {/* Experience Card */}
               <motion.article
-                variants={cardAnim}
+                variants={item}
                 whileHover={{ y: -5 }}
                 className="bg-[#0f0f0f] border border-cyan-500/20 rounded-xl sm:rounded-2xl p-3 sm:p-5 text-center hover:shadow-lg hover:scale-[1.02] hover:border-cyan-500 transition-all duration-300 cursor-default"
               >
                 <FaAward className="text-cyan-500 text-xl sm:text-2xl mb-2 sm:mb-3 mx-auto" />
-                <h5 className="text-base sm:text-lg font-semibold text-white">
-                  Experience
-                </h5>
+                <h5 className="text-base sm:text-lg font-semibold text-white">Experience</h5>
                 <small className="text-xs text-gray-400">1.5 years</small>
               </motion.article>
 
               {/* Projects Card */}
               <motion.article
-                variants={cardAnim}
+                variants={item}
                 whileHover={{ y: -5 }}
                 className="bg-[#0f0f0f] border border-cyan-500/20 rounded-xl sm:rounded-2xl p-3 sm:p-5 text-center hover:shadow-lg hover:scale-[1.02] hover:border-cyan-500 transition-all duration-300 cursor-default"
               >
                 <VscFolderLibrary className="text-cyan-500 text-xl sm:text-2xl mb-2 sm:mb-3 mx-auto" />
-                <h5 className="text-base sm:text-lg font-semibold text-white">
-                  Projects
-                </h5>
+                <h5 className="text-base sm:text-lg font-semibold text-white">Projects</h5>
                 <small className="text-xs text-gray-400">10+ Completed</small>
               </motion.article>
-            </motion.div>
+            </div>
 
             <motion.p
               variants={item}

@@ -1,8 +1,7 @@
 "use client";
 import { useRef, useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import ParticlesBackground from "../components/ParticlesBackground";
-
-// import dynamic from "next/dynamic";
 import {
   FaHtml5,
   FaCss3Alt,
@@ -20,15 +19,6 @@ import {
   SiFigma,
   SiTypescript,
 } from "react-icons/si";
-
-// Particle background
-// const ParticlesBackground = dynamic(
-//   () => import("../components/ParticlesBackground"),
-//   {
-//     ssr: false,
-//     loading: () => <div className="absolute inset-0 bg-black" />,
-//   }
-// );
 
 const skills = [
   { id: 1, icon: <FaHtml5 className="text-orange-500" />, name: "HTML" },
@@ -63,6 +53,28 @@ const Skills = () => {
   const duration = isMobile ? 35 : 20;
   const duplicatedSkills = [...skills, ...skills, ...skills];
 
+  // Animation variants
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.3,
+      },
+    },
+  };
+
+  const item = {
+    hidden: { opacity: 0, y: 30 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+  };
+
+  const skillItem = {
+    hidden: { opacity: 0, scale: 0.8 },
+    show: { opacity: 1, scale: 1, transition: { duration: 0.5 } },
+  };
+
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
@@ -73,30 +85,30 @@ const Skills = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-useEffect(() => {
-  const container = containerRef.current;
-  const skillContainer = skillContainerRef.current;
+  useEffect(() => {
+    const container = containerRef.current;
+    const skillContainer = skillContainerRef.current;
 
-  if (!container || !skillContainer) return;
+    if (!container || !skillContainer) return;
 
-  const scrollWidth = skillContainer.scrollWidth / 4;
-  let startTime = null;
+    const scrollWidth = skillContainer.scrollWidth / 4;
+    let startTime = null;
 
-  const animate = (timestamp) => {
-    if (!startTime) startTime = timestamp;
-    const elapsed = timestamp - startTime;
-    const distancePerMs = scrollWidth / (duration * 1000);
-    const translateX = -(elapsed * distancePerMs) % scrollWidth;
-    skillContainer.style.transform = `translateX(${translateX}px)`;
+    const animate = (timestamp) => {
+      if (!startTime) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+      const distancePerMs = scrollWidth / (duration * 1000);
+      const translateX = -(elapsed * distancePerMs) % scrollWidth;
+      skillContainer.style.transform = `translateX(${translateX}px)`;
+      animationRef.current = requestAnimationFrame(animate);
+    };
+
     animationRef.current = requestAnimationFrame(animate);
-  };
 
-  animationRef.current = requestAnimationFrame(animate);
-
-  return () => {
-    if (animationRef.current) cancelAnimationFrame(animationRef.current);
-  };
-}, [duration]);
+    return () => {
+      if (animationRef.current) cancelAnimationFrame(animationRef.current);
+    };
+  }, [duration]);
 
   return (
     <section
@@ -106,31 +118,62 @@ useEffect(() => {
       <ParticlesBackground />
 
       <div className="relative z-10 flex flex-col justify-center items-center px-3 sm:px-6">
-        <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 text-center text-cyan-500">
-          Tech Stack
-        </h2>
-
-        <div ref={containerRef} className="w-full overflow-hidden py-1 sm:py-2">
-          <div
-            ref={skillContainerRef}
-            className="flex w-max"
-            style={{ willChange: "transform" }}
+        <motion.div
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={container}
+          className="w-full max-w-6xl"
+        >
+          {/* Title - slides down */}
+          <motion.h2
+            variants={item}
+            className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 text-center text-cyan-500"
           >
-            {duplicatedSkills.map((skill, index) => (
-              <div
-                key={`${skill.id}-${index}`}
-                className="flex flex-col items-center mx-2 sm:mx-4 w-20 sm:w-24"
-              >
-                <div className="w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center rounded-full bg-[#0f0f0f] border border-cyan-500/20 hover:border-cyan-500 transition-colors duration-300">
-                  <div className="text-3xl sm:text-4xl">{skill.icon}</div>
-                </div>
-                <p className="text-xs sm:text-sm font-medium text-white/80 mt-2 text-center">
-                  {skill.name}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
+            Tech Stack
+          </motion.h2>
+
+          {/* Skills carousel container */}
+          <motion.div
+            variants={item}
+            ref={containerRef}
+            className="w-full overflow-hidden py-1 sm:py-2"
+          >
+            <motion.div
+              ref={skillContainerRef}
+              className="flex w-max"
+              style={{ willChange: "transform" }}
+            >
+              {duplicatedSkills.map((skill, index) => (
+                <motion.div
+                  key={`${skill.id}-${index}`}
+                  variants={skillItem}
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true, amount: 0.2 }}
+                  className="flex flex-col items-center mx-2 sm:mx-4 w-20 sm:w-24"
+                >
+                  <motion.div
+                    className="w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center rounded-full bg-[#0f0f0f] border border-cyan-500/20 hover:border-cyan-500 transition-colors duration-300"
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ type: "spring", stiffness: 400 }}
+                  >
+                    <div className="text-3xl sm:text-4xl">{skill.icon}</div>
+                  </motion.div>
+                  <motion.p
+                    className="text-xs sm:text-sm font-medium text-white/80 mt-2 text-center"
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.1, duration: 0.5 }}
+                  >
+                    {skill.name}
+                  </motion.p>
+                </motion.div>
+              ))}
+            </motion.div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );

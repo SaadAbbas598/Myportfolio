@@ -111,81 +111,123 @@ const MyProjects = () => {
 
         <div className="relative z-10 max-w-7xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-12 px-4">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-cyan-400 mb-4">
+          <motion.div
+            className="text-center mb-12 px-4"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            variants={{
+              hidden: { opacity: 0 },
+              visible: {
+                opacity: 1,
+                transition: {
+                  staggerChildren: 0.2,
+                  delayChildren: 0.3,
+                },
+              },
+            }}
+          >
+            <motion.h2
+              className="text-3xl sm:text-4xl md:text-5xl font-bold text-cyan-400 mb-4"
+              variants={{
+                hidden: { opacity: 0, y: -30 },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  transition: { duration: 0.6, ease: "easeOut" },
+                },
+              }}
+            >
               My Projects
-            </h2>
-            <p className="text-gray-300 text-base sm:text-lg max-w-2xl mx-auto">
+            </motion.h2>
+
+            <motion.p
+              className="text-gray-300 text-base sm:text-lg max-w-2xl mx-auto"
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  transition: {
+                    duration: 0.6,
+                    ease: "easeOut",
+                    delay: 0.2,
+                  },
+                },
+              }}
+            >
               Explore my recent projects, each crafted to solve real-world
               challenges and showcase my development expertise.
-            </p>
-          </div>
+            </motion.p>
+          </motion.div>
 
           {/* Projects Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {(showAll ? projects : projects.slice(0, 3)).map((project, index) => (
-              <motion.div
-                key={`${project.title}-${index}`}
-                variants={index % 2 === 0 ? leftSlide : rightSlide}
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true, amount: 0.2 }}
-                className="h-full"
-              >
-                <Tilt
-                  tiltMaxAngleX={10}
-                  tiltMaxAngleY={10}
-                  glareEnable={true}
-                  glareMaxOpacity={0.3}
-                  glareColor="#00FFFF"
-                  glarePosition="all"
+            {(showAll ? projects : projects.slice(0, 3)).map(
+              (project, index) => (
+                <motion.div
+                  key={`${project.title}-${index}`}
+                  variants={index % 2 === 0 ? leftSlide : rightSlide}
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true, amount: 0.2 }}
                   className="h-full"
                 >
-                  <motion.div
-                    whileHover={{
-                      y: -8,
-                      boxShadow: "0 8px 32px rgba(0, 255, 255, 0.2)",
-                    }}
-                    transition={{ duration: 0.3 }}
-                    className="bg-[#1a1a1a] border border-cyan-500/30 rounded-xl overflow-hidden h-full flex flex-col"
+                  <Tilt
+                    tiltMaxAngleX={10}
+                    tiltMaxAngleY={10}
+                    glareEnable={true}
+                    glareMaxOpacity={0.3}
+                    glareColor="#00FFFF"
+                    glarePosition="all"
+                    className="h-full"
                   >
-                    <div className="overflow-hidden h-48 sm:h-56">
-                      <img
-                        src={project.image}
-                        alt={project.title}
-                        className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
-                      />
-                    </div>
-                    <div className="p-5 sm:p-6 flex flex-col flex-grow">
-                      <h3 className="text-lg sm:text-xl font-semibold text-white mb-3">
-                        {project.title}
-                      </h3>
-                      <p className="text-gray-400 text-sm sm:text-base mb-4 flex-grow">
-                        {project.description}
-                      </p>
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        {project.tags.map((tag, idx) => (
-                          <span
-                            key={idx}
-                            className="text-xs bg-cyan-900/40 text-cyan-400 px-3 py-1 rounded-full"
-                          >
-                            {tag}
-                          </span>
-                        ))}
+                    <motion.div
+                      whileHover={{
+                        y: -8,
+                        boxShadow: "0 8px 32px rgba(0, 255, 255, 0.2)",
+                      }}
+                      transition={{ duration: 0.3 }}
+                      className="bg-[#1a1a1a] border border-cyan-500/30 rounded-xl overflow-hidden h-full flex flex-col"
+                    >
+                      <div className="overflow-hidden h-48 sm:h-56">
+                        <img
+                          src={project.image}
+                          alt={project.title}
+                          className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+                        />
                       </div>
-                      <a
-                        href={project.link}
-                        className="mt-auto text-cyan-400 hover:text-cyan-300 text-sm sm:text-base font-medium transition-colors duration-300"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        View Project →
-                      </a>
-                    </div>
-                  </motion.div>
-                </Tilt>
-              </motion.div>
-            ))}
+                      <div className="p-5 sm:p-6 flex flex-col flex-grow">
+                        <h3 className="text-lg sm:text-xl font-semibold text-white mb-3">
+                          {project.title}
+                        </h3>
+                        <p className="text-gray-400 text-sm sm:text-base mb-4 flex-grow">
+                          {project.description}
+                        </p>
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          {project.tags.map((tag, idx) => (
+                            <span
+                              key={idx}
+                              className="text-xs bg-cyan-900/40 text-cyan-400 px-3 py-1 rounded-full"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                        <a
+                          href={project.link}
+                          className="mt-auto text-cyan-400 hover:text-cyan-300 text-sm sm:text-base font-medium transition-colors duration-300"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          View Project →
+                        </a>
+                      </div>
+                    </motion.div>
+                  </Tilt>
+                </motion.div>
+              )
+            )}
           </div>
 
           {/* Show More Button */}

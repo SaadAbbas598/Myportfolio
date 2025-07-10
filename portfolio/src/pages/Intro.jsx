@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FaAward } from "react-icons/fa";
+import { Link } from "react-scroll";
 import { VscFolderLibrary } from "react-icons/vsc";
 import { motion } from "framer-motion";
 import ParticlesBackground from "../components/ParticlesBackground";
@@ -21,6 +22,25 @@ const item = {
   show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
 };
 
+// New animation variants for scroll-triggered animations
+const scrollVariants = {
+  offscreenLeft: {
+    opacity: 0,
+    x: -50,
+    transition: { duration: 0.5 },
+  },
+  offscreenRight: {
+    opacity: 0,
+    x: 50,
+    transition: { duration: 0.5 },
+  },
+  onscreen: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.5, delay: 0.2 },
+  },
+};
+
 const Intro = () => {
   const [isMobile, setIsMobile] = useState(false);
 
@@ -39,17 +59,18 @@ const Intro = () => {
       id="about"
       className="py-10 sm:py-14 px-3 sm:px-6 text-black bg-black relative overflow-hidden"
     >
-      {/* ✅ Fix Particles flicker: position absolute & fade in */}
+      {/* Particles background */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <ParticlesBackground />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto">
+        {/* Title section - slides in from top */}
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
+          initial={{ opacity: 0, y: -50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-50px" }}
           className="text-center mb-8 sm:mb-12"
         >
           <h5 className="text-xs xs:text-sm sm:text-base text-cyan-400 uppercase tracking-wider">
@@ -60,21 +81,18 @@ const Intro = () => {
           </h2>
         </motion.div>
 
-        <motion.div
-          variants={container}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-100px" }}
-          className="grid md:grid-cols-[1fr_1.5fr] gap-6 sm:gap-10 items-start"
-        >
-          {/* Left: Image */}
-    <motion.div
-            variants={item}
+        <div className="grid md:grid-cols-[1fr_1.5fr] gap-6 sm:gap-10 items-start">
+          {/* Left: Image - slides in from left */}
+          <motion.div
+            initial="offscreenLeft"
+            whileInView="onscreen"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={scrollVariants}
             className="w-full aspect-square rounded-xl sm:rounded-2xl bg-gradient-to-tr from-transparent via-cyan-500 to-transparent grid place-items-center p-0.5 sm:p-1"
           >
             <div className="overflow-hidden rounded-xl sm:rounded-2xl transition-all duration-300 hover:scale-[1.02] w-full h-full">
               <motion.img
-                src="/images/profile.png" 
+                src="/images/profile.png"
                 alt="Saad Abbas"
                 className="object-cover w-full h-full transition-all duration-500 grayscale hover:grayscale-0 group-hover:grayscale-0"
                 loading="lazy"
@@ -85,42 +103,60 @@ const Intro = () => {
                 transition={{ delay: 0.5, duration: 0.8 }}
                 onTouchStart={(e) =>
                   e.currentTarget.classList.remove("grayscale")
-                } // Mobile tap support
+                }
                 onTouchEnd={(e) => e.currentTarget.classList.add("grayscale")}
               />
             </div>
           </motion.div>
 
-
-
-          {/* Right: Text Content */}
-          <motion.div variants={container} className="mt-4 sm:mt-0">
+          {/* Right: Text Content - slides in from right */}
+          <motion.div
+            initial="offscreenRight"
+            whileInView="onscreen"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={scrollVariants}
+            className="mt-4 sm:mt-0"
+          >
             <div className="grid grid-cols-1 xs:grid-cols-2 gap-3 sm:gap-5 mb-6 sm:mb-8">
-              {/* Experience Card */}
+              {/* Experience Card - slides up */}
               <motion.article
-                variants={item}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                viewport={{ once: true, margin: "-50px" }}
                 whileHover={{ y: -5 }}
                 className="bg-[#0f0f0f] border border-cyan-500/20 rounded-xl sm:rounded-2xl p-3 sm:p-5 text-center hover:shadow-lg hover:scale-[1.02] hover:border-cyan-500 transition-all duration-300 cursor-default"
               >
                 <FaAward className="text-cyan-500 text-xl sm:text-2xl mb-2 sm:mb-3 mx-auto" />
-                <h5 className="text-base sm:text-lg font-semibold text-white">Experience</h5>
+                <h5 className="text-base sm:text-lg font-semibold text-white">
+                  Experience
+                </h5>
                 <small className="text-xs text-gray-400">1.5 years</small>
               </motion.article>
 
-              {/* Projects Card */}
+              {/* Projects Card - slides up with delay */}
               <motion.article
-                variants={item}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+                viewport={{ once: true, margin: "-50px" }}
                 whileHover={{ y: -5 }}
                 className="bg-[#0f0f0f] border border-cyan-500/20 rounded-xl sm:rounded-2xl p-3 sm:p-5 text-center hover:shadow-lg hover:scale-[1.02] hover:border-cyan-500 transition-all duration-300 cursor-default"
               >
                 <VscFolderLibrary className="text-cyan-500 text-xl sm:text-2xl mb-2 sm:mb-3 mx-auto" />
-                <h5 className="text-base sm:text-lg font-semibold text-white">Projects</h5>
+                <h5 className="text-base sm:text-lg font-semibold text-white">
+                  Projects
+                </h5>
                 <small className="text-xs text-gray-400">10+ Completed</small>
               </motion.article>
             </div>
 
+            {/* Description text - slides up with delay */}
             <motion.p
-              variants={item}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              viewport={{ once: true, margin: "-50px" }}
               className="text-white mb-6 sm:mb-8 leading-relaxed text-xs xs:text-sm sm:text-base"
             >
               1+ years experienced Front End Developer with hands-on experience
@@ -134,21 +170,33 @@ const Intro = () => {
               performance.
             </motion.p>
 
-            <motion.div variants={item} className="text-center sm:text-left">
-              <motion.a
-                href="#contact"
-                className="inline-block bg-transparent text-cyan-500 border border-cyan-500 px-4 py-2 sm:px-5 sm:py-3 rounded-md font-medium sm:font-semibold hover:bg-cyan-500 hover:text-blue-950 transition-colors duration-300 text-sm sm:text-base"
+            {/* Button - slides up with delay */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+              viewport={{ once: true, margin: "-50px" }}
+              className="text-center sm:text-left"
+            >
+              <motion.div
                 whileHover={{
                   scale: 1.05,
-                  boxShadow: "0 0 10px rgba(34, 211, 238, 0.5)",
+                  boxShadow: "0 0 rgba(34, 211, 238, 0.5)",
                 }}
                 whileTap={{ scale: 0.95 }}
               >
-                Let's Talk
-              </motion.a>
+                <Link
+                  to="contact"
+                  smooth={true}
+                  duration={500}
+                  className="cursor-pointer inline-block bg-transparent text-cyan-500 border border-cyan-500 px-4 py-2 sm:px-5 sm:py-3 rounded-md font-medium sm:font-semibold hover:bg-cyan-500 hover:text-blue-950 transition-colors duration-300 text-sm sm:text-base"
+                >
+                  Let's Talk
+                </Link>
+              </motion.div>
             </motion.div>
           </motion.div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

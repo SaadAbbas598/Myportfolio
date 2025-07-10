@@ -2,7 +2,7 @@
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import Tilt from "react-parallax-tilt";
-import ParticlesBackground from "../components/ParticlesBackground"; // direct import
+import ParticlesBackground from "../components/ParticlesBackground";
 
 const Testimonials = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -27,7 +27,7 @@ const Testimonials = () => {
     },
     {
       quote:
-        "Saad’s ability to understand our needs and deliver exactly what we imagined is rare. Highly recommended for any tech project.",
+        "Saad's ability to understand our needs and deliver exactly what we imagined is rare. Highly recommended for any tech project.",
       name: "James Carter",
       position: "Product Manager at SkyLabs",
       image: "https://randomuser.me/api/portraits/men/32.jpg",
@@ -41,16 +41,35 @@ const Testimonials = () => {
     },
   ];
 
-  const getSlideVariant = (index) => {
-    const isEven = index % 2 === 0;
-    return {
-      hidden: { opacity: 0, x: isEven ? -50 : 50 },
-      show: {
-        opacity: 1,
-        x: 0,
-        transition: { duration: 0.5, ease: "easeOut" },
+  // Animation variants
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.3,
       },
-    };
+    },
+  };
+
+  const item = {
+    hidden: { opacity: 0, y: 30 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+  };
+
+  const slideFromLeft = {
+    hidden: { opacity: 0, x: -50 },
+    show: { opacity: 1, x: 0, transition: { duration: 0.6 } },
+  };
+
+  const slideFromRight = {
+    hidden: { opacity: 0, x: 50 },
+    show: { opacity: 1, x: 0, transition: { duration: 0.6 } },
+  };
+
+  const getCardAnimation = (index) => {
+    return index % 2 === 0 ? slideFromLeft : slideFromRight;
   };
 
   return (
@@ -61,27 +80,33 @@ const Testimonials = () => {
       <ParticlesBackground />
 
       <div className="relative z-10 flex justify-center items-center min-h-[80vh]">
-        <div className="max-w-6xl text-center w-full">
-          <p className="uppercase text-xs xs:text-sm tracking-wide text-cyan-400 mb-2">
+        <motion.div
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={container}
+          className="max-w-6xl text-center w-full"
+        >
+          {/* Subtitle - slides down */}
+          <motion.p
+            variants={item}
+            className="uppercase text-xs xs:text-sm tracking-wide text-cyan-400 mb-2"
+          >
             WHAT OTHERS SAY
-          </p>
+          </motion.p>
 
+          {/* Title - slides down with delay */}
           <motion.h2
+            variants={item}
             className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold mb-5 sm:mb-8 text-cyan-500"
-            initial={{ opacity: 0, y: -20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.5 }}
           >
             Testimonials
           </motion.h2>
 
+          {/* Description - slides up */}
           <motion.p
+            variants={item}
             className="mb-6 sm:mb-10 text-gray-300 max-w-3xl mx-auto text-xs xs:text-sm sm:text-base px-2 sm:px-0 leading-relaxed"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ delay: 0.2, duration: 0.5 }}
           >
             Discover what clients and colleagues say about my work in the
             testimonial section. Their feedback highlights my expertise in MERN
@@ -89,14 +114,16 @@ const Testimonials = () => {
             delivering high-quality web applications.
           </motion.p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+          {/* Testimonial cards grid */}
+          <motion.div
+            variants={container}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
+          >
             {testimonials.map((testimonial, index) => (
               <motion.div
                 key={index}
-                variants={getSlideVariant(index)}
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true, amount: 0.2 }}
+                variants={getCardAnimation(index)}
+                custom={index}
               >
                 <Tilt
                   tiltMaxAngleX={isMobile ? 0 : 5}
@@ -114,29 +141,45 @@ const Testimonials = () => {
                       "{testimonial.quote}"
                     </p>
                     <div className="flex items-center mt-3">
-                      <img
+                      <motion.img
                         src={testimonial.image}
                         alt={testimonial.name}
                         className="w-10 h-10 sm:w-12 sm:h-12 rounded-full mr-3 sm:mr-4"
                         loading="lazy"
                         width={48}
                         height={48}
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: index * 0.1 + 0.3, duration: 0.5 }}
                       />
                       <div className="text-left">
-                        <h3 className="text-sm sm:text-base font-semibold text-white">
+                        <motion.h3 
+                          className="text-sm sm:text-base font-semibold text-white"
+                          initial={{ opacity: 0, x: -10 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ delay: index * 0.1 + 0.4, duration: 0.5 }}
+                        >
                           {testimonial.name}
-                        </h3>
-                        <p className="text-xs text-gray-400">
+                        </motion.h3>
+                        <motion.p 
+                          className="text-xs text-gray-400"
+                          initial={{ opacity: 0, x: -10 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ delay: index * 0.1 + 0.5, duration: 0.5 }}
+                        >
                           {testimonial.position}
-                        </p>
+                        </motion.p>
                       </div>
                     </div>
                   </motion.div>
                 </Tilt>
               </motion.div>
             ))}
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );

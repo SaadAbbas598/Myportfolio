@@ -3,21 +3,21 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import ParticlesBackground from "../components/ParticlesBackground";
 
-const certificates = [
+const educationDetails = [
   {
-    title: "Crash Course on Python",
-    issuer: "Coursera (Google)",
-    date: "2025",
+    degree: "Bachelor of Science in Computer Science",
+    institution: "University of Engineering and Technology, Lahore",
+    duration: "2023 – 2027",
     description: [
-      "Completed Google's Python course via Coursera.",
-      "Learned core Python concepts like variables, functions, loops, and data structures.",
-      "Gained hands-on experience in writing, debugging, and automating Python scripts.",
+      "Studying core subjects including Data Structures, Algorithms, Operating Systems, and Computer Networks.",
+      "Completed practical projects in MERN stack and Python.",
+      "Actively involved in software development, AI, and research-based coursework.",
     ],
-    image: "/images/My Certificate.jpeg", // Ensure this exists in public/images
+    image: "/images/image7.jpg", // Make sure this image exists in public/images
   },
 ];
 
-const ProfessionalCertificates = () => {
+const Education = () => {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -83,7 +83,7 @@ const ProfessionalCertificates = () => {
 
   return (
     <section
-      id="certificates"
+      id="education"
       className="relative py-16 bg-black text-white overflow-hidden"
     >
       {/* Background Particles */}
@@ -99,7 +99,7 @@ const ProfessionalCertificates = () => {
           transition={{ duration: 0.6 }}
           className="mb-12 text-center text-3xl sm:text-4xl font-bold text-cyan-400"
         >
-          Professional Certificates
+          Education
         </motion.h2>
 
         <motion.div
@@ -109,35 +109,37 @@ const ProfessionalCertificates = () => {
           variants={container}
           className="mx-auto max-w-3xl"
         >
-          {certificates.map((cert, index) => (
+          {educationDetails.map((edu, index) => (
             <motion.div
               key={index}
               variants={fadeInFromBottom}
               className="mb-8 rounded-lg border border-[#00ffff30] bg-[#0f0f0f] p-6 shadow-lg backdrop-blur-md"
             >
-              {/* Certificate Image - slides from left */}
+              {/* Institution Image - slides from left */}
               <motion.img
                 variants={fadeInFromLeft}
-                src={cert.image}
-                alt={`${cert.title} Certificate`}
+                src={edu.image}
+                alt={`${edu.institution}`}
                 className="mb-4 w-full rounded-lg border border-cyan-700 shadow-md"
                 loading="lazy"
                 whileHover={{ scale: 1.02 }}
                 transition={{ type: "spring", stiffness: 400 }}
               />
 
-              {/* Certificate Details - slides from right */}
+              {/* Education Details - slides from right */}
               <motion.div variants={fadeInFromRight} className="mb-4">
                 <h3 className="mb-1 text-xl font-semibold text-cyan-400">
-                  {cert.title}
+                  {edu.degree}
                 </h3>
-                <h4 className="mb-1 text-base text-gray-300">{cert.issuer}</h4>
-                <p className="text-sm text-gray-400">{cert.date}</p>
+                <h4 className="mb-1 text-base text-gray-300">
+                  {edu.institution}
+                </h4>
+                <p className="text-sm text-gray-400">{edu.duration}</p>
               </motion.div>
 
               {/* Description List - staggered items */}
               <motion.ul className="list-disc list-inside space-y-2 text-sm text-gray-300">
-                {cert.description.map((desc, i) => (
+                {edu.description.map((desc, i) => (
                   <motion.li
                     key={i}
                     custom={i}
@@ -156,4 +158,4 @@ const ProfessionalCertificates = () => {
   );
 };
 
-export default ProfessionalCertificates;
+export default Education;

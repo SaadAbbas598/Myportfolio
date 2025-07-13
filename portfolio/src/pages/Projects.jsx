@@ -19,14 +19,7 @@ const MyProjects = () => {
   }, []);
 
   const projects = [
-    {
-      title: "My Portfolio",
-      description:
-        "A personal portfolio website to showcase my projects, skills, and professional achievements with a modern, responsive design.",
-      tags: ["React", "Tailwind", "Framer Motion"],
-      image: "/images/image.png",
-      link: "https://saadabbas.me",
-    },
+  
     {
       title: "A Software House Website",
       description:
@@ -66,6 +59,14 @@ const MyProjects = () => {
       tags: ["Django", "React", "SQLite"],
       image: "/images/image6.png",
       link: "https://smart-quest-system.vercel.app/",
+    },
+      {
+      title: "My Portfolio",
+      description:
+        "A personal portfolio website to showcase my projects, skills, and professional achievements with a modern, responsive design.",
+      tags: ["React", "Tailwind", "Framer Motion"],
+      image: "/images/image.png",
+      link: "https://saadabbas.me",
     },
     {
       title: "Weather Dashboard",

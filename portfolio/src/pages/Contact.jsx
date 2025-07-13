@@ -2,11 +2,14 @@ import React, { useRef, useState, useEffect } from "react";
 import { Element } from "react-scroll";
 import { motion } from "framer-motion";
 import { FiSend } from "react-icons/fi";
+import emailjs from "emailjs-com";
 import ParticlesBackground from "../components/ParticlesBackground";
 
 const ContactForm = () => {
   const formRef = useRef();
   const [isMobile, setIsMobile] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
@@ -17,11 +20,31 @@ const ContactForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert("Message sent successfully!");
-    formRef.current.reset();
+    setIsSubmitting(true);
+
+    // Replace these with your EmailJS credentials
+    const serviceId = "service_lt5svqo";
+    const templateId = "template_aoez6m7";
+    const userId = "iL1jEoGxX0efT4QsO";
+
+    emailjs
+      .sendForm(serviceId, templateId, formRef.current, userId)
+      .then(
+        (result) => {
+          console.log("Email sent successfully!", result.text);
+          setShowSuccessPopup(true);
+          formRef.current.reset();
+          setTimeout(() => setShowSuccessPopup(false), 3000); // Hide popup after 3 seconds
+        },
+        (error) => {
+          console.error("Failed to send email:", error.text);
+          alert("Failed to send message. Please try again.");
+        }
+      )
+      .finally(() => setIsSubmitting(false));
   };
 
-  // Animation variants
+  // Animation variants (same as before)
   const container = {
     hidden: { opacity: 0 },
     show: {
@@ -68,6 +91,19 @@ const ContactForm = () => {
           <ParticlesBackground />
         </div>
 
+        {/* Success Popup */}
+        {showSuccessPopup && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="fixed top-5 right-5 z-50 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg flex items-center gap-2"
+          >
+            <span>✅</span>
+            <span>Message sent successfully!</span>
+          </motion.div>
+        )}
+
         {/* Main Content */}
         <motion.div
           initial="hidden"
@@ -104,6 +140,7 @@ const ContactForm = () => {
               </label>
               <input
                 id="name"
+                name="name" // Required for EmailJS
                 type="text"
                 required
                 placeholder="Saad Abbas"
@@ -118,6 +155,7 @@ const ContactForm = () => {
               </label>
               <input
                 id="email"
+                name="email" // Required for EmailJS
                 type="email"
                 required
                 placeholder="saad@example.com"
@@ -132,6 +170,7 @@ const ContactForm = () => {
               </label>
               <textarea
                 id="message"
+                name="message" // Required for EmailJS
                 required
                 rows={isMobile ? 4 : 5}
                 placeholder="Tell me about your project..."
@@ -148,11 +187,20 @@ const ContactForm = () => {
                 }}
                 whileTap={{ scale: 0.97 }}
                 type="submit"
-                className="mt-2 p-3 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 rounded-lg w-full text-white font-medium flex items-center justify-center gap-2 text-sm transition-all duration-300 shadow-lg hover:shadow-cyan-500/20"
+                disabled={isSubmitting}
+                className={`mt-2 p-3 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 rounded-lg w-full text-white font-medium flex items-center justify-center gap-2 text-sm transition-all duration-300 shadow-lg hover:shadow-cyan-500/20 ${
+                  isSubmitting ? "opacity-70 cursor-not-allowed" : ""
+                }`}
               >
-                <FiSend className="text-base" />
-                Send Message
-                <span className="inline-block ml-1">🚀</span>
+                {isSubmitting ? (
+                  "Sending..."
+                ) : (
+                  <>
+                    <FiSend className="text-base" />
+                    Send Message
+                    <span className="inline-block ml-1">🚀</span>
+                  </>
+                )}
               </motion.button>
             </motion.div>
           </form>

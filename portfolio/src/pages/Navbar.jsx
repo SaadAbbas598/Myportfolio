@@ -88,10 +88,16 @@ const Navbar = () => {
   return (
     <motion.nav
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 p-4 shadow-md 
-        ${isVisible ? "translate-y-0" : "-translate-y-full"} 
-        ${isAtTop ? "bg-transparent" : "bg-black/90 backdrop-blur-sm"}
-        ${darkMode ? "text-white" : "text-black"}
-      `}
+    ${isVisible ? "translate-y-0" : "-translate-y-full"} 
+    ${
+      isAtTop
+        ? "bg-transparent"
+        : darkMode
+        ? "bg-black/90 backdrop-blur-sm"
+        : "bg-white/90 backdrop-blur-sm"
+    }
+    ${darkMode ? "text-white" : "text-black"}
+  `}
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
@@ -115,9 +121,15 @@ const Navbar = () => {
           {/* Theme Toggle */}
           <div className="flex items-center space-x-2 pr-4 border-r border-white/20 cursor-pointer">
             {darkMode ? (
-              <Sun className="w-5 h-5 text-yellow-300" onClick={() => setDarkMode(false)} />
+              <Sun
+                className="w-5 h-5 text-yellow-300"
+                onClick={() => setDarkMode(false)}
+              />
             ) : (
-              <Moon className="w-5 h-5 text-blue-300" onClick={() => setDarkMode(true)} />
+              <Moon
+                className="w-5 h-5 text-blue-300"
+                onClick={() => setDarkMode(true)}
+              />
             )}
           </div>
 
@@ -133,7 +145,9 @@ const Navbar = () => {
               className={`relative cursor-pointer pb-2 transition-colors ${
                 activeSection === link.id
                   ? "text-cyan-400 font-semibold"
-                  : darkMode ? "text-white" : "text-black"
+                  : darkMode
+                  ? "text-white"
+                  : "text-black"
               }`}
             >
               {link.label}
@@ -157,9 +171,15 @@ const Navbar = () => {
         <div className="md:hidden z-50 flex items-center space-x-4">
           <div className="cursor-pointer">
             {darkMode ? (
-              <Sun className="w-5 h-5 text-yellow-300" onClick={() => setDarkMode(false)} />
+              <Sun
+                className="w-5 h-5 text-yellow-300"
+                onClick={() => setDarkMode(false)}
+              />
             ) : (
-              <Moon className="w-5 h-5 text-blue-300" onClick={() => setDarkMode(true)} />
+              <Moon
+                className="w-5 h-5 text-blue-300"
+                onClick={() => setDarkMode(true)}
+              />
             )}
           </div>
           <button

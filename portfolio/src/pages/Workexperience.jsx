@@ -18,7 +18,7 @@ const experience = {
 
 const WorkExperience = () => {
   const [isMobile, setIsMobile] = useState(false);
-  const { darkMode } = useTheme; // ✅ get dark mode
+  const { darkMode } = useTheme(); // ✅ get dark mode
 
   useEffect(() => {
     const handleResize = () => {

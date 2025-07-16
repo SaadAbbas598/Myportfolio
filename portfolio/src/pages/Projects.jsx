@@ -9,14 +9,21 @@ import { useTheme } from "../context/colorTheme";
 const MyProjects = () => {
   const [showAll, setShowAll] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const { darkMode } = useTheme; // ✅ Theme status
+  const { darkMode } = useTheme(); // ✅ Theme status
 
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth <= 768);
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  const handleResize = () => {
+    if (typeof window !== "undefined") {
+      setIsMobile(window.innerWidth <= 768);
+    }
+  };
+
+  handleResize(); // Initial check on mount
+
+  window.addEventListener("resize", handleResize);
+
+  return () => window.removeEventListener("resize", handleResize);
+}, []);
 
   const projects = [
     {

@@ -42,7 +42,7 @@ const Skills = () => {
   const skillContainerRef = useRef(null);
   const animationRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
-  const { darkMode } = useTheme; // ✅
+  const { darkMode } = useTheme(); // ✅
 
   const duration = isMobile ? 35 : 20;
   const duplicatedSkills = [...skills, ...skills, ...skills];

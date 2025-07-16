@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import ParticlesBackground from "../components/ParticlesBackground";
+import { useTheme } from "../context/colorTheme"; // ✅ Ensure this is correct
 
 const certificates = [
   {
@@ -13,18 +14,18 @@ const certificates = [
       "Learned core Python concepts like variables, functions, loops, and data structures.",
       "Gained hands-on experience in writing, debugging, and automating Python scripts.",
     ],
-    image: "/images/My Certificate.jpeg", // Ensure this exists in public/images
+    image: "/images/My Certificate.jpeg", // ✅ Ensure this image exists in public/images
   },
 ];
 
 const ProfessionalCertificates = () => {
   const [isMobile, setIsMobile] = useState(false);
+  const { darkMode } = useTheme(); // ✅ Use theme context
 
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
     };
-
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -84,24 +85,29 @@ const ProfessionalCertificates = () => {
   return (
     <section
       id="certificates"
-      className="relative py-16 bg-black text-white overflow-hidden"
+      className={`relative py-16 overflow-hidden ${
+        darkMode ? "bg-black text-white" : "bg-white text-black"
+      }`}
     >
       {/* Background Particles */}
       <ParticlesBackground />
 
       {/* Main Content */}
       <div className="relative z-10 container mx-auto px-4">
-        {/* Title - slides down */}
+        {/* Title */}
         <motion.h2
           initial={{ opacity: 0, y: -30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
-          className="mb-12 text-center text-3xl sm:text-4xl font-bold text-cyan-400"
+          className={`mb-12 text-center text-3xl sm:text-4xl font-bold ${
+            darkMode ? "text-cyan-400" : "text-cyan-600"
+          }`}
         >
           Professional Certificates
         </motion.h2>
 
+        {/* Certificate Cards */}
         <motion.div
           initial="hidden"
           whileInView="show"
@@ -113,30 +119,54 @@ const ProfessionalCertificates = () => {
             <motion.div
               key={index}
               variants={fadeInFromBottom}
-              className="mb-8 rounded-lg border border-[#00ffff30] bg-[#0f0f0f] p-6 shadow-lg backdrop-blur-md"
+              className={`mb-8 rounded-lg border shadow-lg backdrop-blur-md p-6 ${
+                darkMode
+                  ? "bg-[#0f0f0f] border-cyan-500/20"
+                  : "bg-white border-cyan-300"
+              }`}
             >
-              {/* Certificate Image - slides from left */}
+              {/* Certificate Image */}
               <motion.img
                 variants={fadeInFromLeft}
                 src={cert.image}
                 alt={`${cert.title} Certificate`}
-                className="mb-4 w-full rounded-lg border border-cyan-700 shadow-md"
+                className="mb-4 w-full rounded-lg border shadow-md"
                 loading="lazy"
                 whileHover={{ scale: 1.02 }}
                 transition={{ type: "spring", stiffness: 400 }}
               />
 
-              {/* Certificate Details - slides from right */}
+              {/* Certificate Text Details */}
               <motion.div variants={fadeInFromRight} className="mb-4">
-                <h3 className="mb-1 text-xl font-semibold text-cyan-400">
+                <h3
+                  className={`mb-1 text-xl font-semibold ${
+                    darkMode ? "text-cyan-400" : "text-cyan-600"
+                  }`}
+                >
                   {cert.title}
                 </h3>
-                <h4 className="mb-1 text-base text-gray-300">{cert.issuer}</h4>
-                <p className="text-sm text-gray-400">{cert.date}</p>
+                <h4
+                  className={`mb-1 text-base ${
+                    darkMode ? "text-gray-300" : "text-gray-700"
+                  }`}
+                >
+                  {cert.issuer}
+                </h4>
+                <p
+                  className={`text-sm ${
+                    darkMode ? "text-gray-400" : "text-gray-500"
+                  }`}
+                >
+                  {cert.date}
+                </p>
               </motion.div>
 
-              {/* Description List - staggered items */}
-              <motion.ul className="list-disc list-inside space-y-2 text-sm text-gray-300">
+              {/* Bullet Points */}
+              <motion.ul
+                className={`list-disc list-inside space-y-2 text-sm ${
+                  darkMode ? "text-gray-300" : "text-gray-600"
+                }`}
+              >
                 {cert.description.map((desc, i) => (
                   <motion.li
                     key={i}

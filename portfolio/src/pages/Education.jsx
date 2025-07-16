@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import ParticlesBackground from "../components/ParticlesBackground";
+import { useTheme } from "../context/colorTheme"; // ✅ Import theme context
 
 const educationDetails = [
   {
@@ -13,24 +14,23 @@ const educationDetails = [
       "Completed practical projects in MERN stack and Python.",
       "Actively involved in software development, AI, and research-based coursework.",
     ],
-    image: "/images/image7.jpg", // Make sure this image exists in public/images
+    image: "/images/image7.jpg",
   },
 ];
 
 const Education = () => {
   const [isMobile, setIsMobile] = useState(false);
+  const { darkMode } = useTheme(); // ✅ Get theme mode
 
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
     };
-
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Animation variants
   const container = {
     hidden: { opacity: 0 },
     show: {
@@ -84,24 +84,29 @@ const Education = () => {
   return (
     <section
       id="education"
-      className="relative py-16 bg-black text-white overflow-hidden"
+      className={`relative py-16 overflow-hidden ${
+        darkMode ? "bg-black text-white" : "bg-white text-gray-800"
+      }`}
     >
       {/* Background Particles */}
       <ParticlesBackground />
 
-      {/* Main Content */}
+      {/* Main Container */}
       <div className="relative z-10 container mx-auto px-4">
-        {/* Title - slides down */}
+        {/* Section Heading */}
         <motion.h2
           initial={{ opacity: 0, y: -30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
-          className="mb-12 text-center text-3xl sm:text-4xl font-bold text-cyan-400"
+          className={`mb-12 text-center text-3xl sm:text-4xl font-bold ${
+            darkMode ? "text-cyan-400" : "text-cyan-600"
+          }`}
         >
           Education
         </motion.h2>
 
+        {/* Education Cards */}
         <motion.div
           initial="hidden"
           whileInView="show"
@@ -113,32 +118,48 @@ const Education = () => {
             <motion.div
               key={index}
               variants={fadeInFromBottom}
-              className="mb-8 rounded-lg border border-[#00ffff30] bg-[#0f0f0f] p-6 shadow-lg backdrop-blur-md"
+              className={`mb-8 rounded-lg border p-6 shadow-lg backdrop-blur-md ${
+                darkMode
+                  ? "bg-[#0f0f0f] border-[#00ffff30]"
+                  : "bg-white border-cyan-200"
+              }`}
             >
-              {/* Institution Image - slides from left */}
+              {/* Institution Image */}
               <motion.img
                 variants={fadeInFromLeft}
                 src={edu.image}
-                alt={`${edu.institution}`}
-                className="mb-4 w-full rounded-lg border border-cyan-700 shadow-md"
+                alt={edu.institution}
+                className={`mb-4 w-full rounded-lg border shadow-md ${
+                  darkMode
+                    ? "border-cyan-700"
+                    : "border-cyan-400"
+                }`}
                 loading="lazy"
                 whileHover={{ scale: 1.02 }}
                 transition={{ type: "spring", stiffness: 400 }}
               />
 
-              {/* Education Details - slides from right */}
+              {/* Text Info */}
               <motion.div variants={fadeInFromRight} className="mb-4">
-                <h3 className="mb-1 text-xl font-semibold text-cyan-400">
+                <h3
+                  className={`mb-1 text-xl font-semibold ${
+                    darkMode ? "text-cyan-400" : "text-cyan-600"
+                  }`}
+                >
                   {edu.degree}
                 </h3>
-                <h4 className="mb-1 text-base text-gray-300">
+                <h4 className="mb-1 text-base">
                   {edu.institution}
                 </h4>
-                <p className="text-sm text-gray-400">{edu.duration}</p>
+                <p className="text-sm text-gray-500">{edu.duration}</p>
               </motion.div>
 
-              {/* Description List - staggered items */}
-              <motion.ul className="list-disc list-inside space-y-2 text-sm text-gray-300">
+              {/* Description List */}
+              <motion.ul
+                className={`list-disc list-inside space-y-2 text-sm ${
+                  darkMode ? "text-gray-300" : "text-gray-700"
+                }`}
+              >
                 {edu.description.map((desc, i) => (
                   <motion.li
                     key={i}

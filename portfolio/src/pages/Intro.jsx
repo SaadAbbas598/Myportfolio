@@ -4,25 +4,8 @@ import { Link } from "react-scroll";
 import { VscFolderLibrary } from "react-icons/vsc";
 import { motion } from "framer-motion";
 import ParticlesBackground from "../components/ParticlesBackground";
+import { useTheme } from "../context/colorTheme";
 
-// Animation variants
-const container = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.3,
-    },
-  },
-};
-
-const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-};
-
-// New animation variants for scroll-triggered animations
 const scrollVariants = {
   offscreenLeft: {
     opacity: 0,
@@ -43,6 +26,7 @@ const scrollVariants = {
 
 const Intro = () => {
   const [isMobile, setIsMobile] = useState(false);
+  const { darkMode } = useTheme(); // ✅ access theme
 
   useEffect(() => {
     const handleResize = () => {
@@ -57,15 +41,15 @@ const Intro = () => {
   return (
     <section
       id="about"
-      className="py-10 sm:py-14 px-3 sm:px-6 text-black bg-black relative overflow-hidden"
+      className={`py-10 sm:py-14 px-3 sm:px-6 relative overflow-hidden ${
+        darkMode ? "bg-black text-white" : "bg-white text-black"
+      }`}
     >
-      {/* Particles background */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <ParticlesBackground />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto">
-        {/* Title section - slides in from top */}
         <motion.div
           initial={{ opacity: 0, y: -50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -73,16 +57,15 @@ const Intro = () => {
           viewport={{ once: true, margin: "-50px" }}
           className="text-center mb-8 sm:mb-12"
         >
-          <h5 className="text-xs xs:text-sm sm:text-base text-cyan-400 uppercase tracking-wider">
+          <h5 className="text-xs xs:text-sm sm:text-base text-cyan-500 uppercase tracking-wider">
             Get to know
           </h5>
-          <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl text-white font-bold mt-2">
+          <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold mt-2">
             About Me
           </h2>
         </motion.div>
 
         <div className="grid md:grid-cols-[1fr_1.5fr] gap-6 sm:gap-10 items-start">
-          {/* Left: Image - slides in from left */}
           <motion.div
             initial="offscreenLeft"
             whileInView="onscreen"
@@ -109,7 +92,6 @@ const Intro = () => {
             </div>
           </motion.div>
 
-          {/* Right: Text Content - slides in from right */}
           <motion.div
             initial="offscreenRight"
             whileInView="onscreen"
@@ -118,46 +100,50 @@ const Intro = () => {
             className="mt-4 sm:mt-0"
           >
             <div className="grid grid-cols-1 xs:grid-cols-2 gap-3 sm:gap-5 mb-6 sm:mb-8">
-              {/* Experience Card - slides up */}
+              {/* Experience Card */}
               <motion.article
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
                 viewport={{ once: true, margin: "-50px" }}
                 whileHover={{ y: -5 }}
-                className="bg-[#0f0f0f] border border-cyan-500/20 rounded-xl sm:rounded-2xl p-3 sm:p-5 text-center hover:shadow-lg hover:scale-[1.02] hover:border-cyan-500 transition-all duration-300 cursor-default"
+                className={`border border-cyan-500/20 rounded-xl sm:rounded-2xl p-3 sm:p-5 text-center hover:shadow-lg hover:scale-[1.02] hover:border-cyan-500 transition-all duration-300 cursor-default ${
+                  darkMode ? "bg-[#0f0f0f] text-white" : "bg-gray-100 text-black"
+                }`}
               >
                 <FaAward className="text-cyan-500 text-xl sm:text-2xl mb-2 sm:mb-3 mx-auto" />
-                <h5 className="text-base sm:text-lg font-semibold text-white">
+                <h5 className="text-base sm:text-lg font-semibold">
                   Experience
                 </h5>
                 <small className="text-xs text-gray-400">1.5 years</small>
               </motion.article>
 
-              {/* Projects Card - slides up with delay */}
+              {/* Projects Card */}
               <motion.article
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.4 }}
                 viewport={{ once: true, margin: "-50px" }}
                 whileHover={{ y: -5 }}
-                className="bg-[#0f0f0f] border border-cyan-500/20 rounded-xl sm:rounded-2xl p-3 sm:p-5 text-center hover:shadow-lg hover:scale-[1.02] hover:border-cyan-500 transition-all duration-300 cursor-default"
+                className={`border border-cyan-500/20 rounded-xl sm:rounded-2xl p-3 sm:p-5 text-center hover:shadow-lg hover:scale-[1.02] hover:border-cyan-500 transition-all duration-300 cursor-default ${
+                  darkMode ? "bg-[#0f0f0f] text-white" : "bg-gray-100 text-black"
+                }`}
               >
                 <VscFolderLibrary className="text-cyan-500 text-xl sm:text-2xl mb-2 sm:mb-3 mx-auto" />
-                <h5 className="text-base sm:text-lg font-semibold text-white">
+                <h5 className="text-base sm:text-lg font-semibold">
                   Projects
                 </h5>
                 <small className="text-xs text-gray-400">10+ Completed</small>
               </motion.article>
             </div>
 
-            {/* Description text - slides up with delay */}
+            {/* Description */}
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
               viewport={{ once: true, margin: "-50px" }}
-              className="text-white mb-6 sm:mb-8 leading-relaxed text-xs xs:text-sm sm:text-base"
+              className="mb-6 sm:mb-8 leading-relaxed text-xs xs:text-sm sm:text-base"
             >
               1+ years experienced Front End Developer with hands-on experience
               in identifying web-based user interactions along with designing
@@ -170,7 +156,7 @@ const Intro = () => {
               performance.
             </motion.p>
 
-            {/* Button - slides up with delay */}
+            {/* Button */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}

@@ -19,23 +19,16 @@ import {
   SiFigma,
   SiTypescript,
 } from "react-icons/si";
+import { useTheme } from "../context/colorTheme";
 
 const skills = [
   { id: 1, icon: <FaHtml5 className="text-orange-500" />, name: "HTML" },
   { id: 2, icon: <FaCss3Alt className="text-blue-500" />, name: "CSS" },
   { id: 3, icon: <FaJs className="text-yellow-500" />, name: "JavaScript" },
-  {
-    id: 4,
-    icon: <SiTypescript className="text-blue-400" />,
-    name: "TypeScript",
-  },
+  { id: 4, icon: <SiTypescript className="text-blue-400" />, name: "TypeScript" },
   { id: 5, icon: <FaReact className="text-cyan-400" />, name: "React" },
   { id: 6, icon: <SiRedux className="text-purple-500" />, name: "Redux" },
-  {
-    id: 7,
-    icon: <SiTailwindcss className="text-teal-400" />,
-    name: "Tailwind",
-  },
+  { id: 7, icon: <SiTailwindcss className="text-teal-400" />, name: "Tailwind" },
   { id: 8, icon: <FaNodeJs className="text-green-500" />, name: "Node.js" },
   { id: 9, icon: <SiMongodb className="text-green-400" />, name: "MongoDB" },
   { id: 10, icon: <SiPrisma className="text-gray-400" />, name: "Prisma" },
@@ -49,11 +42,11 @@ const Skills = () => {
   const skillContainerRef = useRef(null);
   const animationRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
+  const { darkMode } = useTheme; // ✅
 
   const duration = isMobile ? 35 : 20;
   const duplicatedSkills = [...skills, ...skills, ...skills];
 
-  // Animation variants
   const container = {
     hidden: { opacity: 0 },
     show: {
@@ -88,7 +81,6 @@ const Skills = () => {
   useEffect(() => {
     const container = containerRef.current;
     const skillContainer = skillContainerRef.current;
-
     if (!container || !skillContainer) return;
 
     const scrollWidth = skillContainer.scrollWidth / 4;
@@ -113,7 +105,9 @@ const Skills = () => {
   return (
     <section
       id="skills"
-      className="relative py-12 bg-black text-white overflow-hidden"
+      className={`relative py-12 overflow-hidden ${
+        darkMode ? "bg-black text-white" : "bg-white text-black"
+      }`}
     >
       <ParticlesBackground />
 
@@ -125,7 +119,6 @@ const Skills = () => {
           variants={container}
           className="w-full max-w-6xl"
         >
-          {/* Title - slides down */}
           <motion.h2
             variants={item}
             className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 text-center text-cyan-500"
@@ -133,7 +126,6 @@ const Skills = () => {
             Tech Stack
           </motion.h2>
 
-          {/* Skills carousel container */}
           <motion.div
             variants={item}
             ref={containerRef}
@@ -154,14 +146,20 @@ const Skills = () => {
                   className="flex flex-col items-center mx-2 sm:mx-4 w-20 sm:w-24"
                 >
                   <motion.div
-                    className="w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center rounded-full bg-[#0f0f0f] border border-cyan-500/20 hover:border-cyan-500 transition-colors duration-300"
+                    className={`w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center rounded-full transition-colors duration-300 border ${
+                      darkMode
+                        ? "bg-[#0f0f0f] text-white border-cyan-500/20 hover:border-cyan-500"
+                        : "bg-gray-100 text-black border-cyan-500/10 hover:border-cyan-500"
+                    }`}
                     whileHover={{ scale: 1.1 }}
                     transition={{ type: "spring", stiffness: 400 }}
                   >
                     <div className="text-3xl sm:text-4xl">{skill.icon}</div>
                   </motion.div>
                   <motion.p
-                    className="text-xs sm:text-sm font-medium text-white/80 mt-2 text-center"
+                    className={`text-xs sm:text-sm font-medium mt-2 text-center ${
+                      darkMode ? "text-white/80" : "text-gray-800"
+                    }`}
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}

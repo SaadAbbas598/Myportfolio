@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import ParticlesBackground from "../components/ParticlesBackground";
+import { useTheme } from "../context/colorTheme";
 
 const experience = {
   title: "Software Intern",
@@ -17,6 +18,7 @@ const experience = {
 
 const WorkExperience = () => {
   const [isMobile, setIsMobile] = useState(false);
+  const { darkMode } = useTheme; // ✅ get dark mode
 
   useEffect(() => {
     const handleResize = () => {
@@ -28,7 +30,6 @@ const WorkExperience = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Animation variants
   const container = {
     hidden: { opacity: 0 },
     show: {
@@ -65,24 +66,25 @@ const WorkExperience = () => {
   return (
     <section
       id="experience"
-      className="relative py-12 bg-black text-white overflow-hidden"
+      className={`relative py-12 overflow-hidden ${
+        darkMode ? "bg-black text-white" : "bg-white text-black"
+      }`}
     >
-      {/* Particles Background */}
       <ParticlesBackground />
 
       <div className="relative z-10 container mx-auto px-4">
-        {/* Title - slides down */}
         <motion.h2
           initial={{ opacity: 0, y: -30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
-          className="mb-6 text-center text-3xl sm:text-4xl font-bold text-cyan-400"
+          className={`mb-6 text-center text-3xl sm:text-4xl font-bold ${
+            darkMode ? "text-cyan-400" : "text-cyan-600"
+          }`}
         >
           Work Experience
         </motion.h2>
 
-        {/* Experience card container */}
         <motion.div
           initial="hidden"
           whileInView="show"
@@ -90,35 +92,46 @@ const WorkExperience = () => {
           variants={container}
           className="mx-auto max-w-3xl"
         >
-          {/* Card - slides from left */}
           <motion.div
             variants={slideFromLeft}
-            className="rounded-lg border border-[#00ffff30] bg-[#0f0f0f] p-6 sm:p-8"
+            className={`rounded-lg border p-6 sm:p-8 ${
+              darkMode
+                ? "border-[#00ffff30] bg-[#0f0f0f]"
+                : "border-cyan-200 bg-gray-100"
+            }`}
           >
-            {/* Header section */}
             <motion.div variants={item} className="mb-4">
               <motion.h3
                 variants={item}
-                className="mb-1 text-lg sm:text-xl font-semibold text-cyan-400"
+                className={`mb-1 text-lg sm:text-xl font-semibold ${
+                  darkMode ? "text-cyan-400" : "text-cyan-600"
+                }`}
               >
                 {experience.title}
               </motion.h3>
               <motion.h4
                 variants={item}
-                className="mb-2 text-sm sm:text-base text-gray-300"
+                className={`mb-2 text-sm sm:text-base ${
+                  darkMode ? "text-gray-300" : "text-gray-700"
+                }`}
               >
                 {experience.company}
               </motion.h4>
               <motion.p
                 variants={item}
-                className="mb-4 text-sm text-gray-400"
+                className={`mb-4 text-sm ${
+                  darkMode ? "text-gray-400" : "text-gray-600"
+                }`}
               >
                 {experience.date}
               </motion.p>
             </motion.div>
 
-            {/* Description list - staggered items */}
-            <motion.ul className="list-disc pl-5 space-y-2 text-sm sm:text-base text-gray-300">
+            <motion.ul
+              className={`list-disc pl-5 space-y-2 text-sm sm:text-base ${
+                darkMode ? "text-gray-300" : "text-gray-700"
+              }`}
+            >
               {experience.description.map((desc, i) => (
                 <motion.li
                   key={i}

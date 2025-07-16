@@ -3,9 +3,11 @@ import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import Tilt from "react-parallax-tilt";
 import ParticlesBackground from "../components/ParticlesBackground";
+import { useTheme } from "../context/colorTheme";
 
 const Testimonials = () => {
   const [isMobile, setIsMobile] = useState(false);
+  const { darkMode } = useTheme(); // ✅
 
   useEffect(() => {
     const handleResize = () => {
@@ -41,7 +43,6 @@ const Testimonials = () => {
     },
   ];
 
-  // Animation variants
   const container = {
     hidden: { opacity: 0 },
     show: {
@@ -68,14 +69,15 @@ const Testimonials = () => {
     show: { opacity: 1, x: 0, transition: { duration: 0.6 } },
   };
 
-  const getCardAnimation = (index) => {
-    return index % 2 === 0 ? slideFromLeft : slideFromRight;
-  };
+  const getCardAnimation = (index) =>
+    index % 2 === 0 ? slideFromLeft : slideFromRight;
 
   return (
     <section
       id="testimonials"
-      className="relative min-h-screen w-full px-3 sm:px-6 py-10 sm:py-14 bg-black text-white overflow-hidden"
+      className={`relative min-h-screen w-full px-3 sm:px-6 py-10 sm:py-14 overflow-hidden ${
+        darkMode ? "bg-black text-white" : "bg-white text-black"
+      }`}
     >
       <ParticlesBackground />
 
@@ -87,15 +89,13 @@ const Testimonials = () => {
           variants={container}
           className="max-w-6xl text-center w-full"
         >
-          {/* Subtitle - slides down */}
           <motion.p
             variants={item}
-            className="uppercase text-xs xs:text-sm tracking-wide text-cyan-400 mb-2"
+            className="uppercase text-xs xs:text-sm tracking-wide text-cyan-500 mb-2"
           >
             WHAT OTHERS SAY
           </motion.p>
 
-          {/* Title - slides down with delay */}
           <motion.h2
             variants={item}
             className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold mb-5 sm:mb-8 text-cyan-500"
@@ -103,10 +103,11 @@ const Testimonials = () => {
             Testimonials
           </motion.h2>
 
-          {/* Description - slides up */}
           <motion.p
             variants={item}
-            className="mb-6 sm:mb-10 text-gray-300 max-w-3xl mx-auto text-xs xs:text-sm sm:text-base px-2 sm:px-0 leading-relaxed"
+            className={`mb-6 sm:mb-10 max-w-3xl mx-auto text-xs xs:text-sm sm:text-base px-2 sm:px-0 leading-relaxed ${
+              darkMode ? "text-gray-300" : "text-gray-700"
+            }`}
           >
             Discover what clients and colleagues say about my work in the
             testimonial section. Their feedback highlights my expertise in MERN
@@ -114,7 +115,6 @@ const Testimonials = () => {
             delivering high-quality web applications.
           </motion.p>
 
-          {/* Testimonial cards grid */}
           <motion.div
             variants={container}
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
@@ -128,16 +128,24 @@ const Testimonials = () => {
                 <Tilt
                   tiltMaxAngleX={isMobile ? 0 : 5}
                   tiltMaxAngleY={isMobile ? 0 : 5}
-                  className="p-4 sm:p-5 rounded-xl shadow-lg bg-[#0f0f0f] border border-cyan-500/20"
                   glareEnable={!isMobile}
                   glareMaxOpacity={0.1}
+                  className={`p-4 sm:p-5 rounded-xl border ${
+                    darkMode
+                      ? "bg-[#0f0f0f] text-white border-cyan-500/20"
+                      : "bg-gray-100 text-black border-cyan-500/10"
+                  } shadow-lg`}
                 >
                   <motion.div
                     className="p-2 xs:p-3 sm:p-4 rounded-lg"
                     whileHover={{ scale: isMobile ? 1 : 1.03 }}
                     transition={{ type: "spring", stiffness: 300 }}
                   >
-                    <p className="text-xs xs:text-sm sm:text-base leading-relaxed text-white/80 mb-4">
+                    <p
+                      className={`text-xs xs:text-sm sm:text-base leading-relaxed mb-4 ${
+                        darkMode ? "text-white/80" : "text-black/80"
+                      }`}
+                    >
                       "{testimonial.quote}"
                     </p>
                     <div className="flex items-center mt-3">
@@ -151,24 +159,35 @@ const Testimonials = () => {
                         initial={{ opacity: 0, scale: 0.8 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
-                        transition={{ delay: index * 0.1 + 0.3, duration: 0.5 }}
+                        transition={{
+                          delay: index * 0.1 + 0.3,
+                          duration: 0.5,
+                        }}
                       />
                       <div className="text-left">
-                        <motion.h3 
-                          className="text-sm sm:text-base font-semibold text-white"
+                        <motion.h3
+                          className="text-sm sm:text-base font-semibold"
                           initial={{ opacity: 0, x: -10 }}
                           whileInView={{ opacity: 1, x: 0 }}
                           viewport={{ once: true }}
-                          transition={{ delay: index * 0.1 + 0.4, duration: 0.5 }}
+                          transition={{
+                            delay: index * 0.1 + 0.4,
+                            duration: 0.5,
+                          }}
                         >
                           {testimonial.name}
                         </motion.h3>
-                        <motion.p 
-                          className="text-xs text-gray-400"
+                        <motion.p
+                          className={`text-xs ${
+                            darkMode ? "text-gray-400" : "text-gray-600"
+                          }`}
                           initial={{ opacity: 0, x: -10 }}
                           whileInView={{ opacity: 1, x: 0 }}
                           viewport={{ once: true }}
-                          transition={{ delay: index * 0.1 + 0.5, duration: 0.5 }}
+                          transition={{
+                            delay: index * 0.1 + 0.5,
+                            duration: 0.5,
+                          }}
                         >
                           {testimonial.position}
                         </motion.p>

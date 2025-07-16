@@ -3,23 +3,22 @@ import { motion } from "framer-motion";
 import { Element } from "react-scroll";
 import Tilt from "react-parallax-tilt";
 import { useState, useEffect } from "react";
-import ParticlesBackground from "../components/ParticlesBackground"; // ✅ Add this import
+import ParticlesBackground from "../components/ParticlesBackground";
+import { useTheme } from "../context/ColorTheme"; // ✅ Theme context
 
 const MyProjects = () => {
   const [showAll, setShowAll] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const { darkMode } = useTheme(); // ✅ Theme status
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const projects = [
-  
     {
       title: "A Software House Website",
       description:
@@ -60,7 +59,7 @@ const MyProjects = () => {
       image: "/images/image6.png",
       link: "https://smart-quest-system.vercel.app/",
     },
-      {
+    {
       title: "My Portfolio",
       description:
         "A personal portfolio website to showcase my projects, skills, and professional achievements with a modern, responsive design.",
@@ -106,8 +105,11 @@ const MyProjects = () => {
 
   return (
     <Element name="projects">
-      <section className="relative z-10 py-16 sm:py-24 px-4 sm:px-6 lg:px-8 text-white overflow-hidden bg-black">
-        {/* ✅ Background Particles */}
+      <section
+        className={`relative z-10 py-16 sm:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden ${
+          darkMode ? "bg-black text-white" : "bg-white text-black"
+        }`}
+      >
         <ParticlesBackground />
 
         <div className="relative z-10 max-w-7xl mx-auto">
@@ -129,13 +131,15 @@ const MyProjects = () => {
             }}
           >
             <motion.h2
-              className="text-3xl sm:text-4xl md:text-5xl font-bold text-cyan-400 mb-4"
+              className={`text-3xl sm:text-4xl md:text-5xl font-bold mb-4 ${
+                darkMode ? "text-cyan-400" : "text-cyan-600"
+              }`}
               variants={{
                 hidden: { opacity: 0, y: -30 },
                 visible: {
                   opacity: 1,
                   y: 0,
-                  transition: { duration: 0.6, ease: "easeOut" },
+                  transition: { duration: 0.6 },
                 },
               }}
             >
@@ -143,17 +147,15 @@ const MyProjects = () => {
             </motion.h2>
 
             <motion.p
-              className="text-gray-300 text-base sm:text-lg max-w-2xl mx-auto"
+              className={`text-base sm:text-lg max-w-2xl mx-auto ${
+                darkMode ? "text-gray-300" : "text-gray-700"
+              }`}
               variants={{
                 hidden: { opacity: 0, y: 20 },
                 visible: {
                   opacity: 1,
                   y: 0,
-                  transition: {
-                    duration: 0.6,
-                    ease: "easeOut",
-                    delay: 0.2,
-                  },
+                  transition: { duration: 0.6, delay: 0.2 },
                 },
               }}
             >
@@ -177,7 +179,7 @@ const MyProjects = () => {
                   <Tilt
                     tiltMaxAngleX={10}
                     tiltMaxAngleY={10}
-                    glareEnable={true}
+                    glareEnable
                     glareMaxOpacity={0.3}
                     glareColor="#00FFFF"
                     glarePosition="all"
@@ -189,7 +191,11 @@ const MyProjects = () => {
                         boxShadow: "0 8px 32px rgba(0, 255, 255, 0.2)",
                       }}
                       transition={{ duration: 0.3 }}
-                      className="bg-[#1a1a1a] border border-cyan-500/30 rounded-xl overflow-hidden h-full flex flex-col"
+                      className={`border rounded-xl overflow-hidden h-full flex flex-col ${
+                        darkMode
+                          ? "bg-[#1a1a1a] border-cyan-500/30"
+                          : "bg-white border-cyan-300 shadow-md"
+                      }`}
                     >
                       <div className="overflow-hidden h-48 sm:h-56">
                         <img
@@ -199,17 +205,29 @@ const MyProjects = () => {
                         />
                       </div>
                       <div className="p-5 sm:p-6 flex flex-col flex-grow">
-                        <h3 className="text-lg sm:text-xl font-semibold text-white mb-3">
+                        <h3
+                          className={`text-lg sm:text-xl font-semibold mb-3 ${
+                            darkMode ? "text-white" : "text-black"
+                          }`}
+                        >
                           {project.title}
                         </h3>
-                        <p className="text-gray-400 text-sm sm:text-base mb-4 flex-grow">
+                        <p
+                          className={`text-sm sm:text-base mb-4 flex-grow ${
+                            darkMode ? "text-gray-400" : "text-gray-600"
+                          }`}
+                        >
                           {project.description}
                         </p>
                         <div className="flex flex-wrap gap-2 mb-4">
                           {project.tags.map((tag, idx) => (
                             <span
                               key={idx}
-                              className="text-xs bg-cyan-900/40 text-cyan-400 px-3 py-1 rounded-full"
+                              className={`text-xs px-3 py-1 rounded-full ${
+                                darkMode
+                                  ? "bg-cyan-900/40 text-cyan-400"
+                                  : "bg-cyan-100 text-cyan-700"
+                              }`}
                             >
                               {tag}
                             </span>
@@ -217,7 +235,11 @@ const MyProjects = () => {
                         </div>
                         <a
                           href={project.link}
-                          className="mt-auto text-cyan-400 hover:text-cyan-300 text-sm sm:text-base font-medium transition-colors duration-300"
+                          className={`mt-auto text-sm sm:text-base font-medium transition-colors duration-300 ${
+                            darkMode
+                              ? "text-cyan-400 hover:text-cyan-300"
+                              : "text-cyan-600 hover:text-cyan-800"
+                          }`}
                           target="_blank"
                           rel="noopener noreferrer"
                         >
@@ -236,7 +258,11 @@ const MyProjects = () => {
             <div className="mt-10 text-center">
               <button
                 onClick={() => setShowAll(true)}
-                className="text-cyan-400 hover:text-cyan-300 border border-cyan-500/30 px-6 py-2 rounded-md transition-all duration-300"
+                className={`px-6 py-2 rounded-md border transition-all duration-300 ${
+                  darkMode
+                    ? "text-cyan-400 hover:text-cyan-300 border-cyan-500/30"
+                    : "text-cyan-600 hover:text-cyan-800 border-cyan-300"
+                }`}
               >
                 See More Projects
               </button>

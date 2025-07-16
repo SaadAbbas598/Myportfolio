@@ -13,6 +13,7 @@ import Intro from "./pages/Intro";
 import ProfessionalCertificates from "./pages/Procertificates";
 import EmailIcon from "./pages/Email";
 import Education from "./pages/Education";
+import { ThemeProvider } from "./context/colorTheme";
 
 function App() {
   const [loadingDone, setLoadingDone] = useState(false);
@@ -23,6 +24,7 @@ function App() {
         <Preloader onFinish={() => setLoadingDone(true)} />
       ) : (
         <>
+        <ThemeProvider>
           <Navbar />
           <Header />
           <Intro />
@@ -36,6 +38,7 @@ function App() {
           <ContactForm />
           <EmailIcon />
           <Footer />
+          </ThemeProvider>
         </>
       )}
     </>

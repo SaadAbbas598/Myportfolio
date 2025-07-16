@@ -2,8 +2,11 @@
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-scroll";
+import { Sun, Moon } from "lucide-react";
+import { useTheme } from "../context/ColorTheme"; // adjust if your context path is different
 
 const Navbar = () => {
+  const { darkMode, setDarkMode } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [isVisible, setIsVisible] = useState(true);
@@ -22,13 +25,11 @@ const Navbar = () => {
 
   const handleScroll = () => {
     const scrollY = window.scrollY;
-    const viewportBottom = scrollY + window.innerHeight;
     setIsAtTop(scrollY < 50);
     setIsVisible(scrollY < lastScrollY.current || scrollY < 50);
     lastScrollY.current = scrollY;
 
     let matched = false;
-
     for (const section of navLinks.map((l) => l.id)) {
       const el = document.getElementById(section);
       if (el) {
@@ -45,14 +46,16 @@ const Navbar = () => {
       }
     }
 
-    // If at bottom and nothing matched, assume "contact" is active
-    if (!matched && window.innerHeight + scrollY >= document.body.scrollHeight - 10) {
+    if (
+      !matched &&
+      window.innerHeight + scrollY >= document.body.scrollHeight - 10
+    ) {
       setActiveSection("contact");
     }
   };
 
   useEffect(() => {
-    handleScroll(); // On first load
+    handleScroll();
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -66,8 +69,14 @@ const Navbar = () => {
         const left = rect.left - containerRect.left;
         const width = rect.width;
 
-        document.documentElement.style.setProperty("--underline-left", `${left}px`);
-        document.documentElement.style.setProperty("--underline-width", `${width}px`);
+        document.documentElement.style.setProperty(
+          "--underline-left",
+          `${left}px`
+        );
+        document.documentElement.style.setProperty(
+          "--underline-width",
+          `${width}px`
+        );
       }
     };
 
@@ -78,15 +87,21 @@ const Navbar = () => {
 
   return (
     <motion.nav
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 p-4 shadow-md text-white 
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 p-4 shadow-md 
         ${isVisible ? "translate-y-0" : "-translate-y-full"} 
-        ${isAtTop ? "bg-transparent" : "bg-black/90 backdrop-blur-sm"}`}
+        ${isAtTop ? "bg-transparent" : "bg-black/90 backdrop-blur-sm"}
+        ${darkMode ? "text-white" : "text-black"}
+      `}
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
       <div className="max-w-7xl mx-auto flex justify-between items-center px-4">
-        <Link to="/" className="relative w-16 h-12 group overflow-hidden cursor-pointer block">
+        {/* Logo */}
+        <Link
+          to="/"
+          className="relative w-16 h-12 group overflow-hidden cursor-pointer block"
+        >
           <div className="absolute inset-0 flex items-center justify-center text-5xl font-bold text-cyan-500 transition-opacity duration-300 group-hover:opacity-0">
             <h1>S.</h1>
           </div>
@@ -95,8 +110,18 @@ const Navbar = () => {
           </div>
         </Link>
 
-        {/* Desktop Navigation Links */}
+        {/* Desktop Nav + Icons */}
         <div className="relative hidden md:flex items-center space-x-6">
+          {/* Theme Toggle */}
+          <div className="flex items-center space-x-2 pr-4 border-r border-white/20 cursor-pointer">
+            {darkMode ? (
+              <Sun className="w-5 h-5 text-yellow-300" onClick={() => setDarkMode(false)} />
+            ) : (
+              <Moon className="w-5 h-5 text-blue-300" onClick={() => setDarkMode(true)} />
+            )}
+          </div>
+
+          {/* Navigation Links */}
           {navLinks.map((link) => (
             <Link
               key={link.id}
@@ -108,14 +133,14 @@ const Navbar = () => {
               className={`relative cursor-pointer pb-2 transition-colors ${
                 activeSection === link.id
                   ? "text-cyan-400 font-semibold"
-                  : "text-white"
+                  : darkMode ? "text-white" : "text-black"
               }`}
             >
               {link.label}
             </Link>
           ))}
 
-          {/* Animated Underline */}
+          {/* Underline */}
           <motion.div
             className="absolute bottom-0 h-0.5 bg-white"
             layout
@@ -128,8 +153,15 @@ const Navbar = () => {
           />
         </div>
 
-        {/* Mobile Toggle */}
-        <div className="md:hidden z-50">
+        {/* Mobile: Theme + Menu */}
+        <div className="md:hidden z-50 flex items-center space-x-4">
+          <div className="cursor-pointer">
+            {darkMode ? (
+              <Sun className="w-5 h-5 text-yellow-300" onClick={() => setDarkMode(false)} />
+            ) : (
+              <Moon className="w-5 h-5 text-blue-300" onClick={() => setDarkMode(true)} />
+            )}
+          </div>
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="text-2xl text-cyan-500 focus:outline-none"
@@ -140,7 +172,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Dropdown Menu */}
       {isOpen && (
         <motion.div
           className="md:hidden bg-black/90 text-white mt-4 px-4 py-3 space-y-4 text-center z-40"

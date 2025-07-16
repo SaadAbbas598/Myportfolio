@@ -45,7 +45,7 @@ const Header = () => {
 
             <p className="text-xs xs:text-sm sm:text-base text-opacity-70 mb-6 sm:mb-8 leading-relaxed max-w-md sm:max-w-xl mx-auto md:mx-0 px-1">
               Passionate developer with expertise in modern web technologies.
-              Creating efficient, scalable, and user-friendly applications.
+              Creating efficient, scalable, and user-friendly  applications.
             </p>
 
             <div className="flex flex-row flex-wrap justify-center md:justify-start gap-3 sm:gap-4 mb-6">

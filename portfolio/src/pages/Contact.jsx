@@ -5,14 +5,14 @@ import { motion } from "framer-motion";
 import { FiSend } from "react-icons/fi";
 import emailjs from "emailjs-com";
 import ParticlesBackground from "../components/ParticlesBackground";
-import { useTheme } from "../context/colorTheme"; // ✅ Theme context
+import { useTheme } from "../context/colorTheme";
 
 const ContactForm = () => {
   const formRef = useRef();
   const [isMobile, setIsMobile] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
-  const { darkMode } = useTheme(); // ✅ Get current theme
+  const { darkMode } = useTheme();
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
@@ -25,23 +25,27 @@ const ContactForm = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    const serviceId = "service_lt5svqo";
-    const templateId = "template_aoez6m7";
-    const userId = "iL1jEoGxX0efT4QsO";
+    const name = formRef.current.name.value;
+    const email = formRef.current.email.value;
+    const message = formRef.current.message.value;
+
+    const templateParams = {
+      from_name: name,
+      from_email: email,
+      message: message,
+    };
 
     emailjs
-      .sendForm(serviceId, templateId, formRef.current, userId)
-      .then(
-        () => {
-          setShowSuccessPopup(true);
-          formRef.current.reset();
-          setTimeout(() => setShowSuccessPopup(false), 3000);
-        },
-        (error) => {
-          console.error("Failed to send email:", error.text);
-          alert("Failed to send message. Please try again.");
-        }
-      )
+      .send("service_lt5svqo", "template_aoez6m7", templateParams, "iL1jEoGxX0efT4QsO")
+      .then(() => {
+        setShowSuccessPopup(true);
+        formRef.current.reset();
+        setTimeout(() => setShowSuccessPopup(false), 3000);
+      })
+      .catch((error) => {
+        console.error("Failed to send email:", error.text);
+        alert("Failed to send message. Please try again.");
+      })
       .finally(() => setIsSubmitting(false));
   };
 
@@ -87,7 +91,7 @@ const ContactForm = () => {
           darkMode ? "bg-black text-white" : "bg-white text-gray-800"
         }`}
       >
-        {/* Background Particles */}
+        {/* Particles Background */}
         <div className="absolute inset-0 z-0 pointer-events-none">
           <ParticlesBackground />
         </div>
@@ -141,7 +145,6 @@ const ContactForm = () => {
             onSubmit={handleSubmit}
             className="flex flex-col gap-5"
           >
-            {/* Name */}
             <motion.div variants={fadeInFromLeft}>
               <label htmlFor="name" className="text-sm font-medium">
                 Your Name
@@ -160,7 +163,6 @@ const ContactForm = () => {
               />
             </motion.div>
 
-            {/* Email */}
             <motion.div variants={fadeInFromRight}>
               <label htmlFor="email" className="text-sm font-medium">
                 Email Address
@@ -179,7 +181,6 @@ const ContactForm = () => {
               />
             </motion.div>
 
-            {/* Message */}
             <motion.div variants={fadeInFromLeft}>
               <label htmlFor="message" className="text-sm font-medium">
                 Your Message
@@ -198,7 +199,6 @@ const ContactForm = () => {
               />
             </motion.div>
 
-            {/* Submit Button */}
             <motion.div variants={fadeInFromBottom}>
               <motion.button
                 whileHover={{

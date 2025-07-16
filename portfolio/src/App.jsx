@@ -13,7 +13,7 @@ import Intro from "./pages/Intro";
 import ProfessionalCertificates from "./pages/Procertificates";
 import EmailIcon from "./pages/Email";
 import Education from "./pages/Education";
-import { ThemeProvider } from "./context/colorTheme";
+import { ThemeProvider } from "./context/ColorTheme";
 
 function App() {
   const [loadingDone, setLoadingDone] = useState(false);

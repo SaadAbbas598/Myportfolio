@@ -1,6 +1,8 @@
 import React, { useMemo, useState, useEffect } from "react";
+import { useTheme } from "../context/ColorTheme";
 
 const ParticlesBackground = () => {
+  const { darkMode } = useTheme(); // ✅ Access darkMode
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -16,14 +18,19 @@ const ParticlesBackground = () => {
   const particleShadows = useMemo(() => {
     const count = isMobile ? 4 : 10;
     return Array.from({ length: count }).map(() =>
-      generateBoxShadow(isMobile ? 60 : 120)
+      generateBoxShadow(isMobile ? 60 : 120, darkMode ? "#fff" : "#000") // ✅ Pass color
     );
-  }, [isMobile]);
+  }, [isMobile, darkMode]);
 
   return (
     <div className="absolute inset-0 z-0 pointer-events-none">
       {/* Background Color Layer */}
-      <div className="absolute inset-0 bg-[#0a0909] grayscale" />
+      <div
+        className="absolute inset-0 grayscale transition-colors duration-500"
+        style={{
+          backgroundColor: darkMode ? "#0a0909" : "#f1f1f1", // ✅ theme-based background
+        }}
+      />
 
       {/* Particle Layer */}
       <div className="absolute inset-0 overflow-hidden">
@@ -57,12 +64,12 @@ const ParticlesBackground = () => {
   );
 };
 
-function generateBoxShadow(count) {
+function generateBoxShadow(count, color = "#fff") {
   const spacing = 2560;
   return Array.from({ length: count }).map(() => {
     const x = Math.floor(Math.random() * spacing);
     const y = Math.floor(Math.random() * spacing);
-    return `${x}px ${y}px #fff`;
+    return `${x}px ${y}px ${color}`;
   }).join(", ");
 }
 

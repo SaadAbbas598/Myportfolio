@@ -3,7 +3,7 @@ import { BsLinkedin } from "react-icons/bs";
 import { FaGithub } from "react-icons/fa";
 import { Link } from "react-scroll";
 import ParticlesBackground from "../components/ParticlesBackground";
-import { useTheme } from "../context/ColorTheme"; // ⬅️ added
+import { useTheme } from "../context/colorTheme";
 
 const Header = () => {
   const { darkMode } = useTheme(); // ⬅️ added

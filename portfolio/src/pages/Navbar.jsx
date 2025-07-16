@@ -2,8 +2,8 @@
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-scroll";
-import { Sun, Moon } from "lucide-react";
-import { useTheme } from "../context/ColorTheme"; // adjust if your context path is different
+import { Sun, Moon } from "lucide-react"; // adjust if your context path is different
+import { useTheme } from "../context/colorTheme";
 
 const Navbar = () => {
   const { darkMode, setDarkMode } = useTheme();

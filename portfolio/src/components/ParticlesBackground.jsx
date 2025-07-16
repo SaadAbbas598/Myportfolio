@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useEffect } from "react";
-import { useTheme } from "../context/ColorTheme";
+import { useTheme } from "../context/colorTheme";
 
 const ParticlesBackground = () => {
   const { darkMode } = useTheme(); // ✅ Access darkMode

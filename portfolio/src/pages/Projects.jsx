@@ -4,12 +4,12 @@ import { Element } from "react-scroll";
 import Tilt from "react-parallax-tilt";
 import { useState, useEffect } from "react";
 import ParticlesBackground from "../components/ParticlesBackground";
-import { useTheme } from "../context/ColorTheme"; // ✅ Theme context
+import { useTheme } from "../context/colorTheme";
 
 const MyProjects = () => {
   const [showAll, setShowAll] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const { darkMode } = useTheme(); // ✅ Theme status
+  const { darkMode } = useTheme; // ✅ Theme status
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);

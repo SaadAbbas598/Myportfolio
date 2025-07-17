@@ -7,32 +7,19 @@ import ParticlesBackground from "../components/ParticlesBackground";
 import { useTheme } from "../context/colorTheme";
 
 const scrollVariants = {
-  offscreenLeft: {
-    opacity: 0,
-    x: -50,
-    transition: { duration: 0.5 },
-  },
-  offscreenRight: {
-    opacity: 0,
-    x: 50,
-    transition: { duration: 0.5 },
-  },
-  onscreen: {
-    opacity: 1,
-    x: 0,
-    transition: { duration: 0.5, delay: 0.2 },
-  },
+  offscreenLeft: { opacity: 0, x: -50, transition: { duration: 0.5 } },
+  offscreenRight: { opacity: 0, x: 50, transition: { duration: 0.5 } },
+  onscreen: { opacity: 1, x: 0, transition: { duration: 0.5, delay: 0.2 } },
 };
 
 const Intro = () => {
   const [isMobile, setIsMobile] = useState(false);
-  const { darkMode } = useTheme(); // ✅ access theme
+  const { darkMode } = useTheme();
 
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
     };
-
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -41,15 +28,18 @@ const Intro = () => {
   return (
     <section
       id="about"
-      className={`py-10 sm:py-14 px-3 sm:px-6 relative overflow-hidden ${
+      className={`py-12 sm:py-16 px-4 sm:px-6 relative overflow-hidden ${
         darkMode ? "bg-black text-white" : "bg-white text-black"
       }`}
+      role="region"
+      aria-labelledby="about-heading"
     >
       <div className="absolute inset-0 z-0 pointer-events-none">
         <ParticlesBackground />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto">
+        {/* Section Title */}
         <motion.div
           initial={{ opacity: 0, y: -50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -57,15 +47,19 @@ const Intro = () => {
           viewport={{ once: true, margin: "-50px" }}
           className="text-center mb-8 sm:mb-12"
         >
-          <h5 className="text-xs xs:text-sm sm:text-base text-cyan-500 uppercase tracking-wider">
-            Get to know
-          </h5>
-          <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold mt-2">
-            About Me
+          <h2
+            id="about-heading"
+            className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold mt-2"
+          >
+            About me
           </h2>
+          <p className="text-xs xs:text-sm sm:text-base text-cyan-500 uppercase tracking-wider">
+            Get to know me
+          </p>
         </motion.div>
 
         <div className="grid md:grid-cols-[1fr_1.5fr] gap-6 sm:gap-10 items-start">
+          {/* Left: Image */}
           <motion.div
             initial="offscreenLeft"
             whileInView="onscreen"
@@ -76,7 +70,7 @@ const Intro = () => {
             <div className="overflow-hidden rounded-xl sm:rounded-2xl transition-all duration-300 hover:scale-[1.02] w-full h-full">
               <motion.img
                 src="/images/profile.png"
-                alt="Saad Abbas"
+                alt="Saad Abbas – Full Stack Developer Profile"
                 className="object-cover w-full h-full transition-all duration-500 grayscale hover:grayscale-0 group-hover:grayscale-0"
                 loading="lazy"
                 width={400}
@@ -92,6 +86,7 @@ const Intro = () => {
             </div>
           </motion.div>
 
+          {/* Right: Content */}
           <motion.div
             initial="offscreenRight"
             whileInView="onscreen"
@@ -100,7 +95,7 @@ const Intro = () => {
             className="mt-4 sm:mt-0"
           >
             <div className="grid grid-cols-1 xs:grid-cols-2 gap-3 sm:gap-5 mb-6 sm:mb-8">
-              {/* Experience Card */}
+              {/* Experience */}
               <motion.article
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -108,17 +103,17 @@ const Intro = () => {
                 viewport={{ once: true, margin: "-50px" }}
                 whileHover={{ y: -5 }}
                 className={`border border-cyan-500/20 rounded-xl sm:rounded-2xl p-3 sm:p-5 text-center hover:shadow-lg hover:scale-[1.02] hover:border-cyan-500 transition-all duration-300 cursor-default ${
-                  darkMode ? "bg-[#0f0f0f] text-white" : "bg-gray-100 text-black"
+                  darkMode ? "bg-[#0f0f0f]" : "bg-gray-100"
                 }`}
               >
                 <FaAward className="text-cyan-500 text-xl sm:text-2xl mb-2 sm:mb-3 mx-auto" />
-                <h5 className="text-base sm:text-lg font-semibold">
+                <h3 className="text-base sm:text-lg font-semibold">
                   Experience
-                </h5>
-                <small className="text-xs text-gray-400">1.5 years</small>
+                </h3>
+                <p className="text-xs text-gray-400">1.5+ Years</p>
               </motion.article>
 
-              {/* Projects Card */}
+              {/* Projects */}
               <motion.article
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -126,14 +121,12 @@ const Intro = () => {
                 viewport={{ once: true, margin: "-50px" }}
                 whileHover={{ y: -5 }}
                 className={`border border-cyan-500/20 rounded-xl sm:rounded-2xl p-3 sm:p-5 text-center hover:shadow-lg hover:scale-[1.02] hover:border-cyan-500 transition-all duration-300 cursor-default ${
-                  darkMode ? "bg-[#0f0f0f] text-white" : "bg-gray-100 text-black"
+                  darkMode ? "bg-[#0f0f0f]" : "bg-gray-100"
                 }`}
               >
                 <VscFolderLibrary className="text-cyan-500 text-xl sm:text-2xl mb-2 sm:mb-3 mx-auto" />
-                <h5 className="text-base sm:text-lg font-semibold">
-                  Projects
-                </h5>
-                <small className="text-xs text-gray-400">10+ Completed</small>
+                <h3 className="text-base sm:text-lg font-semibold">Projects</h3>
+                <p className="text-xs text-gray-400">10+ Completed</p>
               </motion.article>
             </div>
 
@@ -145,7 +138,7 @@ const Intro = () => {
               viewport={{ once: true, margin: "-50px" }}
               className="mb-6 sm:mb-8 leading-relaxed text-xs xs:text-sm sm:text-base"
             >
-              1+ years experienced Front End Developer with hands-on experience
+               1+ years experienced MERN Developer with hands-on experience
               in identifying web-based user interactions along with designing
               and implementing highly-responsive user interface components by
               deploying React concepts. Proficient in translating designs and
@@ -156,7 +149,7 @@ const Intro = () => {
               performance.
             </motion.p>
 
-            {/* Button */}
+            {/* Call to Action */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -177,7 +170,7 @@ const Intro = () => {
                   duration={500}
                   className="cursor-pointer inline-block bg-transparent text-cyan-500 border border-cyan-500 px-4 py-2 sm:px-5 sm:py-3 rounded-md font-medium sm:font-semibold hover:bg-cyan-500 hover:text-blue-950 transition-colors duration-300 text-sm sm:text-base"
                 >
-                  Let's Talk
+                  Let’s Talk
                 </Link>
               </motion.div>
             </motion.div>

@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import ParticlesBackground from "../components/ParticlesBackground";
 import {
@@ -18,6 +18,9 @@ import {
   SiPrisma,
   SiFigma,
   SiTypescript,
+  SiReact,
+  SiExpress,
+  SiNextdotjs,
 } from "react-icons/si";
 import { useTheme } from "../context/colorTheme";
 
@@ -27,14 +30,17 @@ const skills = [
   { id: 3, icon: <FaJs className="text-yellow-500" />, name: "JavaScript" },
   { id: 4, icon: <SiTypescript className="text-blue-400" />, name: "TypeScript" },
   { id: 5, icon: <FaReact className="text-cyan-400" />, name: "React" },
-  { id: 6, icon: <SiRedux className="text-purple-500" />, name: "Redux" },
-  { id: 7, icon: <SiTailwindcss className="text-teal-400" />, name: "Tailwind" },
-  { id: 8, icon: <FaNodeJs className="text-green-500" />, name: "Node.js" },
-  { id: 9, icon: <SiMongodb className="text-green-400" />, name: "MongoDB" },
-  { id: 10, icon: <SiPrisma className="text-gray-400" />, name: "Prisma" },
-  { id: 11, icon: <FaGitAlt className="text-red-500" />, name: "Git" },
-  { id: 12, icon: <SiFigma className="text-indigo-500" />, name: "Figma" },
-  { id: 13, icon: <FaDocker className="text-blue-600" />, name: "Docker" },
+  { id: 6, icon: <SiReact className="text-indigo-400" />, name: "React Native" },
+  { id: 7, icon: <SiRedux className="text-purple-500" />, name: "Redux" },
+  { id: 8, icon: <SiTailwindcss className="text-teal-400" />, name: "Tailwind" },
+  { id: 9, icon: <FaNodeJs className="text-green-500" />, name: "Node.js" },
+  { id: 10, icon: <SiExpress className="text-gray-700" />, name: "Express.js" },
+  { id: 11, icon: <SiNextdotjs className="text-black dark:text-white" />, name: "Next.js" },
+  { id: 12, icon: <SiMongodb className="text-green-400" />, name: "MongoDB" },
+  { id: 13, icon: <SiPrisma className="text-gray-400" />, name: "Prisma" },
+  { id: 14, icon: <FaGitAlt className="text-red-500" />, name: "Git" },
+  { id: 15, icon: <SiFigma className="text-indigo-500" />, name: "Figma" },
+  { id: 16, icon: <FaDocker className="text-blue-600" />, name: "Docker" },
 ];
 
 const Skills = () => {
@@ -42,10 +48,10 @@ const Skills = () => {
   const skillContainerRef = useRef(null);
   const animationRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
-  const { darkMode } = useTheme(); // ✅
+  const { darkMode } = useTheme();
 
   const duration = isMobile ? 35 : 20;
-  const duplicatedSkills = [...skills, ...skills, ...skills];
+  const duplicatedSkills = [...skills, ...skills, ...skills]; // ensure smooth loop
 
   const container = {
     hidden: { opacity: 0 },
@@ -63,27 +69,20 @@ const Skills = () => {
     show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
   };
 
-  const skillItem = {
-    hidden: { opacity: 0, scale: 0.8 },
-    show: { opacity: 1, scale: 1, transition: { duration: 0.5 } },
-  };
-
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
     };
-
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   useEffect(() => {
-    const container = containerRef.current;
     const skillContainer = skillContainerRef.current;
-    if (!container || !skillContainer) return;
+    if (!skillContainer) return;
 
-    const scrollWidth = skillContainer.scrollWidth / 4;
+    const scrollWidth = skillContainer.scrollWidth / 3; // Adjusted to 1/3 for 3X duplication
     let startTime = null;
 
     const animate = (timestamp) => {
@@ -110,7 +109,6 @@ const Skills = () => {
       }`}
     >
       <ParticlesBackground />
-
       <div className="relative z-10 flex flex-col justify-center items-center px-3 sm:px-6">
         <motion.div
           initial="hidden"
@@ -131,45 +129,35 @@ const Skills = () => {
             ref={containerRef}
             className="w-full overflow-hidden py-1 sm:py-2"
           >
-            <motion.div
+            <div
               ref={skillContainerRef}
               className="flex w-max"
               style={{ willChange: "transform" }}
             >
               {duplicatedSkills.map((skill, index) => (
-                <motion.div
+                <div
                   key={`${skill.id}-${index}`}
-                  variants={skillItem}
-                  initial="hidden"
-                  whileInView="show"
-                  viewport={{ once: true, amount: 0.2 }}
                   className="flex flex-col items-center mx-2 sm:mx-4 w-20 sm:w-24"
                 >
-                  <motion.div
+                  <div
                     className={`w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center rounded-full transition-colors duration-300 border ${
                       darkMode
                         ? "bg-[#0f0f0f] text-white border-cyan-500/20 hover:border-cyan-500"
                         : "bg-gray-100 text-black border-cyan-500/10 hover:border-cyan-500"
                     }`}
-                    whileHover={{ scale: 1.1 }}
-                    transition={{ type: "spring", stiffness: 400 }}
                   >
                     <div className="text-3xl sm:text-4xl">{skill.icon}</div>
-                  </motion.div>
-                  <motion.p
+                  </div>
+                  <p
                     className={`text-xs sm:text-sm font-medium mt-2 text-center ${
                       darkMode ? "text-white/80" : "text-gray-800"
                     }`}
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.1, duration: 0.5 }}
                   >
                     {skill.name}
-                  </motion.p>
-                </motion.div>
+                  </p>
+                </div>
               ))}
-            </motion.div>
+            </div>
           </motion.div>
         </motion.div>
       </div>

@@ -7,19 +7,48 @@ import {
   FaGithub,
   FaYoutube,
 } from "react-icons/fa";
-import { useTheme } from "../context/colorTheme"; // ✅ Import theme context
+import { useTheme } from "../context/colorTheme";
 
 const Footer = () => {
-  const { darkMode } = useTheme(); // ✅ Access darkMode value
+  const { darkMode } = useTheme();
+
+  const socialLinks = [
+    {
+      href: "https://www.facebook.com/share/1AiDowF6RB/",
+      icon: FaFacebookF,
+      title: "Facebook - Saad Abbas",
+    },
+    {
+      href: "https://www.instagram.com/saad__rahi?igsh=MWp2bzNtMzh0bzRiNQ==",
+      icon: FaInstagram,
+      title: "Instagram - Saad Abbas",
+    },
+    {
+      href: "https://x.com/SaadRahi8?t=5-HTSgadbwboSWF2T5Roxg&s=08",
+      icon: FaTwitter,
+      title: "Twitter - Saad Abbas",
+    },
+    {
+      href: "https://github.com/SaadAbbas598",
+      icon: FaGithub,
+      title: "GitHub - Saad Abbas",
+    },
+    {
+      href: "https://www.youtube.com/@saadrahi4925",
+      icon: FaYoutube,
+      title: "YouTube - Saad Abbas",
+    },
+  ];
 
   return (
     <footer
       className={`w-full py-12 px-4 sm:px-6 relative z-10 ${
         darkMode ? "bg-black text-white" : "bg-white text-gray-800"
       }`}
+      role="contentinfo"
     >
       <div className="max-w-7xl mx-auto">
-        {/* Top Row: Text and Icons */}
+        {/* Intro Text + Social Icons */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-10">
           <motion.p
             className={`text-lg font-medium text-center md:text-left ${
@@ -30,7 +59,7 @@ const Footer = () => {
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
           >
-            Making the world a better place through constructing elegant hierarchies.
+            Building impactful digital experiences with modern web technologies.
           </motion.p>
 
           <motion.div
@@ -40,42 +69,60 @@ const Footer = () => {
             transition={{ delay: 0.3, duration: 0.5 }}
             viewport={{ once: true }}
           >
-            {[FaFacebookF, FaInstagram, FaTwitter, FaGithub, FaYoutube].map(
-              (Icon, i) => (
-                <a
-                  key={i}
-                  href="#"
-                  className={`text-xl transition-colors ${
-                    darkMode
-                      ? "hover:text-cyan-400 text-white"
-                      : "hover:text-purple-600 text-gray-700"
-                  }`}
-                >
-                  <Icon />
-                </a>
-              )
-            )}
+            {socialLinks.map(({ href, icon: Icon, title }, i) => (
+              <a
+                key={i}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                title={title}
+                aria-label={title}
+                className={`text-xl transition-colors ${
+                  darkMode
+                    ? "hover:text-cyan-400 text-white"
+                    : "hover:text-purple-600 text-gray-700"
+                }`}
+              >
+                <Icon />
+              </a>
+            ))}
           </motion.div>
         </div>
 
         {/* Footer Links */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
+        <nav aria-label="Footer navigation" className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
           {[
             {
-              title: "Solutions",
-              items: ["Marketing", "Analytics", "Automation", "Commerce", "Insights"],
+              title: "Services",
+              items: [
+                { label: "Web Development", href: "/#services" },
+                { label: "App Development", href: "/#services" },
+                { label: "UI/UX Design", href: "/#services" },
+                { label: "SEO Optimization", href: "/#services" },
+              ],
             },
             {
               title: "Support",
-              items: ["Submit ticket", "Documentation", "Guides"],
+              items: [
+                { label: "Contact", href: "/#contact" },
+                { label: "FAQs", href: "/#faqs" },
+                { label: "Live Chat", href: "#" },
+              ],
             },
             {
-              title: "Company",
-              items: ["About", "Blog", "Jobs", "Press"],
+              title: "About",
+              items: [
+                { label: "Portfolio", href: "/#projects" },
+                { label: "Resume", href: "/Saad-Abbas-CV.pdf" },
+                { label: "Client Reviews", href: "/#testimonials" },
+              ],
             },
             {
               title: "Legal",
-              items: ["Terms of service", "Privacy policy", "License"],
+              items: [
+                { label: "Terms of Service", href: "/terms" },
+                { label: "Privacy Policy", href: "/privacy" },
+              ],
             },
           ].map((section, i) => (
             <div key={i}>
@@ -90,21 +137,21 @@ const Footer = () => {
                 {section.items.map((item, idx) => (
                   <li key={idx}>
                     <a
-                      href="#"
+                      href={item.href}
                       className={`transition-colors ${
                         darkMode
                           ? "text-gray-400 hover:text-cyan-400"
                           : "text-gray-500 hover:text-purple-500"
                       }`}
                     >
-                      {item}
+                      {item.label}
                     </a>
                   </li>
                 ))}
               </ul>
             </div>
           ))}
-        </div>
+        </nav>
 
         {/* Copyright */}
         <motion.div
@@ -118,7 +165,7 @@ const Footer = () => {
           transition={{ delay: 0.5, duration: 0.5 }}
           viewport={{ once: true }}
         >
-          &copy; {new Date().getFullYear()} Your Company, Inc. All rights reserved.
+          &copy; {new Date().getFullYear()} Saad Abbas. All rights reserved.
         </motion.div>
       </div>
     </footer>

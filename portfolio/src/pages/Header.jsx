@@ -43,7 +43,7 @@ const Header = () => {
           Saad Abbas – MERN Stack Developer 
         </h1>
 
-        <h2 className="text-base xs:text-lg sm:text-xl md:text-2xl mb-4 sm:mb-6 text-opacity-70">
+        <h2 className="text-base xs:text-lg sm:text-xl md:text-1xl mb-4 sm:mb-6 text-opacity-70">
           Full Stack Developer • Web Designer • App Developer
         </h2>
 

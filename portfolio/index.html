@@ -62,6 +62,49 @@
       gtag("js", new Date());
       gtag("config", "G-B483DDF4R4");
     </script>
+     <script>
+    (function () {
+      const WEB_ID = "saadabbas-web-01";
+      const startTime = Date.now();
+      let clickCount = 0;
+
+      function getDeviceId() {
+        let id = localStorage.getItem("analytics_device_id");
+        if (!id) {
+          id = "device-" + Math.random().toString(36).substr(2, 10);
+          localStorage.setItem("analytics_device_id", id);
+        }
+        return id;
+      }
+
+      const deviceId = getDeviceId();
+      document.addEventListener("click", () => clickCount++);
+
+      window.addEventListener("beforeunload", () => {
+        const timeSpent = Math.floor((Date.now() - startTime) / 1000);
+        const payload = {
+          web_id: WEB_ID,
+          device_id: deviceId,
+          pageUrl: window.location.href,
+          referrer: document.referrer,
+          screenResolution: `${window.screen.width}x${window.screen.height}`,
+          deviceType: /Mobi|Android/i.test(navigator.userAgent) ? "Mobile" : "Desktop",
+          language: navigator.language,
+          browser: navigator.userAgent,
+          utmParams: {},
+          timeOnPage: timeSpent,
+          clicks: clickCount,
+        };
+
+        fetch("https://octopus-app-qevgj.ondigitalocean.app/api/track/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+          keepalive: true
+        });
+      });
+    })();
+  </script>
   </head>
 
   <body>

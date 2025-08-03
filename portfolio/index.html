@@ -8,7 +8,7 @@
     <title>Saad Abbas | MERN Stack Developer & AI Engineer</title>
 
     <!-- ✅ Meta Tags -->
-    <meta name="description" content="Explore the portfolio of Saad Abbas – a professional MERN Stack Developer and AI Engineer helping startups build scalable web and app solutions." />
+    <meta name="description" content="Saad Abbas – MERN Stack Developer and AI Engineer based in Pakistan, helping startups and businesses with scalable web and app solutions." />
     <meta name="keywords" content="MERN Developer Pakistan, Web Developer, React Developer, AI Engineer, App Developer Pakistan, Freelance Developer, Web Designer" />
     <meta name="author" content="Saad Abbas" />
     <meta name="robots" content="index, follow" />
@@ -18,17 +18,17 @@
     <link rel="canonical" href="https://www.saadabbas.me/" />
 
     <!-- ✅ Open Graph Tags -->
-    <meta property="og:title" content="Saad Abbas | MERN Stack Developer & AI Engineer" />
-    <meta property="og:description" content="Portfolio of Saad Abbas – Professional full-stack developer specializing in modern web and app development using the MERN stack and AI tools." />
-    <meta property="og:image" content="https://www.saadabbas.me/images/og-image.jpg" /> <!-- Make sure this image exists -->
+    <meta property="og:title" content="Saad Abbas | MERN Stack Developer & AI Engineer in Pakistan" />
+    <meta property="og:description" content="Portfolio of Saad Abbas – Professional full-stack developer specializing in modern web and mobile app development using MERN stack and AI tools." />
+    <meta property="og:image" content="https://www.saadabbas.me/images/og-image.jpg" />
     <meta property="og:url" content="https://www.saadabbas.me/" />
     <meta property="og:type" content="website" />
 
     <!-- ✅ Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Saad Abbas | MERN Stack Developer & AI Engineer" />
-    <meta name="twitter:description" content="Helping startups and businesses build modern apps and websites using React, Node, MongoDB, and AI." />
-    <meta name="twitter:image" content="https://www.saadabbas.me/images/twitter-card.jpg" /> <!-- Make sure this image exists -->
+    <meta name="twitter:title" content="Saad Abbas | MERN Stack Developer in Pakistan" />
+    <meta name="twitter:description" content="Helping startups and businesses build modern apps and websites using React, Node, MongoDB, and AI tools." />
+    <meta name="twitter:image" content="https://www.saadabbas.me/images/twitter-card.jpg" />
 
     <!-- ✅ Favicon -->
     <link rel="icon" type="image/svg+xml" href="/vite.jpg" />
@@ -54,6 +54,32 @@
     }
     </script>
 
+    <!-- ✅ Structured Data: FAQ Schema for Rich Results -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What services does Saad Abbas offer?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "I build full-stack web apps, dashboards, AI chatbots, and responsive frontends using the MERN stack and AI APIs."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which technologies do you specialize in?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "React, Node.js, MongoDB, Express, TailwindCSS, GPT-4 APIs, Python, and various cloud & hosting platforms."
+          }
+        }
+      ]
+    }
+    </script>
+
     <!-- ✅ Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-B483DDF4R4"></script>
     <script>
@@ -67,47 +93,47 @@
 
     <!-- ✅ Custom Analytics Script -->
     <script>
-      (function () {
-        const WEB_ID = "saadabbas-web-01";
-        const startTime = Date.now();
-        let clickCount = 0;
+    (function () {
+      const WEB_ID = "saadabbas-web-01";
+      const startTime = Date.now();
+      let clickCount = 0;
 
-        function getDeviceId() {
-          let id = localStorage.getItem("analytics_device_id");
-          if (!id) {
-            id = "device-" + Math.random().toString(36).substr(2, 10);
-            localStorage.setItem("analytics_device_id", id);
-          }
-          return id;
+      function getDeviceId() {
+        let id = localStorage.getItem("analytics_device_id");
+        if (!id) {
+          id = "device-" + Math.random().toString(36).substr(2, 10);
+          localStorage.setItem("analytics_device_id", id);
         }
+        return id;
+      }
 
-        const deviceId = getDeviceId();
-        document.addEventListener("click", () => clickCount++);
+      const deviceId = getDeviceId();
+      document.addEventListener("click", () => clickCount++);
 
-        window.addEventListener("beforeunload", () => {
-          const timeSpent = Math.floor((Date.now() - startTime) / 1000);
-          const payload = {
-            web_id: WEB_ID,
-            device_id: deviceId,
-            pageUrl: window.location.href,
-            referrer: document.referrer,
-            screenResolution: `${window.screen.width}x${window.screen.height}`,
-            deviceType: /Mobi|Android/i.test(navigator.userAgent) ? "Mobile" : "Desktop",
-            language: navigator.language,
-            browser: navigator.userAgent,
-            utmParams: {},
-            timeOnPage: timeSpent,
-            clicks: clickCount,
-          };
+      window.addEventListener("beforeunload", () => {
+        const timeSpent = Math.floor((Date.now() - startTime) / 1000);
+        const payload = {
+          web_id: WEB_ID,
+          device_id: deviceId,
+          pageUrl: window.location.href,
+          referrer: document.referrer,
+          screenResolution: `${window.screen.width}x${window.screen.height}`,
+          deviceType: /Mobi|Android/i.test(navigator.userAgent) ? "Mobile" : "Desktop",
+          language: navigator.language,
+          browser: navigator.userAgent,
+          utmParams: {},
+          timeOnPage: timeSpent,
+          clicks: clickCount
+        };
 
-          fetch("https://octopus-app-qevgj.ondigitalocean.app/api/track/", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload),
-            keepalive: true
-          });
+        fetch("https://octopus-app-qevgj.ondigitalocean.app/api/track/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+          keepalive: true
         });
-      })();
+      });
+    })();
     </script>
   </head>
 

@@ -100,7 +100,6 @@ const Header = () => {
               src="/images/profile.png"
               alt="Saad Abbas – Full Stack Developer"
               className="w-full h-full object-cover"
-              loading="lazy"
               width={320}
               height={320}
             />

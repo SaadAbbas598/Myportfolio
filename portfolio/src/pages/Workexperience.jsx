@@ -5,26 +5,26 @@ import ParticlesBackground from "../components/ParticlesBackground";
 import { useTheme } from "../context/colorTheme";
 
 const experience = {
-  title: "Software Intern",
+  title: "Mobile App Development Intern",
   company: "TheDevPort",
   date: "2024 (3 months)",
   description: [
-    "Developed and maintained web applications using modern technologies.",
-    "Collaborated with team members on various projects.",
-    "Gained hands-on experience with software development workflows.",
-    "Contributed to real-world projects and solutions.",
+    "Designed, developed, and maintained Android, iOS, and cross-platform mobile applications using Kotlin, Java, and Flutter.",
+    "Collaborated with designers and developers to create user-friendly mobile interfaces with optimal performance.",
+    "Integrated Firebase services for authentication, real-time database, and push notifications.",
+    "Followed agile development workflows and version control best practices for mobile projects.",
+    "Gained hands-on experience in mobile app testing, debugging, and publishing to Google Play Store.",
   ],
 };
 
 const WorkExperience = () => {
   const [isMobile, setIsMobile] = useState(false);
-  const { darkMode } = useTheme(); // ✅ get dark mode
+  const { darkMode } = useTheme();
 
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
     };
-
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -34,10 +34,7 @@ const WorkExperience = () => {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.3,
-      },
+      transition: { staggerChildren: 0.2, delayChildren: 0.3 },
     },
   };
 
@@ -56,10 +53,7 @@ const WorkExperience = () => {
     show: (i) => ({
       opacity: 1,
       x: 0,
-      transition: {
-        delay: i * 0.1 + 0.4,
-        duration: 0.5,
-      },
+      transition: { delay: i * 0.1 + 0.4, duration: 0.5 },
     }),
   };
 
@@ -82,7 +76,7 @@ const WorkExperience = () => {
             darkMode ? "text-cyan-400" : "text-cyan-600"
           }`}
         >
-          Work Experience
+          Mobile App Development Experience
         </motion.h2>
 
         <motion.div

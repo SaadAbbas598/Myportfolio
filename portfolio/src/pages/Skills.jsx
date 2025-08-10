@@ -3,44 +3,34 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import ParticlesBackground from "../components/ParticlesBackground";
 import {
-  FaHtml5,
-  FaCss3Alt,
-  FaJs,
-  FaNodeJs,
+  FaAndroid,
+  FaApple,
   FaReact,
+  FaJava,
   FaGitAlt,
-  FaDocker,
 } from "react-icons/fa";
 import {
-  SiTailwindcss,
-  SiRedux,
-  SiMongodb,
-  SiPrisma,
+  SiKotlin,
+  SiFlutter,
+  SiFirebase,
+  SiSwift,
   SiFigma,
   SiTypescript,
-  SiReact,
-  SiExpress,
-  SiNextdotjs,
 } from "react-icons/si";
 import { useTheme } from "../context/colorTheme";
 
 const skills = [
-  { id: 1, icon: <FaHtml5 className="text-orange-500" />, name: "HTML" },
-  { id: 2, icon: <FaCss3Alt className="text-blue-500" />, name: "CSS" },
-  { id: 3, icon: <FaJs className="text-yellow-500" />, name: "JavaScript" },
-  { id: 4, icon: <SiTypescript className="text-blue-400" />, name: "TypeScript" },
-  { id: 5, icon: <FaReact className="text-cyan-400" />, name: "React" },
-  { id: 6, icon: <SiReact className="text-indigo-400" />, name: "React Native" },
-  { id: 7, icon: <SiRedux className="text-purple-500" />, name: "Redux" },
-  { id: 8, icon: <SiTailwindcss className="text-teal-400" />, name: "Tailwind" },
-  { id: 9, icon: <FaNodeJs className="text-green-500" />, name: "Node.js" },
-  { id: 10, icon: <SiExpress className="text-gray-700" />, name: "Express.js" },
-  { id: 11, icon: <SiNextdotjs className="text-black dark:text-white" />, name: "Next.js" },
-  { id: 12, icon: <SiMongodb className="text-green-400" />, name: "MongoDB" },
-  { id: 13, icon: <SiPrisma className="text-gray-400" />, name: "Prisma" },
-  { id: 14, icon: <FaGitAlt className="text-red-500" />, name: "Git" },
-  { id: 15, icon: <SiFigma className="text-indigo-500" />, name: "Figma" },
-  { id: 16, icon: <FaDocker className="text-blue-600" />, name: "Docker" },
+  { id: 1, icon: <FaAndroid className="text-green-500" />, name: "Android Development" },
+  { id: 2, icon: <FaApple className="text-gray-800 dark:text-white" />, name: "iOS Development" },
+  { id: 3, icon: <SiKotlin className="text-purple-500" />, name: "Kotlin" },
+  { id: 4, icon: <FaJava className="text-orange-500" />, name: "Java" },
+  { id: 5, icon: <SiSwift className="text-red-500" />, name: "Swift" },
+  { id: 6, icon: <SiFlutter className="text-blue-400" />, name: "Flutter" },
+  { id: 7, icon: <FaReact className="text-cyan-400" />, name: "React Native" },
+  { id: 8, icon: <SiFirebase className="text-yellow-500" />, name: "Firebase" },
+  { id: 9, icon: <SiTypescript className="text-blue-400" />, name: "TypeScript" },
+  { id: 10, icon: <FaGitAlt className="text-red-500" />, name: "Git & Version Control" },
+  { id: 11, icon: <SiFigma className="text-pink-500" />, name: "Figma UI/UX" },
 ];
 
 const Skills = () => {
@@ -51,16 +41,13 @@ const Skills = () => {
   const { darkMode } = useTheme();
 
   const duration = isMobile ? 35 : 20;
-  const duplicatedSkills = [...skills, ...skills, ...skills]; // ensure smooth loop
+  const duplicatedSkills = [...skills, ...skills, ...skills];
 
   const container = {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.3,
-      },
+      transition: { staggerChildren: 0.1, delayChildren: 0.3 },
     },
   };
 
@@ -81,10 +68,8 @@ const Skills = () => {
   useEffect(() => {
     const skillContainer = skillContainerRef.current;
     if (!skillContainer) return;
-
-    const scrollWidth = skillContainer.scrollWidth / 3; // Adjusted to 1/3 for 3X duplication
+    const scrollWidth = skillContainer.scrollWidth / 3;
     let startTime = null;
-
     const animate = (timestamp) => {
       if (!startTime) startTime = timestamp;
       const elapsed = timestamp - startTime;
@@ -93,9 +78,7 @@ const Skills = () => {
       skillContainer.style.transform = `translateX(${translateX}px)`;
       animationRef.current = requestAnimationFrame(animate);
     };
-
     animationRef.current = requestAnimationFrame(animate);
-
     return () => {
       if (animationRef.current) cancelAnimationFrame(animationRef.current);
     };
@@ -119,10 +102,22 @@ const Skills = () => {
         >
           <motion.h2
             variants={item}
-            className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 text-center text-cyan-500"
+            className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-5 text-center text-cyan-500"
           >
-            Tech Stack
+            Mobile App Development Tech Stack
           </motion.h2>
+
+          <motion.p
+            variants={item}
+            className={`text-center max-w-3xl mx-auto mb-6 sm:mb-8 text-xs xs:text-sm sm:text-base leading-relaxed ${
+              darkMode ? "text-gray-300" : "text-gray-700"
+            }`}
+          >
+            My expertise covers{" "}
+            <strong>Android, iOS, and cross-platform mobile application development</strong>, 
+            using modern tools like Kotlin, Swift, Flutter, React Native, Firebase, and more 
+            to create high-performance, user-friendly apps.
+          </motion.p>
 
           <motion.div
             variants={item}

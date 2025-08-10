@@ -59,7 +59,8 @@ const Footer = () => {
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
           >
-            Building impactful digital experiences with modern web technologies.
+            Expert Android, iOS, and cross-platform mobile app development —
+            delivering scalable, and performance-optimized mobile solutions.
           </motion.p>
 
           <motion.div
@@ -95,10 +96,11 @@ const Footer = () => {
             {
               title: "Services",
               items: [
-                { label: "Web Development", href: "/#services" },
-                { label: "App Development", href: "/#services" },
-                { label: "UI/UX Design", href: "/#services" },
-                { label: "SEO Optimization", href: "/#services" },
+                { label: "Android App Development", href: "/#services" },
+                { label: "iOS App Development", href: "/#services" },
+                { label: "Cross-Platform App Development", href: "/#services" },
+                { label: "Mobile App UI/UX Design", href: "/#services" },
+                { label: "App Store Optimization (ASO)", href: "/#services" },
               ],
             },
             {
@@ -165,7 +167,7 @@ const Footer = () => {
           transition={{ delay: 0.5, duration: 0.5 }}
           viewport={{ once: true }}
         >
-          &copy; {new Date().getFullYear()} Saad Abbas. All rights reserved.
+          &copy; {new Date().getFullYear()} Saad Abbas — Mobile Application Developer. All rights reserved.
         </motion.div>
       </div>
     </footer>

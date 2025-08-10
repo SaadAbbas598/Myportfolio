@@ -39,6 +39,7 @@ const Intro = () => {
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto">
+        
         {/* Section Title */}
         <motion.div
           initial={{ opacity: 0, y: -50 }}
@@ -49,16 +50,17 @@ const Intro = () => {
         >
           <h2
             id="about-heading"
-            className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold mt-2"
+            className="text-2xl xs:text-3xl sm:text-4xl md:text-1xl font-bold mt-2"
           >
-            About me
+            About Me 
           </h2>
           <p className="text-xs xs:text-sm sm:text-base text-cyan-500 uppercase tracking-wider">
-            Get to know me
+            Get to know my journey in mobile application development
           </p>
         </motion.div>
 
         <div className="grid md:grid-cols-[1fr_1.5fr] gap-6 sm:gap-10 items-start">
+          
           {/* Left: Image */}
           <motion.div
             initial="offscreenLeft"
@@ -70,7 +72,7 @@ const Intro = () => {
             <div className="overflow-hidden rounded-xl sm:rounded-2xl transition-all duration-300 hover:scale-[1.02] w-full h-full">
               <motion.img
                 src="/images/profile.png"
-                alt="Saad Abbas – Full Stack Developer Profile"
+                alt="Saad Abbas – Mobile App Developer & Android Engineer Profile Picture"
                 className="object-cover w-full h-full transition-all duration-500 grayscale hover:grayscale-0 group-hover:grayscale-0"
                 loading="lazy"
                 width={400}
@@ -95,6 +97,7 @@ const Intro = () => {
             className="mt-4 sm:mt-0"
           >
             <div className="grid grid-cols-1 xs:grid-cols-2 gap-3 sm:gap-5 mb-6 sm:mb-8">
+              
               {/* Experience */}
               <motion.article
                 initial={{ opacity: 0, y: 30 }}
@@ -107,10 +110,8 @@ const Intro = () => {
                 }`}
               >
                 <FaAward className="text-cyan-500 text-xl sm:text-2xl mb-2 sm:mb-3 mx-auto" />
-                <h3 className="text-base sm:text-lg font-semibold">
-                  Experience
-                </h3>
-                <p className="text-xs text-gray-400">1.5+ Years</p>
+                <h3 className="text-base sm:text-lg font-semibold">Experience</h3>
+                <p className="text-xs text-gray-400">1.5+ Years in Mobile App Development</p>
               </motion.article>
 
               {/* Projects */}
@@ -126,11 +127,11 @@ const Intro = () => {
               >
                 <VscFolderLibrary className="text-cyan-500 text-xl sm:text-2xl mb-2 sm:mb-3 mx-auto" />
                 <h3 className="text-base sm:text-lg font-semibold">Projects</h3>
-                <p className="text-xs text-gray-400">10+ Completed</p>
+                <p className="text-xs text-gray-400">10+ Mobile Apps Completed</p>
               </motion.article>
             </div>
 
-            {/* Description */}
+            {/* SEO-Optimized Description with Internal Links */}
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -138,15 +139,13 @@ const Intro = () => {
               viewport={{ once: true, margin: "-50px" }}
               className="mb-6 sm:mb-8 leading-relaxed text-xs xs:text-sm sm:text-base"
             >
-               1+ years experienced MERN Developer with hands-on experience
-              in identifying web-based user interactions along with designing
-              and implementing highly-responsive user interface components by
-              deploying React concepts. Proficient in translating designs and
-              wireframes into high-quality code, and writing application
-              interface code via JavaScript and React JS workflows. Adept at
-              monitoring and maintaining frontend performance and
-              troubleshooting and debugging the same to bolster overall
-              performance.
+              I’m a <Link to="portfolio" smooth={true} duration={800} className="text-cyan-500 underline">mobile app developer</Link> 
+              &nbsp;specializing in Android and cross-platform mobile application development. I create 
+              high-performance, user-friendly apps using technologies like Java, Kotlin, Flutter, React Native, 
+              and Firebase. My work spans from app concept and UI/UX design to deployment on 
+              <a href="https://play.google.com" target="_blank" rel="noreferrer noopener" className="text-cyan-500 underline"> Google Play Store</a> 
+              &nbsp;and Apple App Store. I also integrate APIs, payment systems, and push notifications to ensure 
+              a seamless mobile experience.
             </motion.p>
 
             {/* Call to Action */}
@@ -170,7 +169,7 @@ const Intro = () => {
                   duration={500}
                   className="cursor-pointer inline-block bg-transparent text-cyan-500 border border-cyan-500 px-4 py-2 sm:px-5 sm:py-3 rounded-md font-medium sm:font-semibold hover:bg-cyan-500 hover:text-blue-950 transition-colors duration-300 text-sm sm:text-base"
                 >
-                  Let’s Talk
+                  Let’s Build Your Mobile App
                 </Link>
               </motion.div>
             </motion.div>

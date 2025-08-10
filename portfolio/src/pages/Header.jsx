@@ -6,13 +6,13 @@ import ParticlesBackground from "../components/ParticlesBackground";
 import { useTheme } from "../context/colorTheme";
 
 const Header = () => {
-  const { darkMode } = useTheme(); // ⬅️ added
+  const { darkMode } = useTheme();
 
   const handleDownloadCV = () => {
-    const cvUrl = "/Saad-Abbas-CV.pdf";
+    const cvUrl = "/Saad-Abbas-Mobile-App-Developer-CV.pdf";
     const link = document.createElement("a");
     link.href = cvUrl;
-    link.download = "Saad_Abbas_CV.pdf";
+    link.download = "Saad_Abbas_Mobile_App_Developer_CV.pdf";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -33,49 +33,55 @@ const Header = () => {
 
       <div className="w-full max-w-6xl mx-auto z-10">
         <div className="flex flex-col-reverse md:flex-row items-center gap-6 md:gap-12 lg:gap-16">
+          
           {/* Text Content */}
           <div className="flex-1 text-center md:text-left">
             <p className="text-xs xs:text-sm sm:text-base md:text-lg mb-1 sm:mb-2 text-opacity-70">
-              Hello, I'm
+              Hello, I&apos;m
             </p>
 
-            <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-3xl font-bold mb-2 sm:mb-3">
-              Saad Abbas – MERN Stack Developer
+            {/* Main SEO Heading */}
+            <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-3xl lg:text-2xl font-bold mb-2 sm:mb-3">
+              Saad Abbas – Mobile App Developer & Android Application Engineer
             </h1>
 
-            <h2 className="text-base xs:text-lg sm:text-xl md:text-1xl mb-4 sm:mb-6 text-opacity-70">
-              Full Stack Developer • Web Designer • App Developer
+            {/* Subheading with extra keywords */}
+            <h2 className="text-base xs:text-lg sm:text-xl md:text-lg mb-4 sm:mb-6 text-opacity-70">
+              Expert in Custom Mobile Application Development • Android App Developer • Cross-Platform App Specialist
             </h2>
 
+            {/* Short SEO intro */}
             <p className="text-xs xs:text-sm sm:text-base text-opacity-70 mb-6 sm:mb-8 leading-relaxed max-w-md sm:max-w-xl mx-auto md:mx-0 px-1">
-              Passionate developer with expertise in modern web technologies.
-              Creating efficient, scalable, and user-friendly applications.
+              I create high-performance Android and cross-platform mobile applications with seamless UI/UX, optimized performance, and integration with modern mobile application platforms for startups, enterprises, and personal brands.
             </p>
 
+            {/* CTA Buttons */}
             <div className="flex flex-row flex-wrap justify-center md:justify-start gap-3 sm:gap-4 mb-6">
               <Link
                 to="contact"
                 smooth={true}
                 duration={800}
                 offset={-60}
-                className="flex-1 max-w-[140px] text-center bg-transparent text-cyan-500 font-medium px-3 py-2 rounded-md border border-cyan-500 hover:bg-cyan-500 hover:text-white transition duration-300 text-sm cursor-pointer"
+                className="flex-1 max-w-[160px] text-center bg-transparent text-cyan-500 font-medium px-3 py-2 rounded-md border border-cyan-500 hover:bg-cyan-500 hover:text-white transition duration-300 text-sm cursor-pointer"
               >
-                Contact Me
+                Hire Mobile App Developer
               </Link>
               <button
                 onClick={handleDownloadCV}
-                className="flex-1 max-w-[140px] text-center bg-transparent text-cyan-500 font-medium px-3 py-2 rounded-md border border-cyan-500 hover:bg-cyan-500 hover:text-white transition duration-300 text-sm"
+                className="flex-1 max-w-[160px] text-center bg-transparent text-cyan-500 font-medium px-3 py-2 rounded-md border border-cyan-500 hover:bg-cyan-500 hover:text-white transition duration-300 text-sm"
               >
                 Download CV
               </button>
             </div>
 
+            {/* Social Links */}
             <div className="flex gap-6 text-xl sm:text-2xl justify-center md:justify-start">
               <a
                 href="https://www.linkedin.com/in/saad-abbas-722b08345"
                 target="_blank"
                 rel="noreferrer noopener"
                 aria-label="LinkedIn Profile"
+                title="Connect on LinkedIn – Mobile App Development"
                 className="hover:text-cyan-500 transition-colors duration-300"
               >
                 <BsLinkedin />
@@ -85,24 +91,27 @@ const Header = () => {
                 target="_blank"
                 rel="noreferrer noopener"
                 aria-label="GitHub Profile"
+                title="View Mobile App Development Projects on GitHub"
                 className="hover:text-cyan-500 transition-colors duration-300"
               >
                 <FaGithub />
               </a>
               <a
-                href="https://www.instagram.com/saad__rahi?igsh=MWp2bzNtMzh0bzRiNQ=="
+                href="https://www.instagram.com/saad__rahi"
                 target="_blank"
                 rel="noreferrer noopener"
                 aria-label="Instagram Profile"
+                title="Follow Mobile App Projects on Instagram"
                 className="hover:text-cyan-500 transition-colors duration-300"
               >
                 <FaInstagram />
               </a>
               <a
-                href="https://x.com/SaadRahi8?t=5-HTSgadbwboSWF2T5Roxg&s=08"
+                href="https://x.com/SaadRahi8"
                 target="_blank"
                 rel="noreferrer noopener"
                 aria-label="Twitter Profile"
+                title="Follow Mobile App Development Updates on Twitter"
                 className="hover:text-cyan-500 transition-colors duration-300"
               >
                 <FaTwitter />
@@ -116,7 +125,7 @@ const Header = () => {
               <div className="absolute w-full h-full rounded-full overflow-hidden z-10 border-4 border-cyan-500/30 transform transition duration-500 group-hover:scale-105 group-hover:shadow-xl group-hover:shadow-cyan-400/40">
                 <img
                   src="/images/profile.png"
-                  alt="Saad Abbas – Full Stack Developer"
+                  alt="Saad Abbas – Mobile App Developer and Android Engineer"
                   className="w-full h-full object-cover"
                   width={320}
                   height={320}

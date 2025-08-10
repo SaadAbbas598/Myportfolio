@@ -4,16 +4,16 @@ import { useState, useEffect } from "react";
 import Tilt from "react-parallax-tilt";
 import ParticlesBackground from "../components/ParticlesBackground";
 import { useTheme } from "../context/colorTheme";
+import { Link } from "react-scroll";
 
 const Testimonials = () => {
   const [isMobile, setIsMobile] = useState(false);
-  const { darkMode } = useTheme(); // ✅
+  const { darkMode } = useTheme();
 
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
     };
-
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -22,21 +22,21 @@ const Testimonials = () => {
   const testimonials = [
     {
       quote:
-        "Working with Saad was a game-changer for our business. His attention to detail and creative solutions took our platform to the next level.",
+        "Working with Saad as our mobile app developer was a game-changer. His attention to detail and creative solutions took our Android platform to the next level.",
       name: "Elena Matthews",
       position: "CEO of NovaTech",
       image: "https://randomuser.me/api/portraits/women/65.jpg",
     },
     {
       quote:
-        "Saad's ability to understand our needs and deliver exactly what we imagined is rare. Highly recommended for any tech project.",
+        "Saad's expertise in cross-platform app development helped us deliver on time with exceptional quality. Highly recommended for any mobile app project.",
       name: "James Carter",
       position: "Product Manager at SkyLabs",
       image: "https://randomuser.me/api/portraits/men/32.jpg",
     },
     {
       quote:
-        "From start to finish, the project was handled professionally. Saad brought both clarity and efficiency to our complex requirements.",
+        "From start to finish, the Android application project was handled professionally. Saad ensured seamless performance and a great user experience.",
       name: "Maya Rios",
       position: "CTO of Brightline Solutions",
       image: "https://randomuser.me/api/portraits/women/22.jpg",
@@ -93,14 +93,14 @@ const Testimonials = () => {
             variants={item}
             className="uppercase text-xs xs:text-sm tracking-wide text-cyan-500 mb-2"
           >
-            WHAT OTHERS SAY
+            WHAT CLIENTS SAY
           </motion.p>
 
           <motion.h2
             variants={item}
             className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold mb-5 sm:mb-8 text-cyan-500"
           >
-            Testimonials
+            Client Testimonials 
           </motion.h2>
 
           <motion.p
@@ -109,10 +109,15 @@ const Testimonials = () => {
               darkMode ? "text-gray-300" : "text-gray-700"
             }`}
           >
-            Discover what clients and colleagues say about my work in the
-            testimonial section. Their feedback highlights my expertise in MERN
-            stack development, problem-solving skills, and commitment to
-            delivering high-quality web applications.
+            Hear from clients who have trusted me with{" "}
+            <Link to="portfolio" smooth={true} duration={800} className="text-cyan-500 underline">
+              mobile application development
+            </Link>{" "}
+            and{" "}
+            <Link to="contact" smooth={true} duration={800} className="text-cyan-500 underline">
+              Android app projects
+            </Link>
+            . Their feedback reflects my commitment to delivering high-quality, performance-optimized apps tailored to each business need.
           </motion.p>
 
           <motion.div
@@ -151,7 +156,7 @@ const Testimonials = () => {
                     <div className="flex items-center mt-3">
                       <motion.img
                         src={testimonial.image}
-                        alt={testimonial.name}
+                        alt={`${testimonial.name} – Mobile App Development Client`}
                         className="w-10 h-10 sm:w-12 sm:h-12 rounded-full mr-3 sm:mr-4"
                         loading="lazy"
                         width={48}

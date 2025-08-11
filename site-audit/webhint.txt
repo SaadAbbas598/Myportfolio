@@ -1,2 +1,0 @@
-Using the built-in configuration.
-Visit https://webhint.io/docs/user-guide/ to learn how to create your own configuration.

@@ -214,7 +214,7 @@ const Header = () => {
 
               {/* Main image container */}
               <motion.div
-                className="absolute w-full h-full rounded-full overflow-hidden z-10 border-4 border-cyan-500/30 shadow-2xl shadow-cyan-500/20"
+                className="absolute inset-0 w-full h-full rounded-full overflow-hidden z-10 border-4 border-cyan-500/30 shadow-2xl shadow-cyan-500/20"
                 whileHover={{ 
                   scale: 1.05,
                   boxShadow: "0 0 40px rgba(6, 182, 212, 0.6)",
@@ -225,7 +225,7 @@ const Header = () => {
                 <motion.img
                   src="/images/profile.png"
                   alt="Saad Abbas – Mobile App Developer and Android Engineer"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover object-center"
                   width={400}
                   height={400}
                   loading="eager"

@@ -69,16 +69,17 @@ const Intro = () => {
             variants={scrollVariants}
             className="w-full aspect-square rounded-xl sm:rounded-2xl bg-gradient-to-tr from-transparent via-cyan-500 to-transparent grid place-items-center p-0.5 sm:p-1"
           >
-            <div className="overflow-hidden rounded-xl sm:rounded-2xl transition-all duration-300 hover:scale-[1.02] w-full h-full">
+            <div className="overflow-hidden rounded-xl sm:rounded-2xl w-full h-full relative">
               <motion.img
                 src="/images/profile.png"
                 alt="Saad Abbas – Mobile App Developer & Android Engineer Profile Picture"
-                className="object-cover w-full h-full transition-all duration-500 grayscale hover:grayscale-0 group-hover:grayscale-0"
+                className="absolute inset-0 w-full h-full object-cover object-center transition-all duration-500 grayscale hover:grayscale-0"
                 loading="lazy"
                 width={400}
                 height={400}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                initial={{ opacity: 0, scale: 1.1 }}
+                animate={{ opacity: 1, scale: 1 }}
+                whileHover={{ scale: 1.05 }}
                 transition={{ delay: 0.5, duration: 0.8 }}
                 onTouchStart={(e) =>
                   e.currentTarget.classList.remove("grayscale")

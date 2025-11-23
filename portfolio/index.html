@@ -36,6 +36,10 @@
 
     <!-- ✅ Favicon -->
     <link rel="icon" type="image/svg+xml" href="/vite.jpg" />
+    
+    <!-- ✅ PWA Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="mobile-web-app-capable" content="yes" />
 
     <!-- ✅ Preload Hero Image -->
     <link rel="preload" as="image" href="/images/hero.jpg" />
@@ -205,5 +209,20 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then((registration) => {
+              console.log('SW registered:', registration);
+            })
+            .catch((error) => {
+              console.log('SW registration failed:', error);
+            });
+        });
+      }
+    </script>
   </body>
 </html>

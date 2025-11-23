@@ -1,5 +1,75 @@
-/* globals.css or tailwind base layer */
-html,
+/* Prevent Flash of Unstyled Content (FOUC) */
+html {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
 body {
   overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Prevent theme flash */
+body.light-theme {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+body.dark-theme {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+/* Optimize animations */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Smooth transitions for all interactive elements */
+button, a, input, textarea {
+  transition: all 0.3s ease;
+}
+
+/* Remove default outline and add custom focus */
+*:focus {
+  outline: none;
+}
+
+*:focus-visible {
+  outline: 2px solid #06b6d4;
+  outline-offset: 2px;
+}
+
+/* Improve image rendering */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Hardware acceleration for animations */
+.will-animate {
+  will-change: transform, opacity;
+}
+
+/* Remove animation on reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

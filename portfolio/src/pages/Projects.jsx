@@ -261,19 +261,32 @@ const MyProjects = () => {
           </div>
 
           {/* Show More Button */}
-          {!showAll && (
-            <div className="mt-10 text-center">
-              <button
+          {!showAll && projects.length > 3 && (
+            <motion.div 
+              className="mt-10 sm:mt-12 text-center"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              <motion.button
                 onClick={() => setShowAll(true)}
-                className={`px-6 py-2 rounded-md border transition-all duration-300 ${
+                className={`group relative px-8 py-3 rounded-lg font-semibold overflow-hidden transition-all duration-300 ${
                   darkMode
-                    ? "text-cyan-400 hover:text-cyan-300 border-cyan-500/30"
-                    : "text-cyan-600 hover:text-cyan-800 border-cyan-300"
+                    ? "text-cyan-400 border-2 border-cyan-500/50 hover:border-cyan-400"
+                    : "text-cyan-600 border-2 border-cyan-400 hover:border-cyan-600"
                 }`}
+                whileHover={{ scale: 1.05, boxShadow: "0 8px 20px rgba(6, 182, 212, 0.3)" }}
+                whileTap={{ scale: 0.95 }}
               >
-                See More Projects
-              </button>
-            </div>
+                <span className="relative z-10">Show All Projects</span>
+                <motion.div
+                  className="absolute inset-0 bg-cyan-500/10"
+                  initial={{ scale: 0 }}
+                  whileHover={{ scale: 1 }}
+                  transition={{ duration: 0.3 }}
+                />
+              </motion.button>
+            </motion.div>
           )}
         </div>
       </section>

@@ -1,8 +1,8 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-scroll";
-import { Sun, Moon } from "lucide-react"; // adjust if your context path is different
+import { Sun, Moon, Menu, X } from "lucide-react";
 import { useTheme } from "../context/colorTheme";
 
 const Navbar = () => {
@@ -169,54 +169,75 @@ const Navbar = () => {
 
         {/* Mobile: Theme + Menu */}
         <div className="md:hidden z-50 flex items-center space-x-4">
-          <div className="cursor-pointer">
+          <motion.div 
+            className="cursor-pointer"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+          >
             {darkMode ? (
               <Sun
-                className="w-5 h-5 text-yellow-300"
+                className="w-6 h-6 text-yellow-400"
                 onClick={() => setDarkMode(false)}
               />
             ) : (
               <Moon
-                className="w-5 h-5 text-blue-300"
+                className="w-6 h-6 text-blue-500"
                 onClick={() => setDarkMode(true)}
               />
             )}
-          </div>
-          <button
+          </motion.div>
+          <motion.button
             onClick={() => setIsOpen(!isOpen)}
-            className="text-2xl text-cyan-500 focus:outline-none"
+            className="text-cyan-500 focus:outline-none p-1"
             aria-label="Toggle menu"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
           >
-            ☰
-          </button>
+            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </motion.button>
         </div>
       </div>
 
       {/* Mobile Dropdown Menu */}
-      {isOpen && (
-        <motion.div
-          className="md:hidden bg-black/90 text-white mt-4 px-4 py-3 space-y-4 text-center z-40"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.3 }}
-        >
-          {navLinks.map((link) => (
-            <Link
-              key={link.id}
-              to={link.id}
-              smooth={true}
-              duration={700}
-              offset={-80}
-              className={`block cursor-pointer hover:text-cyan-400 text-base uppercase ${
-                activeSection === link.id ? "text-cyan-400 font-semibold" : ""
-              }`}
-              onClick={() => setIsOpen(false)}
-            >
-              {link.label}
-            </Link>
-          ))}
-        </motion.div>
-      )}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            className={`md:hidden mt-4 px-4 py-6 space-y-3 z-40 backdrop-blur-xl border-t ${
+              darkMode ? "bg-black/95 border-white/10" : "bg-white/95 border-black/10"
+            }`}
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            {navLinks.map((link, index) => (
+              <motion.div
+                key={link.id}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <Link
+                  to={link.id}
+                  smooth={true}
+                  duration={700}
+                  offset={-80}
+                  className={`block cursor-pointer py-3 px-4 rounded-lg text-base font-medium transition-all duration-300 ${
+                    activeSection === link.id
+                      ? "text-cyan-400 bg-cyan-500/10 font-semibold"
+                      : darkMode
+                      ? "text-white hover:text-cyan-400 hover:bg-white/5"
+                      : "text-black hover:text-cyan-600 hover:bg-black/5"
+                  }`}
+                  onClick={() => setIsOpen(false)}
+                >
+                  {link.label}
+                </Link>
+              </motion.div>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.nav>
   );
 };

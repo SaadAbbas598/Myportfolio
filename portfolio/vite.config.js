@@ -9,14 +9,8 @@ export default defineConfig({
     tailwindcss(),
   ],
   build: {
-    // Enable minification
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true,
-        drop_debugger: true,
-      },
-    },
+    // Enable minification without terser
+    minify: 'esbuild',
     // Optimize chunk splitting
     rollupOptions: {
       output: {

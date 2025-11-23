@@ -27,7 +27,8 @@ A modern, fully responsive, and SEO-optimized portfolio website showcasing mobil
 - **Flexible Layouts**: Grid and flexbox for adaptive designs
 
 ### 🔍 SEO Optimization
-- **React Helmet Async**: Dynamic meta tags for better SEO
+- **Native SEO Solution**: React 19 compatible meta tag management
+- **Dynamic Meta Tags**: Updates on route/content changes
 - **Structured Data**: Schema.org markup for rich snippets
   - Person Schema
   - LocalBusiness Schema
@@ -66,7 +67,7 @@ A modern, fully responsive, and SEO-optimized portfolio website showcasing mobil
 - **React 19**: Latest React with concurrent features
 - **Tailwind CSS**: Utility-first CSS framework
 - **Framer Motion**: Production-ready animation library
-- **React Helmet Async**: SEO meta tag management
+- **Native SEO**: React 19 compatible meta tag management
 - **React Scroll**: Smooth scrolling functionality
 - **Lucide React**: Modern icon library
 - **Vite**: Next-generation build tool

@@ -1,4 +1,4 @@
-import { Helmet } from 'react-helmet-async';
+import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 const SEO = ({ 
@@ -8,93 +8,59 @@ const SEO = ({
   author = "Saad Abbas",
   image = "https://www.saadabbas.me/images/og-image.jpg",
   url = "https://www.saadabbas.me/",
-  type = "website",
-  structuredData
+  type = "website"
 }) => {
-  const defaultStructuredData = {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Saad Abbas",
-    "jobTitle": "Mobile App Developer & Android Application Engineer",
-    "url": "https://www.saadabbas.me/",
-    "sameAs": [
-      "https://www.linkedin.com/in/saad-abbas-722b08345",
-      "https://github.com/SaadAbbas598/",
-      "https://www.instagram.com/saad__rahi",
-      "https://x.com/SaadRahi8"
-    ],
-    "knowsAbout": [
-      "Mobile App Development",
-      "Android Development",
-      "iOS Development",
-      "Cross-Platform Development",
-      "React Native",
-      "Flutter",
-      "Kotlin",
-      "Java",
-      "Swift",
-      "Firebase",
-      "UI/UX Design"
-    ],
-    "description": description,
-    "image": image,
-    "alumniOf": {
-      "@type": "EducationalOrganization",
-      "name": "Your University Name"
-    },
-    "worksFor": {
-      "@type": "Organization",
-      "name": "Freelance / Self-Employed"
-    }
-  };
+  useEffect(() => {
+    // Update document title
+    document.title = title;
 
-  return (
-    <Helmet>
-      {/* Primary Meta Tags */}
-      <title>{title}</title>
-      <meta name="title" content={title} />
-      <meta name="description" content={description} />
-      <meta name="keywords" content={keywords} />
-      <meta name="author" content={author} />
-      <meta name="robots" content="index, follow" />
-      <meta name="language" content="en" />
-      <meta name="revisit-after" content="7 days" />
-      <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    // Update or create meta tags
+    const updateMetaTag = (name, content, isProperty = false) => {
+      const attribute = isProperty ? 'property' : 'name';
+      let element = document.querySelector(`meta[${attribute}="${name}"]`);
       
-      {/* Canonical URL */}
-      <link rel="canonical" href={url} />
-      <link rel="alternate" hrefLang="en" href={url} />
-      
-      {/* Open Graph / Facebook */}
-      <meta property="og:type" content={type} />
-      <meta property="og:url" content={url} />
-      <meta property="og:title" content={title} />
-      <meta property="og:description" content={description} />
-      <meta property="og:image" content={image} />
-      <meta property="og:site_name" content="Saad Abbas Portfolio" />
-      <meta property="og:locale" content="en_US" />
-      
-      {/* Twitter */}
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:url" content={url} />
-      <meta name="twitter:title" content={title} />
-      <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={image} />
-      <meta name="twitter:creator" content="@SaadRahi8" />
-      
-      {/* Additional SEO Tags */}
-      <meta name="theme-color" content="#06b6d4" />
-      <meta name="msapplication-TileColor" content="#06b6d4" />
-      <meta name="apple-mobile-web-app-capable" content="yes" />
-      <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-      
-      {/* Structured Data */}
-      <script type="application/ld+json">
-        {JSON.stringify(structuredData || defaultStructuredData)}
-      </script>
-    </Helmet>
-  );
+      if (element) {
+        element.setAttribute('content', content);
+      } else {
+        element = document.createElement('meta');
+        element.setAttribute(attribute, name);
+        element.setAttribute('content', content);
+        document.head.appendChild(element);
+      }
+    };
+
+    // Primary Meta Tags
+    updateMetaTag('description', description);
+    updateMetaTag('keywords', keywords);
+    updateMetaTag('author', author);
+
+    // Open Graph Tags
+    updateMetaTag('og:type', type, true);
+    updateMetaTag('og:url', url, true);
+    updateMetaTag('og:title', title, true);
+    updateMetaTag('og:description', description, true);
+    updateMetaTag('og:image', image, true);
+
+    // Twitter Tags
+    updateMetaTag('twitter:card', 'summary_large_image');
+    updateMetaTag('twitter:url', url);
+    updateMetaTag('twitter:title', title);
+    updateMetaTag('twitter:description', description);
+    updateMetaTag('twitter:image', image);
+
+    // Canonical URL
+    let canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical) {
+      canonical.setAttribute('href', url);
+    } else {
+      canonical = document.createElement('link');
+      canonical.setAttribute('rel', 'canonical');
+      canonical.setAttribute('href', url);
+      document.head.appendChild(canonical);
+    }
+  }, [title, description, keywords, author, image, url, type]);
+
+  return null;
 };
 
 SEO.propTypes = {
@@ -104,8 +70,7 @@ SEO.propTypes = {
   author: PropTypes.string,
   image: PropTypes.string,
   url: PropTypes.string,
-  type: PropTypes.string,
-  structuredData: PropTypes.object
+  type: PropTypes.string
 };
 
 export default SEO;

@@ -73,7 +73,7 @@ const Intro = () => {
               <motion.img
                 src="/images/profile.png"
                 alt="Saad Abbas – Mobile App Developer & Android Engineer Profile Picture"
-                className="absolute inset-0 w-full h-full object-cover object-center transition-all duration-500 grayscale hover:grayscale-0"
+                className="absolute inset-0 min-w-full min-h-full w-full h-full object-cover object-[center_top] transition-all duration-500 grayscale hover:grayscale-0"
                 loading="lazy"
                 width={400}
                 height={400}

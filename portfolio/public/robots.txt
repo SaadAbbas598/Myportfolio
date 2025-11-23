@@ -1,4 +1,25 @@
+# Robots.txt for www.saadabbas.me
+# Allow all search engines to crawl all content
+
 User-agent: *
 Allow: /
+Disallow: /api/
+Disallow: /*.json$
 
+# Crawl-delay for bots
+Crawl-delay: 0
+
+# Sitemap location
 Sitemap: https://www.saadabbas.me/sitemap.xml
+
+# Google bot specific
+User-agent: Googlebot
+Allow: /
+
+# Bing bot specific  
+User-agent: Bingbot
+Allow: /
+
+# Yandex bot specific
+User-agent: Yandex
+Allow: /

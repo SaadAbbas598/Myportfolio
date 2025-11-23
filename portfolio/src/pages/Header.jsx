@@ -24,10 +24,10 @@ const Header = () => {
   }, []);
 
   const handleDownloadCV = () => {
-    const cvUrl = "/Saad-Abbas-Mobile-App-Developer-CV.pdf";
+    const cvUrl = "/Saad-Abbas-CV.pdf";
     const link = document.createElement("a");
     link.href = cvUrl;
-    link.download = "Saad_Abbas_Mobile_App_Developer_CV.pdf";
+    link.download = "Saad-Abbas-CV.pdf";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

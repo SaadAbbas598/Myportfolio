@@ -68,11 +68,12 @@ const EmailIcon = () => {
       <motion.a
         href="https://mail.google.com/mail/?view=cm&fs=1&to=iamsaadabbas@gmail.com&su=Let's%20Collaborate!&body=Hi%20Saad,"
         target="_blank"
-        rel="noopener noreferrer"
+        rel="nofollow noopener noreferrer"
         className={`rounded-full p-3 text-white shadow-lg ${
           isClicked ? "bg-green-500" : "bg-cyan-500 hover:bg-cyan-600"
         }`}
-        title="Send Email"
+        title="Send Email to Saad Abbas - Mobile App Developer"
+        aria-label="Send email to Saad Abbas"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onClick={handleClick}

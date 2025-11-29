@@ -75,7 +75,7 @@ const Footer = () => {
                 key={i}
                 href={href}
                 target="_blank"
-                rel="noopener noreferrer"
+                rel="nofollow noopener noreferrer"
                 title={title}
                 aria-label={title}
                 className={`text-xl transition-colors ${
@@ -140,6 +140,7 @@ const Footer = () => {
                   <li key={idx}>
                     <a
                       href={item.href}
+                      title={`${item.label} - Saad Abbas Mobile App Developer`}
                       className={`transition-colors ${
                         darkMode
                           ? "text-gray-400 hover:text-cyan-400"

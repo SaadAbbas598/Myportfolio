@@ -110,11 +110,11 @@ const Testimonials = () => {
             }`}
           >
             Hear from clients who have trusted me with{" "}
-            <Link to="portfolio" smooth={true} duration={800} className="text-cyan-500 underline">
+            <Link to="portfolio" smooth={true} duration={800} className="text-cyan-500 underline font-semibold" title="View Mobile App Portfolio">
               mobile application development
             </Link>{" "}
             and{" "}
-            <Link to="contact" smooth={true} duration={800} className="text-cyan-500 underline">
+            <Link to="contact" smooth={true} duration={800} className="text-cyan-500 underline font-semibold" title="Contact for Android App Development">
               Android app projects
             </Link>
             . Their feedback reflects my commitment to delivering high-quality, performance-optimized apps tailored to each business need.

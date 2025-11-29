@@ -248,7 +248,9 @@ const MyProjects = () => {
                               : "text-cyan-600 hover:text-cyan-800"
                           }`}
                           target="_blank"
-                          rel="noopener noreferrer"
+                          rel="nofollow noopener noreferrer"
+                          title={`View ${project.title} - Mobile App Project`}
+                          aria-label={`View ${project.title} project details`}
                         >
                           View Project →
                         </a>

@@ -140,11 +140,11 @@ const Intro = () => {
               viewport={{ once: true, margin: "-50px" }}
               className="mb-6 sm:mb-8 leading-relaxed text-xs xs:text-sm sm:text-base"
             >
-              I’m a <Link to="portfolio" smooth={true} duration={800} className="text-cyan-500 underline">mobile app developer</Link> 
+              I'm a <Link to="portfolio" smooth={true} duration={800} className="text-cyan-500 underline font-semibold" title="View Mobile App Portfolio">mobile app developer</Link> 
               &nbsp;specializing in Android and cross-platform mobile application development. I create 
               high-performance, user-friendly apps using technologies like Java, Kotlin, Flutter, React Native, 
               and Firebase. My work spans from app concept and UI/UX design to deployment on 
-              <a href="https://play.google.com" target="_blank" rel="noreferrer noopener" className="text-cyan-500 underline"> Google Play Store</a> 
+              <a href="https://play.google.com/store/apps" target="_blank" rel="nofollow noopener noreferrer" className="text-cyan-500 underline font-semibold" title="Google Play Store - Android Apps"> Google Play Store</a> 
               &nbsp;and Apple App Store. I also integrate APIs, payment systems, and push notifications to ensure 
               a seamless mobile experience.
             </motion.p>

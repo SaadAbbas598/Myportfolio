@@ -188,7 +188,7 @@ const Header = () => {
                     key={index}
                     href={social.href}
                     target="_blank"
-                    rel="noreferrer noopener"
+                    rel="nofollow noopener noreferrer"
                     aria-label={social.label}
                     title={social.title}
                     className={`${social.color} transition-all duration-300 hover:scale-125`}

@@ -43,7 +43,7 @@ const ContactForm = () => {
       const result = await response.json();
 
       if (result.success) {
-        console.log("✅ Email sent successfully via Web3Forms");
+        console.log("✅ Email sent successfully ");
         setShowSuccessPopup(true);
         formRef.current.reset();
         setTimeout(() => setShowSuccessPopup(false), 3000);

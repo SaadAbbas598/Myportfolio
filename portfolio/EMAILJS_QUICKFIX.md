@@ -3,8 +3,10 @@
 ## The Problem
 Contact form works locally but **fails on saadabbas.me** with:
 ```
-Contact-DBNwuzc_.js:1 Failed to send email
+Failed to send email: y {status: 0, text: ''}
 ```
+
+**This means:** Your domain is not whitelisted in EmailJS! Status 0 = CORS blocking.
 
 ## ✅ What Was Fixed
 1. ✅ Moved hardcoded EmailJS credentials to environment variables

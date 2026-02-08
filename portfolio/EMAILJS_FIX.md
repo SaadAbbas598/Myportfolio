@@ -1,7 +1,16 @@
 # EmailJS Production Deployment Fix
 
 ## Problem
-EmailJS works locally but fails on production (saadabbas.me) with error: "Failed to send email"
+EmailJS works locally but fails on production (saadabbas.me) with error: 
+```
+Failed to send email: y {status: 0, text: ''}
+```
+
+### What This Error Means
+**Status 0** indicates a CORS/network blocking issue where the request is blocked **before** reaching EmailJS servers. This happens when:
+1. Domain is not whitelisted in EmailJS
+2. CORS policy blocks the request
+3. Network/firewall blocks the connection
 
 ## Root Causes
 1. **Hard-coded credentials** - Not using environment variables

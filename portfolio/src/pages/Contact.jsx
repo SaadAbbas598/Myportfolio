@@ -33,17 +33,14 @@ const ContactForm = () => {
     setIsSubmitting(true);
     setShowErrorPopup(false);
 
-    const name = formRef.current.name.value;
-    const email = formRef.current.email.value;
-    const message = formRef.current.message.value;
-
     const templateParams = {
-      from_name: name,
-      from_email: email,
-      message: message,
-      to_name: "Saad Abbas", // Add recipient name
+      from_name: formRef.current.from_name.value,
+      from_email: formRef.current.from_email.value,
+      message: formRef.current.message.value,
+      to_name: "Saad Abbas",
     };
 
+    // Use send method with emailjs-com
     emailjs
       .send(
         EMAILJS_SERVICE_ID,
@@ -52,17 +49,34 @@ const ContactForm = () => {
         EMAILJS_PUBLIC_KEY
       )
       .then((response) => {
-        console.log("Email sent successfully:", response.status, response.text);
+        console.log("✅ Email sent successfully:", response.status, response.text);
         setShowSuccessPopup(true);
         formRef.current.reset();
         setTimeout(() => setShowSuccessPopup(false), 3000);
       })
       .catch((error) => {
-        console.error("Failed to send email:", error);
-        const errorMsg = error?.text || error?.message || "Failed to send message. Please try again.";
+        console.error("❌ Failed to send email:", error);
+        
+        let errorMsg = "Failed to send message. ";
+        
+        // Handle specific error cases
+        if (error.status === 0 || error.status === undefined) {
+          errorMsg = "Network error: Check if domain is whitelisted in EmailJS dashboard. Your message was not sent.";
+        } else if (error.status === 400) {
+          errorMsg = "Invalid request. Please check your EmailJS configuration.";
+        } else if (error.status === 401) {
+          errorMsg = "Unauthorized. Please verify your EmailJS credentials.";
+        } else if (error.status === 403) {
+          errorMsg = "Forbidden. Domain not whitelisted in EmailJS.";
+        } else if (error.status === 404) {
+          errorMsg = "EmailJS service or template not found.";
+        } else {
+          errorMsg += error?.text || error?.message || "Please try again later.";
+        }
+        
         setErrorMessage(errorMsg);
         setShowErrorPopup(true);
-        setTimeout(() => setShowErrorPopup(false), 5000);
+        setTimeout(() => setShowErrorPopup(false), 8000);
       })
       .finally(() => setIsSubmitting(false));
   };
@@ -180,12 +194,12 @@ const ContactForm = () => {
             className="flex flex-col gap-5"
           >
             <motion.div variants={fadeInFromLeft}>
-              <label htmlFor="name" className="text-sm font-medium">
+              <label htmlFor="from_name" className="text-sm font-medium">
                 Your Name
               </label>
               <input
-                id="name"
-                name="name"
+                id="from_name"
+                name="from_name"
                 type="text"
                 required
                 placeholder="Saad Abbas"
@@ -198,12 +212,12 @@ const ContactForm = () => {
             </motion.div>
 
             <motion.div variants={fadeInFromRight}>
-              <label htmlFor="email" className="text-sm font-medium">
+              <label htmlFor="from_email" className="text-sm font-medium">
                 Email Address
               </label>
               <input
-                id="email"
-                name="email"
+                id="from_email"
+                name="from_email"
                 type="email"
                 required
                 placeholder="saad@example.com"

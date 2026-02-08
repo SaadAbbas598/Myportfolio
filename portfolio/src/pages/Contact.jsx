@@ -3,7 +3,6 @@ import React, { useRef, useState, useEffect } from "react";
 import { Element } from "react-scroll";
 import { motion } from "framer-motion";
 import { FiSend } from "react-icons/fi";
-import emailjs from "emailjs-com";
 import ParticlesBackground from "../components/ParticlesBackground";
 import { useTheme } from "../context/colorTheme";
 
@@ -16,11 +15,6 @@ const ContactForm = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const { darkMode } = useTheme();
 
-  // EmailJS configuration from environment variables
-  const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || "service_lt5svqo";
-  const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || "template_aoez6m7";
-  const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || "iL1jEoGxX0efT4QsO";
-
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
     handleResize();
@@ -28,57 +22,45 @@ const ContactForm = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
     setShowErrorPopup(false);
 
-    const templateParams = {
-      from_name: formRef.current.from_name.value,
-      from_email: formRef.current.from_email.value,
-      message: formRef.current.message.value,
-      to_name: "Saad Abbas",
-    };
+    console.log("🚀 Sending email via Web3Forms...");
 
-    // Use send method with emailjs-com
-    emailjs
-      .send(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID,
-        templateParams,
-        EMAILJS_PUBLIC_KEY
-      )
-      .then((response) => {
-        console.log("✅ Email sent successfully:", response.status, response.text);
+    try {
+      // Using Web3Forms - FormData approach (recommended)
+      const formData = new FormData(e.target);
+      formData.append("access_key", "5a793313-b43a-4740-a0c6-7c28e6678eb1");
+      formData.append("subject", `New Contact Form from ${formData.get("name")}`);
+
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        console.log("✅ Email sent successfully via Web3Forms");
         setShowSuccessPopup(true);
         formRef.current.reset();
         setTimeout(() => setShowSuccessPopup(false), 3000);
-      })
-      .catch((error) => {
-        console.error("❌ Failed to send email:", error);
-        
-        let errorMsg = "Failed to send message. ";
-        
-        // Handle specific error cases
-        if (error.status === 0 || error.status === undefined) {
-          errorMsg = "Network error: Check if domain is whitelisted in EmailJS dashboard. Your message was not sent.";
-        } else if (error.status === 400) {
-          errorMsg = "Invalid request. Please check your EmailJS configuration.";
-        } else if (error.status === 401) {
-          errorMsg = "Unauthorized. Please verify your EmailJS credentials.";
-        } else if (error.status === 403) {
-          errorMsg = "Forbidden. Domain not whitelisted in EmailJS.";
-        } else if (error.status === 404) {
-          errorMsg = "EmailJS service or template not found.";
-        } else {
-          errorMsg += error?.text || error?.message || "Please try again later.";
-        }
-        
-        setErrorMessage(errorMsg);
-        setShowErrorPopup(true);
-        setTimeout(() => setShowErrorPopup(false), 8000);
-      })
-      .finally(() => setIsSubmitting(false));
+      } else {
+        throw new Error(result.message || "Failed to send");
+      }
+    } catch (error) {
+      console.error("❌ Failed to send email:", error);
+      
+      let errorMsg = `Failed to send message: ${error.message}`;
+      
+      setErrorMessage(errorMsg);
+      setShowErrorPopup(true);
+      setTimeout(() => setShowErrorPopup(false), 10000);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const container = {
@@ -194,12 +176,12 @@ const ContactForm = () => {
             className="flex flex-col gap-5"
           >
             <motion.div variants={fadeInFromLeft}>
-              <label htmlFor="from_name" className="text-sm font-medium">
+              <label htmlFor="name" className="text-sm font-medium">
                 Your Name
               </label>
               <input
-                id="from_name"
-                name="from_name"
+                id="name"
+                name="name"
                 type="text"
                 required
                 placeholder="Saad Abbas"
@@ -212,12 +194,12 @@ const ContactForm = () => {
             </motion.div>
 
             <motion.div variants={fadeInFromRight}>
-              <label htmlFor="from_email" className="text-sm font-medium">
+              <label htmlFor="email" className="text-sm font-medium">
                 Email Address
               </label>
               <input
-                id="from_email"
-                name="from_email"
+                id="email"
+                name="email"
                 type="email"
                 required
                 placeholder="saad@example.com"

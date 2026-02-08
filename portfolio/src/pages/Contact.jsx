@@ -12,7 +12,14 @@ const ContactForm = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const [showErrorPopup, setShowErrorPopup] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const { darkMode } = useTheme();
+
+  // EmailJS configuration from environment variables
+  const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || "service_lt5svqo";
+  const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || "template_aoez6m7";
+  const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || "iL1jEoGxX0efT4QsO";
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
@@ -24,6 +31,7 @@ const ContactForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setShowErrorPopup(false);
 
     const name = formRef.current.name.value;
     const email = formRef.current.email.value;
@@ -33,18 +41,28 @@ const ContactForm = () => {
       from_name: name,
       from_email: email,
       message: message,
+      to_name: "Saad Abbas", // Add recipient name
     };
 
     emailjs
-      .send("service_lt5svqo", "template_aoez6m7", templateParams, "iL1jEoGxX0efT4QsO")
-      .then(() => {
+      .send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        templateParams,
+        EMAILJS_PUBLIC_KEY
+      )
+      .then((response) => {
+        console.log("Email sent successfully:", response.status, response.text);
         setShowSuccessPopup(true);
         formRef.current.reset();
         setTimeout(() => setShowSuccessPopup(false), 3000);
       })
       .catch((error) => {
-        console.error("Failed to send email:", error.text);
-        alert("Failed to send message. Please try again.");
+        console.error("Failed to send email:", error);
+        const errorMsg = error?.text || error?.message || "Failed to send message. Please try again.";
+        setErrorMessage(errorMsg);
+        setShowErrorPopup(true);
+        setTimeout(() => setShowErrorPopup(false), 5000);
       })
       .finally(() => setIsSubmitting(false));
   };
@@ -106,6 +124,22 @@ const ContactForm = () => {
           >
             <span>✅</span>
             <span>Message sent successfully!</span>
+          </motion.div>
+        )}
+
+        {/* Error Popup */}
+        {showErrorPopup && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="fixed top-5 right-5 z-50 bg-red-600 text-white px-6 py-3 rounded-lg shadow-lg flex items-center gap-2 max-w-md"
+          >
+            <span>❌</span>
+            <div className="flex flex-col">
+              <span className="font-semibold">Failed to send message</span>
+              <span className="text-xs mt-1 opacity-90">{errorMessage}</span>
+            </div>
           </motion.div>
         )}
 

@@ -72,7 +72,7 @@ const MyProjects = () => {
         "A personal portfolio website to showcase my projects, skills, and professional achievements with a modern, responsive design.",
       tags: ["React", "Tailwind", "Framer Motion"],
       image: "/images/image.png",
-      link: "https://saadabbas.me",
+      link: "https://www.saadabbas.tech",
     },
     {
       title: "Weather Dashboard",
